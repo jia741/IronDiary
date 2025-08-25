@@ -14,6 +14,14 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
   List<Map<String, dynamic>> _exercises = [];
   int? _selectedCategory;
 
+  String get _currentCategoryName {
+    final cat = _categories.firstWhere(
+      (c) => c['id'] == _selectedCategory,
+      orElse: () => {'name': ''},
+    );
+    return (cat['name'] as String?) ?? '';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,8 +86,9 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     showDialog(
       context: context,
       builder: (context) {
+        final catName = _currentCategoryName;
         return AlertDialog(
-          title: Text(id == null ? '新增動作' : '修改動作'),
+          title: Text('${id == null ? '新增' : '修改'}動作（$catName）'),
           content: TextField(controller: controller),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
@@ -117,7 +126,11 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                     children: _categories
                         .map(
                           (c) => ListTile(
-                            title: Text(c['name'] as String),
+                            title: Text(
+                              c['name'] as String,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             selected: c['id'] == _selectedCategory,
                             onTap: () => _loadExercises(c['id'] as int),
                             trailing: Row(
@@ -151,13 +164,27 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           ),
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '當前類別: $_currentCategoryName',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Expanded(
                   child: ListView(
                     children: _exercises
                         .map(
                           (e) => ListTile(
-                            title: Text(e['name'] as String),
+                            title: Text(
+                              e['name'] as String,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
