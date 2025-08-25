@@ -30,7 +30,39 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const MyHomePage(
+            title: 'Flutter Demo Home Page',
+          ),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
