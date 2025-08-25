@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
           secondary: secondaryColor,
           brightness: brightness,
         ),
-        fontFamily: 'Inter',
       );
       return base.copyWith(
         textTheme: GoogleFonts.interTextTheme(base.textTheme),
@@ -35,12 +34,12 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            shape: const MaterialStatePropertyAll(
+            shape: const WidgetStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
             ),
-            elevation: const MaterialStatePropertyAll(1),
+            elevation: const WidgetStatePropertyAll(1),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
