@@ -59,7 +59,9 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                 } else {
                   await _db.updateCategory(id, controller.text);
                 }
+                if (!context.mounted) return;
                 Navigator.pop(context);
+                if (!mounted) return;
                 _loadCategories();
               },
               child: const Text('確定'),
@@ -88,7 +90,9 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                 } else {
                   await _db.updateExercise(id, controller.text);
                 }
+                if (!context.mounted) return;
                 Navigator.pop(context);
+                if (!mounted) return;
                 _loadExercises(_selectedCategory!);
               },
               child: const Text('確定'),
