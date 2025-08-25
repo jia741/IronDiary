@@ -138,12 +138,9 @@ class _HomePageState extends State<HomePage> {
       body: AbsorbPointer(
         absorbing: _isTiming,
         child: Center(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               DropdownButton<int>(
                 value: _selectedCategory,
                 items: _categories
@@ -189,9 +186,8 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40, vertical: 24),
-                ),
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(40)),
                 onPressed: _isTiming ? null : _startWorkout,
                 child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
               ),
@@ -199,37 +195,35 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    ),
-  ),
-    bottomNavigationBar: AbsorbPointer(
-      absorbing: _isTiming,
-      child: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ReportPage()),
-                );
-              },
-              icon: const Icon(Icons.assessment),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
-                ).then((_) => _loadData());
-              },
-              icon: const Icon(Icons.settings),
-            ),
-          ],
+      bottomNavigationBar: AbsorbPointer(
+        absorbing: _isTiming,
+        child: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ReportPage()),
+                  );
+                },
+                icon: const Icon(Icons.assessment),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                  ).then((_) => _loadData());
+                },
+                icon: const Icon(Icons.settings),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }
