@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('設定計時秒數'),
+          title: const Text('設定組間休息秒數'),
           content: TextField(
             controller: controller,
             keyboardType: TextInputType.number,
