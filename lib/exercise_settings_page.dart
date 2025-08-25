@@ -60,7 +60,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           content: TextField(controller: controller),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
-            ElevatedButton(
+            FilledButton(
               onPressed: () async {
                 if (id == null) {
                   await _db.insertCategory(controller.text);
@@ -92,7 +92,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           content: TextField(controller: controller),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
-            ElevatedButton(
+            FilledButton(
               onPressed: () async {
                 if (id == null) {
                   await _db.insertExercise(_selectedCategory!, controller.text);
@@ -155,7 +155,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                         .toList(),
                   ),
                 ),
-                ElevatedButton(
+                FilledButton(
                   onPressed: () => _showCategoryDialog(),
                   child: const Text('新增類別'),
                 )
@@ -207,7 +207,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                         .toList(),
                   ),
                 ),
-                ElevatedButton(
+                FilledButton(
                   onPressed: () => _showExerciseDialog(),
                   child: const Text('新增動作'),
                 )

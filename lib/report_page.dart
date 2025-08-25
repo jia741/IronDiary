@@ -94,27 +94,16 @@ class _ReportPageState extends State<ReportPage> {
       appBar: AppBar(title: const Text('報表')),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ChoiceChip(
-                label: const Text('日'),
-                selected: _period == _Period.day,
-                onSelected: (_) => _changePeriod(_Period.day),
-              ),
-              const SizedBox(width: 8),
-              ChoiceChip(
-                label: const Text('周'),
-                selected: _period == _Period.week,
-                onSelected: (_) => _changePeriod(_Period.week),
-              ),
-              const SizedBox(width: 8),
-              ChoiceChip(
-                label: const Text('月'),
-                selected: _period == _Period.month,
-                onSelected: (_) => _changePeriod(_Period.month),
-              ),
-            ],
+          Center(
+            child: SegmentedButton<_Period>(
+              segments: const [
+                ButtonSegment(value: _Period.day, label: Text('日')),
+                ButtonSegment(value: _Period.week, label: Text('周')),
+                ButtonSegment(value: _Period.month, label: Text('月')),
+              ],
+              selected: {_period},
+              onSelectionChanged: (s) => _changePeriod(s.first),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

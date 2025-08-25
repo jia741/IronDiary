@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   bool _isTiming = false;
   int _remainingSeconds = 0;
   Timer? _timer;
+  int _navIndex = 0;
 
   @override
   void initState() {
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => Navigator.pop(context),
               child: const Text('取消'),
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: () {
                 setState(() {
                   _timerSeconds = int.tryParse(controller.text) ?? _timerSeconds;
@@ -141,25 +142,25 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              DropdownButton<int>(
-                value: _selectedCategory,
-                items: _categories
-                    .map((c) => DropdownMenuItem<int>(
+              DropdownMenu<int>(
+                initialSelection: _selectedCategory,
+                dropdownMenuEntries: _categories
+                    .map((c) => DropdownMenuEntry<int>(
                           value: c['id'] as int,
-                          child: Text(c['name'] as String),
+                          label: c['name'] as String,
                         ))
                     .toList(),
-                onChanged: _onCategoryChanged,
+                onSelected: _onCategoryChanged,
               ),
-              DropdownButton<int>(
-                value: _selectedExercise,
-                items: _exercises
-                    .map((e) => DropdownMenuItem<int>(
+              DropdownMenu<int>(
+                initialSelection: _selectedExercise,
+                dropdownMenuEntries: _exercises
+                    .map((e) => DropdownMenuEntry<int>(
                           value: e['id'] as int,
-                          child: Text(e['name'] as String),
+                          label: e['name'] as String,
                         ))
                     .toList(),
-                onChanged: (id) => setState(() => _selectedExercise = id),
+                onSelected: (id) => setState(() => _selectedExercise = id),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -184,8 +185,8 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
+              FilledButton(
+                style: FilledButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(40)),
                 onPressed: _isTiming ? null : _startWorkout,
@@ -197,31 +198,33 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: AbsorbPointer(
         absorbing: _isTiming,
-        child: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ReportPage()),
-                  );
-                },
-                icon: const Icon(Icons.assessment),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
-                  ).then((_) => _loadData());
-                },
-                icon: const Icon(Icons.settings),
-              ),
-            ],
-          ),
+        child: NavigationBar(
+          selectedIndex: _navIndex,
+          onDestinationSelected: (index) {
+            setState(() => _navIndex = index);
+            switch (index) {
+              case 0:
+                _showTimerDialog();
+                break;
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ReportPage()),
+                );
+                break;
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                ).then((_) => _loadData());
+                break;
+            }
+          },
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.timer), label: '計時'),
+            NavigationDestination(icon: Icon(Icons.assessment), label: '報表'),
+            NavigationDestination(icon: Icon(Icons.settings), label: '設定'),
+          ],
         ),
       ),
     );
