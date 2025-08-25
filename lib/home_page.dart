@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -18,8 +19,12 @@ class _HomePageState extends State<HomePage> {
   int? _selectedCategory;
   int? _selectedExercise;
   final TextEditingController _repController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
   int _timerSeconds = 60;
   bool _loading = true;
+  bool _isTiming = false;
+  int _remainingSeconds = 0;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -43,6 +48,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  @override
+  void dispose() {
+    _repController.dispose();
+    _weightController.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+
   Future<void> _onCategoryChanged(int? id) async {
     if (id == null) return;
     final exs = await _db.getExercises(id);
@@ -53,20 +66,34 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _startWorkout() {
+  Future<void> _startWorkout() async {
     final exId = _selectedExercise;
     final reps = int.tryParse(_repController.text);
-    if (exId == null || reps == null) return;
-    _db.logWorkout(exId, reps);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('開始計時')),
-    );
-    Timer(Duration(seconds: _timerSeconds), () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('計時完成')),
-      );
+    final weight = double.tryParse(_weightController.text);
+    if (exId == null || reps == null || weight == null) return;
+    await _db.logWorkout(exId, reps, weight);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('開始計時')));
+    setState(() {
+      _isTiming = true;
+      _remainingSeconds = _timerSeconds;
     });
-    _repController.clear();
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (_remainingSeconds > 1) {
+        setState(() => _remainingSeconds--);
+      } else {
+        t.cancel();
+        if (!mounted) return;
+        SystemSound.play(SystemSoundType.alert);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('計時完成')));
+        setState(() {
+          _isTiming = false;
+        });
+      }
+    });
   }
 
   void _showTimerDialog() {
@@ -108,71 +135,93 @@ class _HomePageState extends State<HomePage> {
       );
     }
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DropdownButton<int>(
-              value: _selectedCategory,
-              items: _categories
-                  .map((c) => DropdownMenuItem<int>(
-                        value: c['id'] as int,
-                        child: Text(c['name'] as String),
-                      ))
-                  .toList(),
-              onChanged: _onCategoryChanged,
-            ),
-            DropdownButton<int>(
-              value: _selectedExercise,
-              items: _exercises
-                  .map((e) => DropdownMenuItem<int>(
-                        value: e['id'] as int,
-                        child: Text(e['name'] as String),
-                      ))
-                  .toList(),
-              onChanged: (id) => setState(() => _selectedExercise = id),
-            ),
-            SizedBox(
-              width: 120,
-              child: TextField(
-                controller: _repController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(hintText: '次數'),
+      body: AbsorbPointer(
+        absorbing: _isTiming,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButton<int>(
+                value: _selectedCategory,
+                items: _categories
+                    .map((c) => DropdownMenuItem<int>(
+                          value: c['id'] as int,
+                          child: Text(c['name'] as String),
+                        ))
+                    .toList(),
+                onChanged: _onCategoryChanged,
               ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(shape: const CircleBorder(), padding: const EdgeInsets.all(24)),
-              onPressed: _startWorkout,
-              child: const Icon(Icons.play_arrow),
-            ),
-          ],
+              DropdownButton<int>(
+                value: _selectedExercise,
+                items: _exercises
+                    .map((e) => DropdownMenuItem<int>(
+                          value: e['id'] as int,
+                          child: Text(e['name'] as String),
+                        ))
+                    .toList(),
+                onChanged: (id) => setState(() => _selectedExercise = id),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: TextField(
+                      controller: _repController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(hintText: '次數'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 100,
+                    child: TextField(
+                      controller: _weightController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(hintText: '重量(kg)'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(40)),
+                onPressed: _isTiming ? null : _startWorkout,
+                child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
+              ),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ReportPage()),
-                );
-              },
-              icon: const Icon(Icons.assessment),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
-                ).then((_) => _loadData());
-              },
-              icon: const Icon(Icons.settings),
-            ),
-          ],
+      bottomNavigationBar: AbsorbPointer(
+        absorbing: _isTiming,
+        child: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ReportPage()),
+                  );
+                },
+                icon: const Icon(Icons.assessment),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                  ).then((_) => _loadData());
+                },
+                icon: const Icon(Icons.settings),
+              ),
+            ],
+          ),
         ),
       ),
     );

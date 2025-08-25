@@ -130,7 +130,8 @@ class _ReportPageState extends State<ReportPage> {
                   .map(
                     (w) => ListTile(
                       title: Text('${w['category_name']} - ${w['exercise_name']}'),
-                      subtitle: Text('次數: ${w['reps']}'),
+                      subtitle:
+                          Text('次數: ${w['reps']}  重量: ${w['weight']}kg'),
                     ),
                   )
                   .toList(),

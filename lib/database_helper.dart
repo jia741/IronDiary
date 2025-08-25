@@ -17,7 +17,8 @@ class DatabaseHelper {
   Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'irondiary.db');
-    return openDatabase(path, version: 1, onCreate: _onCreate);
+    return openDatabase(path,
+        version: 2, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -40,6 +41,7 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         exercise_id INTEGER NOT NULL,
         reps INTEGER NOT NULL,
+        weight REAL NOT NULL,
         timestamp INTEGER NOT NULL,
         FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
       )
@@ -71,6 +73,13 @@ class DatabaseHelper {
     await addEx('背', '引體向上');
     await addEx('腿', '深蹲');
     await addEx('腿', '保加利亞分腿蹲');
+  }
+
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute(
+          'ALTER TABLE workouts ADD COLUMN weight REAL NOT NULL DEFAULT 0');
+    }
   }
 
   Future<List<Map<String, dynamic>>> getCategories() async {
@@ -113,11 +122,12 @@ class DatabaseHelper {
     await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<void> logWorkout(int exerciseId, int reps) async {
+  Future<void> logWorkout(int exerciseId, int reps, double weight) async {
     final db = await database;
     await db.insert('workouts', {
       'exercise_id': exerciseId,
       'reps': reps,
+      'weight': weight,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
   }
@@ -127,7 +137,7 @@ class DatabaseHelper {
     final startMs = start.millisecondsSinceEpoch;
     final endMs = end.millisecondsSinceEpoch;
     return db.rawQuery('''
-      SELECT w.id, w.reps, w.timestamp, e.name as exercise_name, c.name as category_name
+      SELECT w.id, w.reps, w.weight, w.timestamp, e.name as exercise_name, c.name as category_name
       FROM workouts w
       JOIN exercises e ON w.exercise_id = e.id
       JOIN categories c ON e.category_id = c.id
