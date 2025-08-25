@@ -23,11 +23,9 @@ class MyApp extends StatelessWidget {
           brightness: brightness,
         ),
         fontFamily: 'Inter',
-        fontFamilyFallback: const ['Noto Sans TC'],
       );
       return base.copyWith(
-        textTheme: GoogleFonts.interTextTheme(base.textTheme)
-            .apply(fontFamilyFallback: const ['Noto Sans TC']),
+        textTheme: GoogleFonts.interTextTheme(base.textTheme),
         cardTheme: const CardTheme(
           margin: EdgeInsets.all(16),
           shape: RoundedRectangleBorder(
@@ -37,12 +35,12 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            shape: const WidgetStatePropertyAll(
+            shape: const MaterialStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
             ),
-            elevation: const WidgetStatePropertyAll(1),
+            elevation: const MaterialStatePropertyAll(1),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
