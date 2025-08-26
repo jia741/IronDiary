@@ -26,6 +26,10 @@ class _HomePageState extends State<HomePage> {
   int _remainingSeconds = 0;
   Timer? _timer;
 
+  int _navIndex = 0;
+  int reps = 12;
+  double weight = 30;
+
   @override
   void initState() {
     super.initState();
@@ -73,8 +77,9 @@ class _HomePageState extends State<HomePage> {
     if (exId == null || reps == null || weight == null) return;
     await _db.logWorkout(exId, reps, weight);
     if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('開始計時')));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('開始計時')));
     setState(() {
       _isTiming = true;
       _remainingSeconds = _timerSeconds;
@@ -87,8 +92,9 @@ class _HomePageState extends State<HomePage> {
         t.cancel();
         if (!mounted) return;
         SystemSound.play(SystemSoundType.alert);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('計時完成')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('計時完成')));
         setState(() {
           _isTiming = false;
         });
@@ -115,7 +121,8 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _timerSeconds = int.tryParse(controller.text) ?? _timerSeconds;
+                  _timerSeconds =
+                      int.tryParse(controller.text) ?? _timerSeconds;
                 });
                 Navigator.pop(context);
               },
@@ -130,9 +137,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     return Scaffold(
       body: AbsorbPointer(
@@ -144,50 +149,70 @@ class _HomePageState extends State<HomePage> {
               DropdownButton<int>(
                 value: _selectedCategory,
                 items: _categories
-                    .map((c) => DropdownMenuItem<int>(
-                          value: c['id'] as int,
-                          child: Text(c['name'] as String),
-                        ))
+                    .map(
+                      (c) => DropdownMenuItem<int>(
+                        value: c['id'] as int,
+                        child: Text(c['name'] as String),
+                      ),
+                    )
                     .toList(),
                 onChanged: _onCategoryChanged,
               ),
               DropdownButton<int>(
                 value: _selectedExercise,
                 items: _exercises
-                    .map((e) => DropdownMenuItem<int>(
-                          value: e['id'] as int,
-                          child: Text(e['name'] as String),
-                        ))
+                    .map(
+                      (e) => DropdownMenuItem<int>(
+                        value: e['id'] as int,
+                        child: Text(e['name'] as String),
+                      ),
+                    )
                     .toList(),
                 onChanged: (id) => setState(() => _selectedExercise = id),
               ),
-              Row(
+              Column(
+                //改成帶有 `+/-` 的 `Row` + `OutlinedButton`
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 100,
-                    child: TextField(
-                      controller: _repController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(hintText: '次數'),
-                    ),
+                  NumberRow(
+                    label: '次數',
+                    valueText: reps.toString(),
+                    onMinus: () =>
+                        setState(() => reps = (reps - 1).clamp(0, 999)),
+                    onPlus: () =>
+                        setState(() => reps = (reps + 1).clamp(0, 999)),
+                    onSubmitted: (v) =>
+                        setState(() => reps = int.tryParse(v) ?? reps),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
+
                   const SizedBox(width: 8),
-                  SizedBox(
-                    width: 100,
-                    child: TextField(
-                      controller: _weightController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(hintText: '重量(kg)'),
+                  NumberRow(
+                    label: '重量 (kg)',
+                    valueText: weight.toStringAsFixed(1),
+                    onMinus: () =>
+                        setState(() => weight = (weight - 0.5).clamp(0, 999)),
+                    onPlus: () =>
+                        setState(() => weight = (weight + 0.5).clamp(0, 999)),
+                    onSubmitted: (v) =>
+                        setState(() => weight = double.tryParse(v) ?? weight),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d*\.?\d{0,1}'),
+                      ),
+                    ],
                   ),
                 ],
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(40)),
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(40),
+                ),
                 onPressed: _isTiming ? null : _startWorkout,
                 child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
               ),
@@ -195,13 +220,50 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _navIndex,
+        onDestinationSelected: (i) => setState(() {
+          _navIndex = i;
+          switch (_navIndex) {
+            case 0:
+              // Navigate to Timer Page
+              _showTimerDialog();
+              break;
+            case 1:
+              // Navigate to Report Page
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ReportPage()),
+              );
+              break;
+            case 2:
+              // Navigate to Settings Page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ExerciseSettingsPage(),
+                    ),
+                  ).then((_) => _loadData());
+              break;
+          }
+        }),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.timer), label: '計時'),
+          NavigationDestination(icon: Icon(Icons.bar_chart), label: '報表'),
+          NavigationDestination(icon: Icon(Icons.settings), label: '設定'),
+        ],
+      ),
+      /*
       bottomNavigationBar: AbsorbPointer(
         absorbing: _isTiming,
         child: BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(onPressed: _showTimerDialog, icon: const Icon(Icons.timer)),
+              IconButton(
+                onPressed: _showTimerDialog,
+                icon: const Icon(Icons.timer),
+              ),
               IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -215,13 +277,96 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                    MaterialPageRoute(
+                      builder: (_) => const ExerciseSettingsPage(),
+                    ),
                   ).then((_) => _loadData());
                 },
                 icon: const Icon(Icons.settings),
               ),
             ],
           ),
+        ),
+      ),
+      */
+    );
+  }
+}
+
+/// 含 +/- 與可輸入的數值列
+class NumberRow extends StatefulWidget {
+  const NumberRow({
+    super.key,
+    required this.label,
+    required this.valueText,
+    required this.onMinus,
+    required this.onPlus,
+    required this.onSubmitted,
+    this.keyboardType = TextInputType.number,
+    this.inputFormatters,
+  });
+
+  final String label;
+  final String valueText;
+  final VoidCallback onMinus;
+  final VoidCallback onPlus;
+  final ValueChanged<String> onSubmitted;
+  final TextInputType keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+
+  @override
+  State<NumberRow> createState() => _NumberRowState();
+}
+
+class _NumberRowState extends State<NumberRow> {
+  late final TextEditingController _c = TextEditingController(
+    text: widget.valueText,
+  );
+
+  @override
+  void didUpdateWidget(covariant NumberRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.valueText != widget.valueText) {
+      _c.text = widget.valueText;
+      _c.selection = TextSelection.fromPosition(
+        TextPosition(offset: _c.text.length),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
+            const Spacer(),
+            OutlinedButton(
+              onPressed: widget.onMinus,
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              child: const Icon(Icons.remove),
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 96,
+              child: TextField(
+                controller: _c,
+                textAlign: TextAlign.center,
+                keyboardType: widget.keyboardType,
+                inputFormatters: widget.inputFormatters,
+                onSubmitted: widget.onSubmitted,
+                decoration: const InputDecoration(isDense: true),
+              ),
+            ),
+            const SizedBox(width: 8),
+            OutlinedButton(
+              onPressed: widget.onPlus,
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              child: const Icon(Icons.add),
+            ),
+          ],
         ),
       ),
     );
