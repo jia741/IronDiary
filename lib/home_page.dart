@@ -150,6 +150,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(20)),
             child: Column(
               children: [
+                SizedBox(height: ScreenUtil.h(20)),
                 // 美化下拉 1：部位
                 prettyDropdown<int>(
                   context: context,
@@ -231,33 +232,38 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _navIndex,
-        onDestinationSelected: (i) => setState(() {
-          _navIndex = i;
-          switch (i) {
-            case 0:
-              _showTimerDialog();
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ReportPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
-              ).then((_) => _loadData());
-              break;
-          }
-        }),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.timer), label: '計時'),
-          NavigationDestination(icon: Icon(Icons.bar_chart), label: '報表'),
-          NavigationDestination(icon: Icon(Icons.settings), label: '設定'),
-        ],
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          indicatorColor: Colors.transparent,
+        ),
+        child: NavigationBar(
+          selectedIndex: _navIndex,
+          onDestinationSelected: (i) => setState(() {
+            _navIndex = i;
+            switch (i) {
+              case 0:
+                _showTimerDialog();
+                break;
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ReportPage()),
+                );
+                break;
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                ).then((_) => _loadData());
+                break;
+            }
+          }),
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.timer), label: '計時'),
+            NavigationDestination(icon: Icon(Icons.bar_chart), label: '報表'),
+            NavigationDestination(icon: Icon(Icons.settings), label: '設定'),
+          ],
+        ),
       ),
     );
   }
@@ -351,7 +357,7 @@ class _NumberRowState extends State<NumberRow> {
             ),
             SizedBox(width: ScreenUtil.w(8)),
             SizedBox(
-              width: ScreenUtil.w(96),
+              width: ScreenUtil.w(56),
               child: TextField(
                 controller: _c,
                 textAlign: TextAlign.center,
