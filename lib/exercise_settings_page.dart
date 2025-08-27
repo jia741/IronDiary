@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'database_helper.dart';
 
 class ExerciseSettingsPage extends StatefulWidget {
@@ -11,16 +12,6 @@ class ExerciseSettingsPage extends StatefulWidget {
 class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
   final _db = DatabaseHelper.instance;
   List<Map<String, dynamic>> _categories = [];
-  List<Map<String, dynamic>> _exercises = [];
-  int? _selectedCategory;
-
-  String get _currentCategoryName {
-    final cat = _categories.firstWhere(
-      (c) => c['id'] == _selectedCategory,
-      orElse: () => {'name': ''},
-    );
-    return (cat['name'] as String?) ?? '';
-  }
 
   @override
   void initState() {
@@ -30,23 +21,13 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
 
   Future<void> _loadCategories() async {
     final cats = await _db.getCategories();
-    int? firstCat = cats.isNotEmpty ? cats.first['id'] as int : null;
-    List<Map<String, dynamic>> exs = [];
-    if (firstCat != null) {
-      exs = await _db.getExercises(firstCat);
+    final List<Map<String, dynamic>> withExs = [];
+    for (final c in cats) {
+      final exs = await _db.getExercises(c['id'] as int);
+      withExs.add({...c, 'exercises': exs});
     }
     setState(() {
-      _categories = cats;
-      _selectedCategory = firstCat;
-      _exercises = exs;
-    });
-  }
-
-  Future<void> _loadExercises(int catId) async {
-    final exs = await _db.getExercises(catId);
-    setState(() {
-      _selectedCategory = catId;
-      _exercises = exs;
+      _categories = withExs;
     });
   }
 
@@ -59,7 +40,10 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           title: Text(id == null ? '新增類別' : '修改類別'),
           content: TextField(controller: controller),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
@@ -80,29 +64,30 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     );
   }
 
-  void _showExerciseDialog({int? id, String? name}) {
-    if (_selectedCategory == null) return;
+  void _showExerciseDialog(int catId, String catName, {int? id, String? name}) {
     final controller = TextEditingController(text: name ?? '');
     showDialog(
       context: context,
       builder: (context) {
-        final catName = _currentCategoryName;
         return AlertDialog(
           title: Text('${id == null ? '新增' : '修改'}動作（$catName）'),
           content: TextField(controller: controller),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
-                  await _db.insertExercise(_selectedCategory!, controller.text);
+                  await _db.insertExercise(catId, controller.text);
                 } else {
                   await _db.updateExercise(id, controller.text);
                 }
                 if (!context.mounted) return;
                 Navigator.pop(context);
                 if (!mounted) return;
-                _loadExercises(_selectedCategory!);
+                _loadCategories();
               },
               child: const Text('確定'),
             ),
@@ -112,108 +97,109 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     );
   }
 
+  Widget _buildExerciseTile(int catId, String catName, Map<String, dynamic> e) {
+    return Slidable(
+      key: ValueKey('ex_${e['id']}'),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) =>
+                _showExerciseDialog(catId, catName, id: e['id'] as int, name: e['name'] as String),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+            label: '編輯',
+          ),
+          SlidableAction(
+            onPressed: (context) async {
+              await _db.deleteExercise(e['id'] as int);
+              _loadCategories();
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: '刪除',
+          ),
+        ],
+      ),
+      child: ListTile(
+        title: Text(
+          e['name'] as String,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryTile(Map<String, dynamic> c) {
+    final catId = c['id'] as int;
+    final catName = c['name'] as String;
+    final exercises = c['exercises'] as List<Map<String, dynamic>>;
+    return Slidable(
+      key: ValueKey('cat_$catId'),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) =>
+                _showCategoryDialog(id: catId, name: catName),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+            label: '編輯',
+          ),
+          SlidableAction(
+            onPressed: (context) async {
+              await _db.deleteCategory(catId);
+              _loadCategories();
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: '刪除',
+          ),
+        ],
+      ),
+      child: ExpansionTile(
+        title: Text(
+          catName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        children: [
+          ...exercises
+              .map((e) => _buildExerciseTile(catId, catName, e))
+              .toList(),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: () => _showExerciseDialog(catId, catName),
+              icon: const Icon(Icons.add),
+              label: const Text('新增動作'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('動作設定')),
-      body: Row(
+      body: ListView(
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: _categories
-                        .map(
-                          (c) => ListTile(
-                            title: Text(
-                              c['name'] as String,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            selected: c['id'] == _selectedCategory,
-                            onTap: () => _loadExercises(c['id'] as int),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () => _showCategoryDialog(
-                                      id: c['id'] as int, name: c['name'] as String),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () async {
-                                    await _db.deleteCategory(c['id'] as int);
-                                    _loadCategories();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () => _showCategoryDialog(),
-                  child: const Text('新增類別'),
-                )
-              ],
+          ..._categories.map(_buildCategoryTile).toList(),
+          const SizedBox(height: 16),
+          Center(
+            child: ElevatedButton(
+              onPressed: () => _showCategoryDialog(),
+              child: const Text('新增類別'),
             ),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '當前類別: $_currentCategoryName',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Expanded(
-                  child: ListView(
-                    children: _exercises
-                        .map(
-                          (e) => ListTile(
-                            title: Text(
-                              e['name'] as String,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () => _showExerciseDialog(
-                                      id: e['id'] as int, name: e['name'] as String),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () async {
-                                    await _db.deleteExercise(e['id'] as int);
-                                    _loadExercises(_selectedCategory!);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () => _showExerciseDialog(),
-                  child: const Text('新增動作'),
-                )
-              ],
-            ),
-          ),
+          const SizedBox(height: 16),
         ],
       ),
     );
