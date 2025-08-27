@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'database_helper.dart';
 
 class ExerciseSettingsPage extends StatefulWidget {
@@ -11,16 +12,6 @@ class ExerciseSettingsPage extends StatefulWidget {
 class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
   final _db = DatabaseHelper.instance;
   List<Map<String, dynamic>> _categories = [];
-  List<Map<String, dynamic>> _exercises = [];
-  int? _selectedCategory;
-
-  String get _currentCategoryName {
-    final cat = _categories.firstWhere(
-      (c) => c['id'] == _selectedCategory,
-      orElse: () => {'name': ''},
-    );
-    return (cat['name'] as String?) ?? '';
-  }
 
   @override
   void initState() {
@@ -30,23 +21,32 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
 
   Future<void> _loadCategories() async {
     final cats = await _db.getCategories();
-    int? firstCat = cats.isNotEmpty ? cats.first['id'] as int : null;
-    List<Map<String, dynamic>> exs = [];
-    if (firstCat != null) {
-      exs = await _db.getExercises(firstCat);
+    final List<Map<String, dynamic>> withExs = [];
+    for (final c in cats) {
+      final exs = await _db.getExercises(c['id'] as int);
+      withExs.add({...c, 'exercises': exs});
     }
     setState(() {
-      _categories = cats;
-      _selectedCategory = firstCat;
-      _exercises = exs;
+      _categories = withExs;
     });
   }
 
-  Future<void> _loadExercises(int catId) async {
-    final exs = await _db.getExercises(catId);
+  void _reorderCategories(int oldIndex, int newIndex) {
     setState(() {
-      _selectedCategory = catId;
-      _exercises = exs;
+      if (newIndex > oldIndex) newIndex -= 1;
+      final item = _categories.removeAt(oldIndex);
+      _categories.insert(newIndex, item);
+    });
+  }
+
+  void _reorderExercises(int catId, int oldIndex, int newIndex) {
+    setState(() {
+      final exercises = _categories
+          .firstWhere((c) => c['id'] == catId)['exercises']
+          as List<Map<String, dynamic>>;
+      if (newIndex > oldIndex) newIndex -= 1;
+      final item = exercises.removeAt(oldIndex);
+      exercises.insert(newIndex, item);
     });
   }
 
@@ -59,7 +59,10 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           title: Text(id == null ? '新增類別' : '修改類別'),
           content: TextField(controller: controller),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
@@ -80,29 +83,30 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     );
   }
 
-  void _showExerciseDialog({int? id, String? name}) {
-    if (_selectedCategory == null) return;
+  void _showExerciseDialog(int catId, String catName, {int? id, String? name}) {
     final controller = TextEditingController(text: name ?? '');
     showDialog(
       context: context,
       builder: (context) {
-        final catName = _currentCategoryName;
         return AlertDialog(
           title: Text('${id == null ? '新增' : '修改'}動作（$catName）'),
           content: TextField(controller: controller),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消'),
+            ),
             ElevatedButton(
               onPressed: () async {
                 if (id == null) {
-                  await _db.insertExercise(_selectedCategory!, controller.text);
+                  await _db.insertExercise(catId, controller.text);
                 } else {
                   await _db.updateExercise(id, controller.text);
                 }
                 if (!context.mounted) return;
                 Navigator.pop(context);
                 if (!mounted) return;
-                _loadExercises(_selectedCategory!);
+                _loadCategories();
               },
               child: const Text('確定'),
             ),
@@ -112,110 +116,201 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     );
   }
 
+  Widget _buildExerciseTile(
+      int catId, String catName, Map<String, dynamic> e, int index) {
+    return Slidable(
+      key: ValueKey('ex_${e['id']}'),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => _showExerciseDialog(
+                catId, catName,
+                id: e['id'] as int, name: e['name'] as String),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+            label: '編輯',
+          ),
+          SlidableAction(
+            onPressed: (context) async {
+              final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (dialogContext) => AlertDialog(
+                      title: const Text('確認刪除'),
+                      content:
+                          Text("確定要刪除『${e['name']}』這個動作嗎？"),
+                      actions: [
+                        TextButton(
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, false),
+                            child: const Text('取消')),
+                        TextButton(
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, true),
+                            child: const Text('刪除')),
+                      ],
+                    ),
+                  ) ??
+                  false;
+              if (confirm) {
+                await _db.deleteExercise(e['id'] as int);
+                _loadCategories();
+              }
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: '刪除',
+          ),
+        ],
+      ),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: ListTile(
+          leading: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
+          title: Text(
+            e['name'] as String,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryTile(Map<String, dynamic> c, int index) {
+    final catId = c['id'] as int;
+    final catName = c['name'] as String;
+    final exercises = c['exercises'] as List<Map<String, dynamic>>;
+    return Slidable(
+      key: ValueKey('cat_$catId'),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) =>
+                _showCategoryDialog(id: catId, name: catName),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+            label: '編輯',
+          ),
+          SlidableAction(
+            onPressed: (context) async {
+              final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (dialogContext) => AlertDialog(
+                      title: const Text('確認刪除'),
+                      content: Text(
+                          "確定要刪除『$catName』這個類別嗎？所有相關動作將一併被刪除。"),
+                      actions: [
+                        TextButton(
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, false),
+                            child: const Text('取消')),
+                        TextButton(
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, true),
+                            child: const Text('刪除')),
+                      ],
+                    ),
+                  ) ??
+                  false;
+              if (confirm) {
+                await _db.deleteCategory(catId);
+                _loadCategories();
+              }
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: '刪除',
+          ),
+        ],
+      ),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: ExpansionTile(
+          leading: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
+          title: Text(
+            catName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          children: [
+            ReorderableListView(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              onReorder: (oldIndex, newIndex) =>
+                  _reorderExercises(catId, oldIndex, newIndex),
+              buildDefaultDragHandles: false,
+              children: [
+                for (int i = 0; i < exercises.length; i++)
+                  _buildExerciseTile(catId, catName, exercises[i], i),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => _showExerciseDialog(catId, catName),
+                icon: const Icon(Icons.add),
+                label: const Text('新增動作'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('動作設定')),
-      body: Row(
-        children: [
-          Expanded(
-            child: Column(
+      body: _categories.isEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ListView(
-                    children: _categories
-                        .map(
-                          (c) => ListTile(
-                            title: Text(
-                              c['name'] as String,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            selected: c['id'] == _selectedCategory,
-                            onTap: () => _loadExercises(c['id'] as int),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () => _showCategoryDialog(
-                                      id: c['id'] as int, name: c['name'] as String),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () async {
-                                    await _db.deleteCategory(c['id'] as int);
-                                    _loadCategories();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+                const Icon(Icons.info_outline,
+                    size: 80, color: Colors.grey),
+                const SizedBox(height: 16),
+                const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => _showCategoryDialog(),
                   child: const Text('新增類別'),
-                )
+                ),
               ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            )
+          : Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '當前類別: $_currentCategoryName',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
                 Expanded(
-                  child: ListView(
-                    children: _exercises
-                        .map(
-                          (e) => ListTile(
-                            title: Text(
-                              e['name'] as String,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () => _showExerciseDialog(
-                                      id: e['id'] as int, name: e['name'] as String),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () async {
-                                    await _db.deleteExercise(e['id'] as int);
-                                    _loadExercises(_selectedCategory!);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
+                  child: ReorderableListView(
+                    onReorder: _reorderCategories,
+                    buildDefaultDragHandles: false,
+                    children: [
+                      for (int i = 0; i < _categories.length; i++)
+                        _buildCategoryTile(_categories[i], i),
+                    ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () => _showExerciseDialog(),
-                  child: const Text('新增動作'),
-                )
+                const SizedBox(height: 16),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () => _showCategoryDialog(),
+                    child: const Text('新增類別'),
+                  ),
+                ),
+                const SizedBox(height: 16),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
