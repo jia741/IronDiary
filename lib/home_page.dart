@@ -72,9 +72,9 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _startWorkout() async {
     final exId = _selectedExercise;
-    final reps = int.tryParse(_repController.text);
-    final weight = double.tryParse(_weightController.text);
-    if (exId == null || reps == null || weight == null) return;
+    //final reps = int.tryParse(_repController.text);
+    //final weight = double.tryParse(_weightController.text);
+    if (exId == null) return;
     await _db.logWorkout(exId, reps, weight);
     if (!mounted) return;
     ScaffoldMessenger.of(
@@ -139,111 +139,115 @@ class _HomePageState extends State<HomePage> {
     if (_loading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    return Scaffold(
-      body: AbsorbPointer(
-        absorbing: _isTiming,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButton<int>(
-                value: _selectedCategory,
-                items: _categories
-                    .map(
-                      (c) => DropdownMenuItem<int>(
-                        value: c['id'] as int,
-                        child: Text(c['name'] as String),
-                      ),
-                    )
-                    .toList(),
-                onChanged: _onCategoryChanged,
-              ),
-              DropdownButton<int>(
-                value: _selectedExercise,
-                items: _exercises
-                    .map(
-                      (e) => DropdownMenuItem<int>(
-                        value: e['id'] as int,
-                        child: Text(e['name'] as String),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (id) => setState(() => _selectedExercise = id),
-              ),
-              Column(
-                //改成帶有 `+/-` 的 `Row` + `OutlinedButton`
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  NumberRow(
-                    label: '次數',
-                    valueText: reps.toString(),
-                    onMinus: () =>
-                        setState(() => reps = (reps - 1).clamp(0, 999)),
-                    onPlus: () =>
-                        setState(() => reps = (reps + 1).clamp(0, 999)),
-                    onSubmitted: (v) =>
-                        setState(() => reps = int.tryParse(v) ?? reps),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  ),
 
-                  const SizedBox(width: 8),
-                  NumberRow(
-                    label: '重量 (kg)',
-                    valueText: weight.toStringAsFixed(1),
-                    onMinus: () =>
-                        setState(() => weight = (weight - 0.5).clamp(0, 999)),
-                    onPlus: () =>
-                        setState(() => weight = (weight + 0.5).clamp(0, 999)),
-                    onSubmitted: (v) =>
-                        setState(() => weight = double.tryParse(v) ?? weight),
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d*\.?\d{0,1}'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(40),
+    return Scaffold(
+      body: SafeArea(
+        child: AbsorbPointer(
+          absorbing: _isTiming,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                // 美化下拉 1：部位
+                prettyDropdown<int>(
+                  context: context,
+                  label: '部位',
+                  value: _selectedCategory,
+                  items: _categories
+                      .map(
+                        (c) => DropdownMenuItem(
+                          value: c['id'] as int,
+                          child: Text(c['name'] as String),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: _onCategoryChanged,
                 ),
-                onPressed: _isTiming ? null : _startWorkout,
-                child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
-              ),
-            ],
+
+                const SizedBox(height: 12),
+                // 美化下拉 2：動作
+                prettyDropdown<int>(
+                  context: context,
+                  label: '動作',
+                  value: _selectedExercise,
+                  items: _exercises
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e['id'] as int,
+                          child: Text(e['name'] as String),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (id) => setState(() => _selectedExercise = id),
+                ),
+                const SizedBox(height: 16),
+
+                // 數值列：左右留白已由外層 padding 提供
+                NumberRow(
+                  label: '次數',
+                  valueText: reps.toString(),
+                  onMinus: () =>
+                      setState(() => reps = (reps - 1).clamp(0, 999)),
+                  onPlus: () => setState(() => reps = (reps + 1).clamp(0, 999)),
+                  onSubmitted: (v) =>
+                      setState(() => reps = int.tryParse(v) ?? reps),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
+                const SizedBox(height: 12),
+                NumberRow(
+                  label: '重量 (kg)',
+                  valueText: weight.toStringAsFixed(1),
+                  onMinus: () =>
+                      setState(() => weight = (weight - 0.5).clamp(0, 999)),
+                  onPlus: () =>
+                      setState(() => weight = (weight + 0.5).clamp(0, 999)),
+                  onSubmitted: (v) =>
+                      setState(() => weight = double.tryParse(v) ?? weight),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d*\.?\d{0,1}'),
+                    ),
+                  ],
+                ),
+
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _isTiming ? null : _startWorkout,
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(50),
+                    ),
+                    child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+
       bottomNavigationBar: NavigationBar(
         selectedIndex: _navIndex,
         onDestinationSelected: (i) => setState(() {
           _navIndex = i;
-          switch (_navIndex) {
+          switch (i) {
             case 0:
-              // Navigate to Timer Page
               _showTimerDialog();
               break;
             case 1:
-              // Navigate to Report Page
               Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ReportPage()),
+                context,
+                MaterialPageRoute(builder: (_) => const ReportPage()),
               );
               break;
             case 2:
-              // Navigate to Settings Page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ExerciseSettingsPage(),
-                    ),
-                  ).then((_) => _loadData());
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+              ).then((_) => _loadData());
               break;
           }
         }),
@@ -253,44 +257,37 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(icon: Icon(Icons.settings), label: '設定'),
         ],
       ),
-      /*
-      bottomNavigationBar: AbsorbPointer(
-        absorbing: _isTiming,
-        child: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                onPressed: _showTimerDialog,
-                icon: const Icon(Icons.timer),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ReportPage()),
-                  );
-                },
-                icon: const Icon(Icons.assessment),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ExerciseSettingsPage(),
-                    ),
-                  ).then((_) => _loadData());
-                },
-                icon: const Icon(Icons.settings),
-              ),
-            ],
-          ),
-        ),
-      ),
-      */
     );
   }
+}
+
+// 下拉樣式（M3 外觀）
+Widget prettyDropdown<T>({
+  required BuildContext context,
+  required String label,
+  required T? value,
+  required List<DropdownMenuItem<T>> items,
+  required ValueChanged<T?> onChanged,
+}) {
+  final cs = Theme.of(context).colorScheme;
+  return DropdownButtonFormField<T>(
+    value: value,
+    isExpanded: true,
+    items: items,
+    onChanged: onChanged,
+    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+    decoration: InputDecoration(
+      labelText: label,
+      filled: true,
+      fillColor: cs.surfaceContainerHighest,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Theme.of(context).dividerColor),
+      ),
+    ),
+  );
 }
 
 /// 含 +/- 與可輸入的數值列
@@ -338,7 +335,7 @@ class _NumberRowState extends State<NumberRow> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(8),
         child: Row(
           children: [
             Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
