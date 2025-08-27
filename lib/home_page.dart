@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
+import 'screen_util.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -136,6 +137,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     if (_loading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -145,7 +147,7 @@ class _HomePageState extends State<HomePage> {
         child: AbsorbPointer(
           absorbing: _isTiming,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(20)),
             child: Column(
               children: [
                 // 美化下拉 1：部位
@@ -164,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                   onChanged: _onCategoryChanged,
                 ),
 
-                const SizedBox(height: 12),
+                SizedBox(height: ScreenUtil.h(12)),
                 // 美化下拉 2：動作
                 prettyDropdown<int>(
                   context: context,
@@ -180,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                       .toList(),
                   onChanged: (id) => setState(() => _selectedExercise = id),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ScreenUtil.h(16)),
 
                 // 數值列：左右留白已由外層 padding 提供
                 NumberRow(
@@ -193,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                       setState(() => reps = int.tryParse(v) ?? reps),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: ScreenUtil.h(12)),
                 NumberRow(
                   label: '重量 (kg)',
                   valueText: weight.toStringAsFixed(1),
@@ -218,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _isTiming ? null : _startWorkout,
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(50),
+                      padding: EdgeInsets.all(ScreenUtil.w(50)),
                     ),
                     child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                   ),
@@ -280,10 +282,12 @@ Widget prettyDropdown<T>({
       labelText: label,
       filled: true,
       fillColor: cs.surfaceContainerHighest,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+      contentPadding: EdgeInsets.symmetric(
+          horizontal: ScreenUtil.w(16), vertical: ScreenUtil.h(14)),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtil.w(16))),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ScreenUtil.w(16)),
         borderSide: BorderSide(color: Theme.of(context).dividerColor),
       ),
     ),
@@ -335,7 +339,7 @@ class _NumberRowState extends State<NumberRow> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(ScreenUtil.w(8)),
         child: Row(
           children: [
             Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
@@ -345,9 +349,9 @@ class _NumberRowState extends State<NumberRow> {
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               child: const Icon(Icons.remove),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ScreenUtil.w(8)),
             SizedBox(
-              width: 96,
+              width: ScreenUtil.w(96),
               child: TextField(
                 controller: _c,
                 textAlign: TextAlign.center,
@@ -357,7 +361,7 @@ class _NumberRowState extends State<NumberRow> {
                 decoration: const InputDecoration(isDense: true),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ScreenUtil.w(8)),
             OutlinedButton(
               onPressed: widget.onPlus,
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
