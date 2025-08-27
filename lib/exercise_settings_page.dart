@@ -136,16 +136,18 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             onPressed: (context) async {
               final confirm = await showDialog<bool>(
                     context: context,
-                    builder: (_) => AlertDialog(
+                    builder: (dialogContext) => AlertDialog(
                       title: const Text('確認刪除'),
                       content:
                           Text("確定要刪除『${e['name']}』這個動作嗎？"),
                       actions: [
                         TextButton(
-                            onPressed: () => Navigator.pop(context, false),
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, false),
                             child: const Text('取消')),
                         TextButton(
-                            onPressed: () => Navigator.pop(context, true),
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, true),
                             child: const Text('刪除')),
                       ],
                     ),
@@ -201,16 +203,18 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             onPressed: (context) async {
               final confirm = await showDialog<bool>(
                     context: context,
-                    builder: (_) => AlertDialog(
+                    builder: (dialogContext) => AlertDialog(
                       title: const Text('確認刪除'),
                       content: Text(
                           "確定要刪除『$catName』這個類別嗎？所有相關動作將一併被刪除。"),
                       actions: [
                         TextButton(
-                            onPressed: () => Navigator.pop(context, false),
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, false),
                             child: const Text('取消')),
                         TextButton(
-                            onPressed: () => Navigator.pop(context, true),
+                            onPressed: () =>
+                                Navigator.pop(dialogContext, true),
                             child: const Text('刪除')),
                       ],
                     ),
