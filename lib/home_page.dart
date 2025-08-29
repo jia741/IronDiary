@@ -452,38 +452,43 @@ class _NumberRowState extends State<NumberRow> {
               SizedBox(width: ScreenUtil.w(8)),
               widget.labelTrailing!,
             ],
-            const Spacer(),
-            OutlinedButton(
-              onPressed: widget.onMinus,
-              style: OutlinedButton.styleFrom(
-                visualDensity: VisualDensity.compact,
-                minimumSize:
-                    Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: widget.onMinus,
+                    style: OutlinedButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                      minimumSize:
+                          Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+                    ),
+                    child: Icon(Icons.remove, size: ScreenUtil.w(20)),
+                  ),
+                  SizedBox(width: ScreenUtil.w(8)),
+                  Flexible(
+                    child: TextField(
+                      controller: _c,
+                      textAlign: TextAlign.center,
+                      keyboardType: widget.keyboardType,
+                      inputFormatters: widget.inputFormatters,
+                      onSubmitted: widget.onSubmitted,
+                      style: TextStyle(fontSize: ScreenUtil.w(16)),
+                      decoration: const InputDecoration(isDense: true),
+                    ),
+                  ),
+                  SizedBox(width: ScreenUtil.w(8)),
+                  OutlinedButton(
+                    onPressed: widget.onPlus,
+                    style: OutlinedButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                      minimumSize:
+                          Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+                    ),
+                    child: Icon(Icons.add, size: ScreenUtil.w(20)),
+                  ),
+                ],
               ),
-              child: Icon(Icons.remove, size: ScreenUtil.w(20)),
-            ),
-            SizedBox(width: ScreenUtil.w(8)),
-            SizedBox(
-              width: ScreenUtil.w(56),
-              child: TextField(
-                controller: _c,
-                textAlign: TextAlign.center,
-                keyboardType: widget.keyboardType,
-                inputFormatters: widget.inputFormatters,
-                onSubmitted: widget.onSubmitted,
-                style: TextStyle(fontSize: ScreenUtil.w(16)),
-                decoration: const InputDecoration(isDense: true),
-              ),
-            ),
-            SizedBox(width: ScreenUtil.w(8)),
-            OutlinedButton(
-              onPressed: widget.onPlus,
-              style: OutlinedButton.styleFrom(
-                visualDensity: VisualDensity.compact,
-                minimumSize:
-                    Size(ScreenUtil.w(36), ScreenUtil.w(36)),
-              ),
-              child: Icon(Icons.add, size: ScreenUtil.w(20)),
             ),
           ],
         ),
