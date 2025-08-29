@@ -142,6 +142,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _toggleWeightUnit() {
+    setState(() {
+      if (_weightUnit == 'kg') {
+        weight = weight * 2.20462;
+        _weightUnit = 'lb';
+      } else {
+        weight = weight / 2.20462;
+        _weightUnit = 'kg';
+      }
+    });
+    unawaited(_saveSettings());
+  }
+
   void _showTimerDialog() {
     final controller = TextEditingController(text: _timerSeconds.toString());
     showDialog(
@@ -247,57 +260,32 @@ class _HomePageState extends State<HomePage> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 SizedBox(height: ScreenUtil.h(12)),
-                  Row(
-                  children: [
-                    Expanded(
-                      child: NumberRow(
-                        label: '重量 ($_weightUnit)',
-                        valueText: weight.toStringAsFixed(1),
-                        onMinus: () {
-                          setState(() => weight = (weight - 0.5).clamp(0, 999));
-                          unawaited(_saveSettings());
-                        },
-                        onPlus: () {
-                          setState(() => weight = (weight + 0.5).clamp(0, 999));
-                          unawaited(_saveSettings());
-                        },
-                        onSubmitted: (v) {
-                          setState(() => weight = double.tryParse(v) ?? weight);
-                          unawaited(_saveSettings());
-                        },
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,1}'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    ToggleButtons(
-                      isSelected: [
-                        _weightUnit == 'kg',
-                        _weightUnit == 'lb'
-                      ],
-                      borderRadius: BorderRadius.circular(ScreenUtil.w(8)),
-                      constraints: BoxConstraints(minWidth: ScreenUtil.w(40)),
-                      onPressed: (index) {
-                        setState(() {
-                          final newUnit = index == 0 ? 'kg' : 'lb';
-                          if (_weightUnit != newUnit) {
-                            if (newUnit == 'kg') {
-                              weight = weight / 2.20462;
-                            } else {
-                              weight = weight * 2.20462;
-                            }
-                            _weightUnit = newUnit;
-                          }
-                        });
-                        unawaited(_saveSettings());
-                      },
-                      children: const [Text('kg'), Text('lb')],
+                NumberRow(
+                  label: '重量',
+                  labelTrailing: OutlinedButton(
+                    onPressed: _toggleWeightUnit,
+                    style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                    child: Text(_weightUnit),
+                  ),
+                  valueText: weight.toStringAsFixed(1),
+                  onMinus: () {
+                    setState(() => weight = (weight - 0.5).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onPlus: () {
+                    setState(() => weight = (weight + 0.5).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onSubmitted: (v) {
+                    setState(() => weight = double.tryParse(v) ?? weight);
+                    unawaited(_saveSettings());
+                  },
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d*\.?\d{0,1}'),
                     ),
                   ],
                 ),
@@ -397,6 +385,7 @@ class NumberRow extends StatefulWidget {
     required this.onSubmitted,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
+    this.labelTrailing,
   });
 
   final String label;
@@ -406,6 +395,7 @@ class NumberRow extends StatefulWidget {
   final ValueChanged<String> onSubmitted;
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final Widget? labelTrailing;
 
   @override
   State<NumberRow> createState() => _NumberRowState();
@@ -435,6 +425,10 @@ class _NumberRowState extends State<NumberRow> {
         child: Row(
           children: [
             Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
+            if (widget.labelTrailing != null) ...[
+              SizedBox(width: ScreenUtil.w(8)),
+              widget.labelTrailing!,
+            ],
             const Spacer(),
             OutlinedButton(
               onPressed: widget.onMinus,
