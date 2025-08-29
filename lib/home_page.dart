@@ -215,7 +215,10 @@ class _HomePageState extends State<HomePage> {
                       .map(
                         (c) => DropdownMenuItem(
                           value: c['id'] as int,
-                          child: Text(c['name'] as String),
+                          child: Text(
+                            c['name'] as String,
+                            style: TextStyle(fontSize: ScreenUtil.w(16)),
+                          ),
                         ),
                       )
                       .toList(),
@@ -232,7 +235,10 @@ class _HomePageState extends State<HomePage> {
                       .map(
                         (e) => DropdownMenuItem(
                           value: e['id'] as int,
-                          child: Text(e['name'] as String),
+                          child: Text(
+                            e['name'] as String,
+                            style: TextStyle(fontSize: ScreenUtil.w(16)),
+                          ),
                         ),
                       )
                       .toList(),
@@ -360,9 +366,13 @@ Widget prettyDropdown<T>({
   return DropdownButtonFormField<T>(
     value: value,
     isExpanded: true,
+    style: TextStyle(fontSize: ScreenUtil.w(16)),
     items: items,
     onChanged: onChanged,
-    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+    icon: Icon(
+      Icons.keyboard_arrow_down_rounded,
+      size: ScreenUtil.w(24),
+    ),
     decoration: InputDecoration(
       labelText: label,
       filled: true,
@@ -432,7 +442,12 @@ class _NumberRowState extends State<NumberRow> {
         padding: EdgeInsets.all(ScreenUtil.w(8)),
         child: Row(
           children: [
-            Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              widget.label,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: ScreenUtil.w(16),
+                  ),
+            ),
             if (widget.labelTrailing != null) ...[
               SizedBox(width: ScreenUtil.w(8)),
               widget.labelTrailing!,
@@ -440,8 +455,12 @@ class _NumberRowState extends State<NumberRow> {
             const Spacer(),
             OutlinedButton(
               onPressed: widget.onMinus,
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: const Icon(Icons.remove),
+              style: OutlinedButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                minimumSize:
+                    Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+              ),
+              child: Icon(Icons.remove, size: ScreenUtil.w(20)),
             ),
             SizedBox(width: ScreenUtil.w(8)),
             SizedBox(
@@ -452,14 +471,19 @@ class _NumberRowState extends State<NumberRow> {
                 keyboardType: widget.keyboardType,
                 inputFormatters: widget.inputFormatters,
                 onSubmitted: widget.onSubmitted,
+                style: TextStyle(fontSize: ScreenUtil.w(16)),
                 decoration: const InputDecoration(isDense: true),
               ),
             ),
             SizedBox(width: ScreenUtil.w(8)),
             OutlinedButton(
               onPressed: widget.onPlus,
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: const Icon(Icons.add),
+              style: OutlinedButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                minimumSize:
+                    Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+              ),
+              child: Icon(Icons.add, size: ScreenUtil.w(20)),
             ),
           ],
         ),
