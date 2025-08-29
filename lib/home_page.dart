@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   int _navIndex = 0;
   int reps = 12;
   double weight = 30;
+  String _weightUnit = 'kg';
 
   @override
   void initState() {
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _timerSeconds = prefs.getInt('timerSeconds') ?? _timerSeconds;
       reps = prefs.getInt('reps') ?? reps;
+      _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
       weight = prefs.getDouble('weight') ?? weight;
     });
   }
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
     await prefs.setInt('timerSeconds', _timerSeconds);
     await prefs.setInt('reps', reps);
     await prefs.setDouble('weight', weight);
+    await prefs.setString('weightUnit', _weightUnit);
     if (_selectedCategory != null) {
       await prefs.setInt('selectedCategory', _selectedCategory!);
     }
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
     //final reps = int.tryParse(_repController.text);
     //final weight = double.tryParse(_weightController.text);
     if (exId == null) return;
-    await _db.logWorkout(exId, reps, weight);
+    await _db.logWorkout(exId, reps, weight, _weightUnit);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -137,6 +140,19 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
+  }
+
+  void _toggleWeightUnit() {
+    setState(() {
+      if (_weightUnit == 'kg') {
+        weight = weight * 2.20462;
+        _weightUnit = 'lb';
+      } else {
+        weight = weight / 2.20462;
+        _weightUnit = 'kg';
+      }
+    });
+    unawaited(_saveSettings());
   }
 
   void _showTimerDialog() {
@@ -245,7 +261,12 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: ScreenUtil.h(12)),
                 NumberRow(
-                  label: '重量 (kg)',
+                  label: '重量',
+                  labelTrailing: OutlinedButton(
+                    onPressed: _toggleWeightUnit,
+                    style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                    child: Text(_weightUnit),
+                  ),
                   valueText: weight.toStringAsFixed(1),
                   onMinus: () {
                     setState(() => weight = (weight - 0.5).clamp(0, 999));
@@ -364,6 +385,7 @@ class NumberRow extends StatefulWidget {
     required this.onSubmitted,
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
+    this.labelTrailing,
   });
 
   final String label;
@@ -373,6 +395,7 @@ class NumberRow extends StatefulWidget {
   final ValueChanged<String> onSubmitted;
   final TextInputType keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final Widget? labelTrailing;
 
   @override
   State<NumberRow> createState() => _NumberRowState();
@@ -402,6 +425,10 @@ class _NumberRowState extends State<NumberRow> {
         child: Row(
           children: [
             Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
+            if (widget.labelTrailing != null) ...[
+              SizedBox(width: ScreenUtil.w(8)),
+              widget.labelTrailing!,
+            ],
             const Spacer(),
             OutlinedButton(
               onPressed: widget.onMinus,

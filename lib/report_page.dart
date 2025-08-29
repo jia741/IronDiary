@@ -128,13 +128,17 @@ class _ReportPageState extends State<ReportPage> {
             child: ListView(
               children: _workouts
                   .map(
-                    (w) => ListTile(
-                      title: Text('${w['category_name']} - ${w['exercise_name']}'),
-                      subtitle:
-                          Text('次數: ${w['reps']}  重量: ${w['weight']}kg'),
-                    ),
-                  )
-                  .toList(),
+                  (w) => ListTile(
+                    title: Text('${w['category_name']} - ${w['exercise_name']}'),
+                    subtitle: () {
+                      final double weight = (w['weight'] as num).toDouble();
+                      final String unit = w['unit'] as String;
+                      return Text(
+                          '次數: ${w['reps']}  重量: ${weight.toStringAsFixed(1)}$unit');
+                    }(),
+                  ),
+                )
+                .toList(),
             ),
           )
         ],
