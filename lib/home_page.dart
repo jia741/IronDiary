@@ -252,6 +252,7 @@ class _HomePageState extends State<HomePage> {
                 // 數值列：左右留白已由外層 padding 提供
                 NumberRow(
                   label: '次數',
+                  labelTrailing: SizedBox(width: ScreenUtil.w(36)),
                   valueText: reps.toString(),
                   onMinus: () {
                     setState(() => reps = (reps - 1).clamp(0, 999));
