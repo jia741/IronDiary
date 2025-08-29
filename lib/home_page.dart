@@ -291,16 +291,13 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 Center(
-                  child: SizedBox(
-                    width: ScreenUtil.w(100),
-                    height: ScreenUtil.w(100),
-                    child: ElevatedButton(
-                      onPressed: _isTiming ? null : _startWorkout,
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                      ),
-                      child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
+                  child: ElevatedButton(
+                    onPressed: _isTiming ? null : _startWorkout,
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      minimumSize: Size.square(ScreenUtil.w(100)),
                     ),
+                    child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                   ),
                 ),
               ],
