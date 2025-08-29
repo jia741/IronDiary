@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'database_helper.dart';
+import 'screen_util.dart';
 
 enum _Period { day, week, month }
 
@@ -102,13 +103,13 @@ class _ReportPageState extends State<ReportPage> {
                 selected: _period == _Period.day,
                 onSelected: (_) => _changePeriod(_Period.day),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: ScreenUtil.w(8)),
               ChoiceChip(
                 label: const Text('周'),
                 selected: _period == _Period.week,
                 onSelected: (_) => _changePeriod(_Period.week),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: ScreenUtil.w(8)),
               ChoiceChip(
                 label: const Text('月'),
                 selected: _period == _Period.month,
@@ -116,13 +117,16 @@ class _ReportPageState extends State<ReportPage> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(onPressed: () => _shift(-1), icon: const Icon(Icons.arrow_left)),
-              Text(_title()),
-              IconButton(onPressed: () => _shift(1), icon: const Icon(Icons.arrow_right)),
-            ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(16)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: () => _shift(-1), icon: const Icon(Icons.arrow_left)),
+                Text(_title()),
+                IconButton(onPressed: () => _shift(1), icon: const Icon(Icons.arrow_right)),
+              ],
+            ),
           ),
           Expanded(
             child: ListView(

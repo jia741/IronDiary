@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'database_helper.dart';
+import 'screen_util.dart';
 
 class ExerciseSettingsPage extends StatefulWidget {
   const ExerciseSettingsPage({super.key});
@@ -166,7 +167,8 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
         ],
       ),
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: EdgeInsets.symmetric(
+            horizontal: ScreenUtil.w(8), vertical: ScreenUtil.h(4)),
         child: ListTile(
           leading: ReorderableDragStartListener(
             index: index,
@@ -233,7 +235,8 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
         ],
       ),
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: EdgeInsets.symmetric(
+            horizontal: ScreenUtil.w(8), vertical: ScreenUtil.h(4)),
         child: ExpansionTile(
           leading: ReorderableDragStartListener(
             index: index,
@@ -278,11 +281,11 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.info_outline,
-                    size: 80, color: Colors.grey),
-                const SizedBox(height: 16),
+                Icon(Icons.info_outline,
+                    size: ScreenUtil.w(80), color: Colors.grey),
+                SizedBox(height: ScreenUtil.h(16)),
                 const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
-                const SizedBox(height: 16),
+                SizedBox(height: ScreenUtil.h(16)),
                 ElevatedButton(
                   onPressed: () => _showCategoryDialog(),
                   child: const Text('新增類別'),
@@ -301,14 +304,14 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ScreenUtil.h(16)),
                 Center(
                   child: ElevatedButton(
                     onPressed: () => _showCategoryDialog(),
                     child: const Text('新增類別'),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ScreenUtil.h(16)),
               ],
             ),
     );
