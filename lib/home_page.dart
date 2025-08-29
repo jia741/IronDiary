@@ -217,7 +217,12 @@ class _HomePageState extends State<HomePage> {
                           value: c['id'] as int,
                           child: Text(
                             c['name'] as String,
-                            style: TextStyle(fontSize: ScreenUtil.w(16)),
+                            style: TextStyle(
+                              fontSize: ScreenUtil.w(16),
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                            ),
                           ),
                         ),
                       )
@@ -237,7 +242,12 @@ class _HomePageState extends State<HomePage> {
                           value: e['id'] as int,
                           child: Text(
                             e['name'] as String,
-                            style: TextStyle(fontSize: ScreenUtil.w(16)),
+                            style: TextStyle(
+                              fontSize: ScreenUtil.w(16),
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                            ),
                           ),
                         ),
                       )
@@ -252,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                 // 數值列：左右留白已由外層 padding 提供
                 NumberRow(
                   label: '次數',
-                  labelTrailing: SizedBox(width: ScreenUtil.w(36)),
+                  labelTrailing: SizedBox(width: ScreenUtil.w(64)),
                   valueText: reps.toString(),
                   onMinus: () {
                     setState(() => reps = (reps - 1).clamp(0, 999));
@@ -275,6 +285,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _toggleWeightUnit,
                     style: const ButtonStyle(
                       visualDensity: VisualDensity.compact,
+                      //minimumSize: Size(ScreenUtil.w(36), ScreenUtil.w(36)),
                     ),
                     child: Text(_weightUnit),
                   ),
@@ -370,14 +381,11 @@ Widget prettyDropdown<T>({
     style: TextStyle(fontSize: ScreenUtil.w(16)),
     items: items,
     onChanged: onChanged,
-    icon: Icon(
-      Icons.keyboard_arrow_down_rounded,
-      size: ScreenUtil.w(24),
-    ),
+    icon: Icon(Icons.keyboard_arrow_down_rounded, size: ScreenUtil.w(24)),
     decoration: InputDecoration(
       labelText: label,
       filled: true,
-      fillColor: cs.surfaceContainerHighest,
+      fillColor: cs.surfaceContainerHigh,
       contentPadding: EdgeInsets.symmetric(
         horizontal: ScreenUtil.w(16),
         vertical: ScreenUtil.h(14),
@@ -443,29 +451,43 @@ class _NumberRowState extends State<NumberRow> {
         padding: EdgeInsets.all(ScreenUtil.w(8)),
         child: Row(
           children: [
-            Text(
-              widget.label,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: ScreenUtil.w(16),
-                  ),
-            ),
-            if (widget.labelTrailing != null) ...[
-              SizedBox(width: ScreenUtil.w(8)),
-              widget.labelTrailing!,
-            ],
+            SizedBox(width: ScreenUtil.w(8)),
             Flexible(
+              flex: 1,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  OutlinedButton(
-                    onPressed: widget.onMinus,
-                    style: OutlinedButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
-                      minimumSize:
-                          Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+                  Text(
+                    widget.label,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: ScreenUtil.w(16),
                     ),
-                    child: Icon(Icons.remove, size: ScreenUtil.w(20)),
                   ),
+                  if (widget.labelTrailing != null) ...[
+                    SizedBox(width: ScreenUtil.w(8)),
+                    widget.labelTrailing!,
+                    SizedBox(width: ScreenUtil.w(8)),
+                  ],
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Row(
+                //mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Flexible(
+                    child: IconButton(
+                      onPressed: widget.onMinus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
+                        ),
+                      ),
+                      icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
+                    ),
+                  ),
+
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
                     child: TextField(
@@ -478,15 +500,19 @@ class _NumberRowState extends State<NumberRow> {
                       decoration: const InputDecoration(isDense: true),
                     ),
                   ),
+
                   SizedBox(width: ScreenUtil.w(8)),
-                  OutlinedButton(
-                    onPressed: widget.onPlus,
-                    style: OutlinedButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
-                      minimumSize:
-                          Size(ScreenUtil.w(36), ScreenUtil.w(36)),
+                  Flexible(
+                    child: IconButton(
+                      onPressed: widget.onPlus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
+                        ),
+                      ),
+                      icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                     ),
-                    child: Icon(Icons.add, size: ScreenUtil.w(20)),
                   ),
                 ],
               ),
