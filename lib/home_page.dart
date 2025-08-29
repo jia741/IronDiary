@@ -193,7 +193,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context);
     if (_loading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -216,7 +215,15 @@ class _HomePageState extends State<HomePage> {
                       .map(
                         (c) => DropdownMenuItem(
                           value: c['id'] as int,
-                          child: Text(c['name'] as String),
+                          child: Text(
+                            c['name'] as String,
+                            style: TextStyle(
+                              fontSize: ScreenUtil.w(16),
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                            ),
+                          ),
                         ),
                       )
                       .toList(),
@@ -233,7 +240,15 @@ class _HomePageState extends State<HomePage> {
                       .map(
                         (e) => DropdownMenuItem(
                           value: e['id'] as int,
-                          child: Text(e['name'] as String),
+                          child: Text(
+                            e['name'] as String,
+                            style: TextStyle(
+                              fontSize: ScreenUtil.w(16),
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyLarge?.color,
+                            ),
+                          ),
                         ),
                       )
                       .toList(),
@@ -247,6 +262,7 @@ class _HomePageState extends State<HomePage> {
                 // 數值列：左右留白已由外層 padding 提供
                 NumberRow(
                   label: '次數',
+                  labelTrailing: SizedBox(width: ScreenUtil.w(64)),
                   valueText: reps.toString(),
                   onMinus: () {
                     setState(() => reps = (reps - 1).clamp(0, 999));
@@ -269,6 +285,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: _toggleWeightUnit,
                     style: const ButtonStyle(
                       visualDensity: VisualDensity.compact,
+                      //minimumSize: Size(ScreenUtil.w(36), ScreenUtil.w(36)),
                     ),
                     child: Text(_weightUnit),
                   ),
@@ -361,13 +378,14 @@ Widget prettyDropdown<T>({
   return DropdownButtonFormField<T>(
     value: value,
     isExpanded: true,
+    style: TextStyle(fontSize: ScreenUtil.w(16)),
     items: items,
     onChanged: onChanged,
-    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+    icon: Icon(Icons.keyboard_arrow_down_rounded, size: ScreenUtil.w(24)),
     decoration: InputDecoration(
       labelText: label,
       filled: true,
-      fillColor: cs.surfaceContainerHighest,
+      fillColor: cs.surfaceContainerHigh,
       contentPadding: EdgeInsets.symmetric(
         horizontal: ScreenUtil.w(16),
         vertical: ScreenUtil.h(14),
@@ -433,34 +451,71 @@ class _NumberRowState extends State<NumberRow> {
         padding: EdgeInsets.all(ScreenUtil.w(8)),
         child: Row(
           children: [
-            Text(widget.label, style: Theme.of(context).textTheme.titleMedium),
-            if (widget.labelTrailing != null) ...[
-              SizedBox(width: ScreenUtil.w(8)),
-              widget.labelTrailing!,
-            ],
-            const Spacer(),
-            OutlinedButton(
-              onPressed: widget.onMinus,
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: const Icon(Icons.remove),
-            ),
             SizedBox(width: ScreenUtil.w(8)),
-            SizedBox(
-              width: ScreenUtil.w(56),
-              child: TextField(
-                controller: _c,
-                textAlign: TextAlign.center,
-                keyboardType: widget.keyboardType,
-                inputFormatters: widget.inputFormatters,
-                onSubmitted: widget.onSubmitted,
-                decoration: const InputDecoration(isDense: true),
+            Flexible(
+              flex: 1,
+              child: Row(
+                children: [
+                  Text(
+                    widget.label,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: ScreenUtil.w(16),
+                    ),
+                  ),
+                  if (widget.labelTrailing != null) ...[
+                    SizedBox(width: ScreenUtil.w(8)),
+                    widget.labelTrailing!,
+                    SizedBox(width: ScreenUtil.w(8)),
+                  ],
+                ],
               ),
             ),
-            SizedBox(width: ScreenUtil.w(8)),
-            OutlinedButton(
-              onPressed: widget.onPlus,
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: const Icon(Icons.add),
+            Flexible(
+              flex: 1,
+              child: Row(
+                //mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Flexible(
+                    child: IconButton(
+                      onPressed: widget.onMinus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
+                        ),
+                      ),
+                      icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
+                    ),
+                  ),
+
+                  SizedBox(width: ScreenUtil.w(8)),
+                  Flexible(
+                    child: TextField(
+                      controller: _c,
+                      textAlign: TextAlign.center,
+                      keyboardType: widget.keyboardType,
+                      inputFormatters: widget.inputFormatters,
+                      onSubmitted: widget.onSubmitted,
+                      style: TextStyle(fontSize: ScreenUtil.w(16)),
+                      decoration: const InputDecoration(isDense: true),
+                    ),
+                  ),
+
+                  SizedBox(width: ScreenUtil.w(8)),
+                  Flexible(
+                    child: IconButton(
+                      onPressed: widget.onPlus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
+                        ),
+                      ),
+                      icon: Icon(Icons.add, size: ScreenUtil.w(16)),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
