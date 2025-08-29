@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -35,22 +36,56 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadData();
+    _loadSettings();
   }
 
   Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
     final cats = await _db.getCategories();
+    final savedCat = prefs.getInt('selectedCategory');
     int? firstCat = cats.isNotEmpty ? cats.first['id'] as int : null;
+    int? catId =
+        savedCat != null && cats.any((c) => c['id'] == savedCat) ? savedCat : firstCat;
+
     List<Map<String, dynamic>> exs = [];
-    if (firstCat != null) {
-      exs = await _db.getExercises(firstCat);
+    if (catId != null) {
+      exs = await _db.getExercises(catId);
     }
+    final savedEx = prefs.getInt('selectedExercise');
+    int? exId =
+        savedEx != null && exs.any((e) => e['id'] == savedEx)
+            ? savedEx
+            : (exs.isNotEmpty ? exs.first['id'] as int : null);
+
     setState(() {
       _categories = cats;
-      _selectedCategory = firstCat;
+      _selectedCategory = catId;
       _exercises = exs;
-      _selectedExercise = exs.isNotEmpty ? exs.first['id'] as int : null;
+      _selectedExercise = exId;
       _loading = false;
     });
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _timerSeconds = prefs.getInt('timerSeconds') ?? _timerSeconds;
+      reps = prefs.getInt('reps') ?? reps;
+      weight = prefs.getDouble('weight') ?? weight;
+    });
+  }
+
+  Future<void> _saveSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('timerSeconds', _timerSeconds);
+    await prefs.setInt('reps', reps);
+    await prefs.setDouble('weight', weight);
+    if (_selectedCategory != null) {
+      await prefs.setInt('selectedCategory', _selectedCategory!);
+    }
+    if (_selectedExercise != null) {
+      await prefs.setInt('selectedExercise', _selectedExercise!);
+    }
   }
 
   @override
@@ -69,6 +104,7 @@ class _HomePageState extends State<HomePage> {
       _exercises = exs;
       _selectedExercise = exs.isNotEmpty ? exs.first['id'] as int : null;
     });
+    unawaited(_saveSettings());
   }
 
   Future<void> _startWorkout() async {
@@ -125,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                   _timerSeconds =
                       int.tryParse(controller.text) ?? _timerSeconds;
                 });
+                unawaited(_saveSettings());
                 Navigator.pop(context);
               },
               child: const Text('確定'),
@@ -181,7 +218,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                       .toList(),
-                  onChanged: (id) => setState(() => _selectedExercise = id),
+                  onChanged: (id) {
+                    setState(() => _selectedExercise = id);
+                    unawaited(_saveSettings());
+                  },
                 ),
                 SizedBox(height: ScreenUtil.h(16)),
 
@@ -189,23 +229,36 @@ class _HomePageState extends State<HomePage> {
                 NumberRow(
                   label: '次數',
                   valueText: reps.toString(),
-                  onMinus: () =>
-                      setState(() => reps = (reps - 1).clamp(0, 999)),
-                  onPlus: () => setState(() => reps = (reps + 1).clamp(0, 999)),
-                  onSubmitted: (v) =>
-                      setState(() => reps = int.tryParse(v) ?? reps),
+                  onMinus: () {
+                    setState(() => reps = (reps - 1).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onPlus: () {
+                    setState(() => reps = (reps + 1).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onSubmitted: (v) {
+                    setState(() => reps = int.tryParse(v) ?? reps);
+                    unawaited(_saveSettings());
+                  },
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 SizedBox(height: ScreenUtil.h(12)),
                 NumberRow(
                   label: '重量 (kg)',
                   valueText: weight.toStringAsFixed(1),
-                  onMinus: () =>
-                      setState(() => weight = (weight - 0.5).clamp(0, 999)),
-                  onPlus: () =>
-                      setState(() => weight = (weight + 0.5).clamp(0, 999)),
-                  onSubmitted: (v) =>
-                      setState(() => weight = double.tryParse(v) ?? weight),
+                  onMinus: () {
+                    setState(() => weight = (weight - 0.5).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onPlus: () {
+                    setState(() => weight = (weight + 0.5).clamp(0, 999));
+                    unawaited(_saveSettings());
+                  },
+                  onSubmitted: (v) {
+                    setState(() => weight = double.tryParse(v) ?? weight);
+                    unawaited(_saveSettings());
+                  },
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
