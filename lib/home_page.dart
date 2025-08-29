@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   bool _isTiming = false;
   int _remainingSeconds = 0;
   Timer? _timer;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   int _navIndex = 0;
   int reps = 12;
@@ -96,6 +98,7 @@ class _HomePageState extends State<HomePage> {
     _repController.dispose();
     _weightController.dispose();
     _timer?.cancel();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -131,7 +134,7 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        SystemSound.play(SystemSoundType.alert);
+        unawaited(_audioPlayer.play(AssetSource('readytowork.mp3')));
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('計時完成')));
