@@ -47,18 +47,18 @@ class _HomePageState extends State<HomePage> {
     final cats = await _db.getCategories();
     final savedCat = prefs.getInt('selectedCategory');
     int? firstCat = cats.isNotEmpty ? cats.first['id'] as int : null;
-    int? catId =
-        savedCat != null && cats.any((c) => c['id'] == savedCat) ? savedCat : firstCat;
+    int? catId = savedCat != null && cats.any((c) => c['id'] == savedCat)
+        ? savedCat
+        : firstCat;
 
     List<Map<String, dynamic>> exs = [];
     if (catId != null) {
       exs = await _db.getExercises(catId);
     }
     final savedEx = prefs.getInt('selectedExercise');
-    int? exId =
-        savedEx != null && exs.any((e) => e['id'] == savedEx)
-            ? savedEx
-            : (exs.isNotEmpty ? exs.first['id'] as int : null);
+    int? exId = savedEx != null && exs.any((e) => e['id'] == savedEx)
+        ? savedEx
+        : (exs.isNotEmpty ? exs.first['id'] as int : null);
 
     setState(() {
       _categories = cats;
@@ -267,7 +267,9 @@ class _HomePageState extends State<HomePage> {
                   label: '重量',
                   labelTrailing: OutlinedButton(
                     onPressed: _toggleWeightUnit,
-                    style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                    style: const ButtonStyle(
+                      visualDensity: VisualDensity.compact,
+                    ),
                     child: Text(_weightUnit),
                   ),
                   valueText: weight.toStringAsFixed(1),
@@ -292,15 +294,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _isTiming ? null : _startWorkout,
-                    style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      minimumSize: Size.square(ScreenUtil.w(100)),
+                Expanded(
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: _isTiming ? null : _startWorkout,
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        minimumSize: Size.square(ScreenUtil.w(100)),
+                      ),
+                      child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                     ),
-                    child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                   ),
                 ),
               ],
@@ -310,9 +313,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.transparent,
-        ),
+        data: NavigationBarThemeData(indicatorColor: Colors.transparent),
         child: NavigationBar(
           selectedIndex: _navIndex,
           onDestinationSelected: (i) => setState(() {
@@ -330,7 +331,9 @@ class _HomePageState extends State<HomePage> {
               case 2:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const ExerciseSettingsPage()),
+                  MaterialPageRoute(
+                    builder: (_) => const ExerciseSettingsPage(),
+                  ),
                 ).then((_) => _loadData());
                 break;
             }
@@ -366,9 +369,12 @@ Widget prettyDropdown<T>({
       filled: true,
       fillColor: cs.surfaceContainerHighest,
       contentPadding: EdgeInsets.symmetric(
-          horizontal: ScreenUtil.w(16), vertical: ScreenUtil.h(14)),
+        horizontal: ScreenUtil.w(16),
+        vertical: ScreenUtil.h(14),
+      ),
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(ScreenUtil.w(16))),
+        borderRadius: BorderRadius.circular(ScreenUtil.w(16)),
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(ScreenUtil.w(16)),
         borderSide: BorderSide(color: Theme.of(context).dividerColor),
