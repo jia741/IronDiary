@@ -290,12 +290,12 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
 
-                Expanded(
+                Center(
                   child: ElevatedButton(
                     onPressed: _isTiming ? null : _startWorkout,
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
-                      padding: EdgeInsets.all(ScreenUtil.w(50)),
+                      minimumSize: Size.square(ScreenUtil.w(100)),
                     ),
                     child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                   ),
