@@ -1,16 +1,9 @@
 # irondiary
 
-A new Flutter project.
+結合組間休息計時以及健身運動紀錄，讓你運動時不用頻繁切換APP來記錄自己的運動狀況
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+先在設定中自訂運動菜單的動作，計時設定中設定自己想要的組間休息時間
+做完一組運動後按下開始，就會開始計時組間休息時間並記錄下該次運動次數重量資訊
+報表可以回顧所有紀錄
