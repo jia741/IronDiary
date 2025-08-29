@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   int _navIndex = 0;
   int reps = 12;
   double weight = 30;
+  String _weightUnit = 'kg';
 
   @override
   void initState() {
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _timerSeconds = prefs.getInt('timerSeconds') ?? _timerSeconds;
       reps = prefs.getInt('reps') ?? reps;
+      _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
       weight = prefs.getDouble('weight') ?? weight;
     });
   }
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
     await prefs.setInt('timerSeconds', _timerSeconds);
     await prefs.setInt('reps', reps);
     await prefs.setDouble('weight', weight);
+    await prefs.setString('weightUnit', _weightUnit);
     if (_selectedCategory != null) {
       await prefs.setInt('selectedCategory', _selectedCategory!);
     }
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
     //final reps = int.tryParse(_repController.text);
     //final weight = double.tryParse(_weightController.text);
     if (exId == null) return;
-    await _db.logWorkout(exId, reps, weight);
+    await _db.logWorkout(exId, reps, weight, _weightUnit);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -244,27 +247,57 @@ class _HomePageState extends State<HomePage> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 SizedBox(height: ScreenUtil.h(12)),
-                NumberRow(
-                  label: '重量 (kg)',
-                  valueText: weight.toStringAsFixed(1),
-                  onMinus: () {
-                    setState(() => weight = (weight - 0.5).clamp(0, 999));
-                    unawaited(_saveSettings());
-                  },
-                  onPlus: () {
-                    setState(() => weight = (weight + 0.5).clamp(0, 999));
-                    unawaited(_saveSettings());
-                  },
-                  onSubmitted: (v) {
-                    setState(() => weight = double.tryParse(v) ?? weight);
-                    unawaited(_saveSettings());
-                  },
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d*\.?\d{0,1}'),
+                  Row(
+                  children: [
+                    Expanded(
+                      child: NumberRow(
+                        label: '重量 ($_weightUnit)',
+                        valueText: weight.toStringAsFixed(1),
+                        onMinus: () {
+                          setState(() => weight = (weight - 0.5).clamp(0, 999));
+                          unawaited(_saveSettings());
+                        },
+                        onPlus: () {
+                          setState(() => weight = (weight + 0.5).clamp(0, 999));
+                          unawaited(_saveSettings());
+                        },
+                        onSubmitted: (v) {
+                          setState(() => weight = double.tryParse(v) ?? weight);
+                          unawaited(_saveSettings());
+                        },
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d*\.?\d{0,1}'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ToggleButtons(
+                      isSelected: [
+                        _weightUnit == 'kg',
+                        _weightUnit == 'lb'
+                      ],
+                      borderRadius: BorderRadius.circular(ScreenUtil.w(8)),
+                      constraints: BoxConstraints(minWidth: ScreenUtil.w(40)),
+                      onPressed: (index) {
+                        setState(() {
+                          final newUnit = index == 0 ? 'kg' : 'lb';
+                          if (_weightUnit != newUnit) {
+                            if (newUnit == 'kg') {
+                              weight = weight / 2.20462;
+                            } else {
+                              weight = weight * 2.20462;
+                            }
+                            _weightUnit = newUnit;
+                          }
+                        });
+                        unawaited(_saveSettings());
+                      },
+                      children: const [Text('kg'), Text('lb')],
                     ),
                   ],
                 ),

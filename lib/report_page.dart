@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'database_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum _Period { day, week, month }
 
@@ -14,10 +15,12 @@ class _ReportPageState extends State<ReportPage> {
   _Period _period = _Period.day;
   DateTime _anchor = DateTime.now();
   List<Map<String, dynamic>> _workouts = [];
+  String _weightUnit = 'kg';
 
   @override
   void initState() {
     super.initState();
+    _loadUnit();
     _loadData();
   }
 
@@ -48,6 +51,13 @@ class _ReportPageState extends State<ReportPage> {
     final data = await DatabaseHelper.instance.getWorkouts(_start, _end);
     setState(() {
       _workouts = data;
+    });
+  }
+
+  Future<void> _loadUnit() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
     });
   }
 
@@ -128,13 +138,25 @@ class _ReportPageState extends State<ReportPage> {
             child: ListView(
               children: _workouts
                   .map(
-                    (w) => ListTile(
-                      title: Text('${w['category_name']} - ${w['exercise_name']}'),
-                      subtitle:
-                          Text('次數: ${w['reps']}  重量: ${w['weight']}kg'),
-                    ),
-                  )
-                  .toList(),
+                  (w) => ListTile(
+                    title: Text('${w['category_name']} - ${w['exercise_name']}'),
+                    subtitle: () {
+                      final num weight = w['weight'] as num;
+                      final String unit = w['unit'] as String;
+                      double displayWeight;
+                      if (unit == _weightUnit) {
+                        displayWeight = weight.toDouble();
+                      } else if (_weightUnit == 'kg') {
+                        displayWeight = weight / 2.20462;
+                      } else {
+                        displayWeight = weight * 2.20462;
+                      }
+                      return Text(
+                          '次數: ${w['reps']}  重量: ${displayWeight.toStringAsFixed(1)}$_weightUnit');
+                    }(),
+                  ),
+                )
+                .toList(),
             ),
           )
         ],
