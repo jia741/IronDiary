@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        SystemSound.play(SystemSoundType.alert);
+        unawaited(FlutterRingtonePlayer.playNotification());
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('計時完成')));
