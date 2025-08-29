@@ -1,57 +1,68 @@
-# Flutter build 產物
-/build/
-/. dart_tool/
-/.packages
-.pub-cache/
-/.pub/
-/flutter_*.png
-
-# Android
-/android/.gradle/
-/android/local.properties
-/android/**/GeneratedPluginRegistrant.java
-/android/key.properties
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# iOS / macOS
-/ios/Flutter/Flutter.framework
-/ios/Flutter/Flutter.podspec
-/ios/Flutter/Generated.xcconfig
-/ios/Flutter/ephemeral/
-/ios/ServiceDefinitions.json
-/ios/Runner/GeneratedPluginRegistrant.*
-/macos/Flutter/GeneratedPluginRegistrant.swift
-/macos/Flutter/ephemeral/
-/macos/Flutter/Generated.xcconfig
-
-# Xcode
-*.xcworkspace
-*.xcuserstate
-*.xcuserdatad
-*.xcodeproj/project.xcworkspace/
-*.xcodeproj/xcuserdata/
-
-# Windows
-/windows/Flutter/ephemeral/
-
-# Linux
-/linux/flutter/ephemeral/
-
-# VS Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/launch.json
-!.vscode/tasks.json
-
-# IntelliJ / Android Studio
+# Flutter specific
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.dart_tool/
 .idea/
+.vscode/
+
+# Build artifacts
+/build/
+.gradle
+.ds_store
+
+# Android specific
+/android/.gradle
+/android/build/
+/android/local.properties
+/android/key.properties
+/android/app/src/debug
+/android/app/build/
+/android/app/libs
+/android/app/src/main/assets/flutter_assets/
+/android/app/src/main/java/
+
+# iOS specific
+/ios/.symlinks
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/App.framework/
+/ios/Flutter/flutter_assets/
+/ios/Pods/
+/ios/Runner.xcodeproj/project.xcworkspace
+/ios/Runner.xcworkspace
+/ios/Flutter/Flutter.podspec
+/ios/Runner/Runner.entitlements
+/ios/DerivedData/
+
+# Git Ignore for common files
+/pubspec.lock
+/test/
+/web/
+/windows/
+/macos/
+/linux/
+/lib/
+/ios/
+/android/
+
+# ignore all output from flutter test
+/.flutter-test
+/.flutter-test.json
+
+# Other common files to ignore
+*.lock
+*.log
+*.sqlite
+*.db
+*.apk
+*.aab
+*.ipa
+*.app
+
+# IDE-related
+.idea/
+.vscode/
 *.iml
 
-# 其他系統檔案
-.DS_Store
-Thumbs.db
-
-# Coverage
-coverage/
+# Local files
+**/local.properties
