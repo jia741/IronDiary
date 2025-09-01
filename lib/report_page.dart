@@ -305,43 +305,60 @@ class _ReportPageState extends State<ReportPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: LineChart(
-              LineChartData(
-                minY: 0,
-                titlesData: FlTitlesData(
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      interval: 1,
-                      getTitlesWidget: (value, meta) {
-                        final index = value.toInt();
-                        if (index < 0 || index >= _labels.length) {
-                          return const SizedBox();
-                        }
-                        return Text(
-                          _labels[index],
-                          style: const TextStyle(fontSize: 10),
-                        );
-                      },
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final maxWidth = constraints.maxWidth;
+                final chartWidth =
+                    _spots.length <= 6 ? maxWidth : maxWidth / 6 * _spots.length;
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: chartWidth,
+                    child: LineChart(
+                      LineChartData(
+                        minX: 0,
+                        maxX: _spots.isNotEmpty
+                            ? (_spots.length - 1).toDouble()
+                            : 0,
+                        minY: 0,
+                        titlesData: FlTitlesData(
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              interval: 1,
+                              getTitlesWidget: (value, meta) {
+                                final index = value.toInt();
+                                if (index < 0 || index >= _labels.length) {
+                                  return const SizedBox();
+                                }
+                                return Text(
+                                  _labels[index],
+                                  style: const TextStyle(fontSize: 10),
+                                );
+                              },
+                            ),
+                          ),
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: true),
+                          ),
+                          topTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
+                          rightTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
+                        ),
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: _spots,
+                            isCurved: true,
+                            color: Colors.blue,
+                            barWidth: 3,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: true),
-                  ),
-                  topTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                ),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: _spots,
-                    isCurved: true,
-                    color: Colors.blue,
-                    barWidth: 3,
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),
