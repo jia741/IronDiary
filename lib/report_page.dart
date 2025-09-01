@@ -118,7 +118,7 @@ class _ReportPageState extends State<ReportPage> {
       case _Range.days90:
         return '近90天';
       case _Range.year:
-        return '一年';
+        return '近一年';
     }
   }
 
@@ -126,30 +126,81 @@ class _ReportPageState extends State<ReportPage> {
       _categories.firstWhere((c) => c['id'] == id)['name'] as String;
 
   void _updateChartData() {
-    final now = DateTime.now();
+    final latest = _allWorkouts.isEmpty
+        ? DateTime.now()
+        : DateTime.fromMillisecondsSinceEpoch(_allWorkouts
+            .map<int>((w) => w['timestamp'] as int)
+            .reduce(math.max));
+    final now = latest;
     DateTime start;
-    int groups;
+    int groups = 0;
     switch (_range) {
       case _Range.days30:
         start = now.subtract(const Duration(days: 29));
-        groups = 30;
         break;
       case _Range.days90:
         start = now.subtract(const Duration(days: 89));
         groups = 13;
         break;
       case _Range.year:
-        start = DateTime(now.year - 1, now.month, 1);
+        start = DateTime(now.year, now.month - 11, 1);
         groups = 12;
         break;
     }
+
+    if (_range == _Range.days30) {
+      final Map<DateTime, double> volumes = {};
+      for (final w in _allWorkouts) {
+        final ts =
+            DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+        if (ts.isBefore(start) || ts.isAfter(now)) continue;
+        if (_selectedCategoryId != null &&
+            w['category_name'] != _catName(_selectedCategoryId!)) {
+          continue;
+        }
+        if (_selectedExerciseId != null) {
+          final exName = _exercises
+              .firstWhere((e) => e['id'] == _selectedExerciseId)['name']
+              as String;
+          if (w['exercise_name'] != exName) continue;
+        }
+        double weight = (w['weight'] as num).toDouble();
+        final unit = w['unit'] as String;
+        if (unit.toLowerCase() == 'lb') {
+          weight *= 0.453592;
+        }
+        final reps = w['reps'] as int;
+        final vol = weight * reps;
+        final day = DateTime(ts.year, ts.month, ts.day);
+        volumes[day] = (volumes[day] ?? 0) + vol;
+      }
+      final dates = volumes.keys.toList()..sort();
+      final spots = <FlSpot>[];
+      final labels = <String>[];
+      for (var i = 0; i < dates.length; i++) {
+        final d = dates[i];
+        final y = volumes[d] ?? 0;
+        spots.add(FlSpot(i.toDouble(), y));
+        labels.add('${d.month}/${d.day}');
+      }
+      final maxY = spots.fold<double>(0, (p, s) => math.max(p, s.y));
+      setState(() {
+        _spots = spots;
+        _labels = labels;
+        _maxY = maxY;
+        _shouldScrollToEnd = true;
+      });
+      return;
+    }
+
     final Map<int, double> volumes = {for (var i = 0; i < groups; i++) i: 0};
     for (final w in _allWorkouts) {
       final ts =
           DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
       if (ts.isBefore(start) || ts.isAfter(now)) continue;
-      if (_selectedCategoryId != null) {
-        if (w['category_name'] != _catName(_selectedCategoryId!)) continue;
+      if (_selectedCategoryId != null &&
+          w['category_name'] != _catName(_selectedCategoryId!)) {
+        continue;
       }
       if (_selectedExerciseId != null) {
         final exName = _exercises
@@ -166,15 +217,14 @@ class _ReportPageState extends State<ReportPage> {
       final vol = weight * reps;
       int idx;
       switch (_range) {
-        case _Range.days30:
-          idx = ts.difference(start).inDays;
-          break;
         case _Range.days90:
           idx = ts.difference(start).inDays ~/ 7;
           break;
         case _Range.year:
           idx = (ts.year - start.year) * 12 + ts.month - start.month;
           break;
+        default:
+          idx = 0;
       }
       volumes[idx] = (volumes[idx] ?? 0) + vol;
     }
@@ -185,10 +235,6 @@ class _ReportPageState extends State<ReportPage> {
       spots.add(FlSpot(i.toDouble(), y));
       DateTime d;
       switch (_range) {
-        case _Range.days30:
-          d = start.add(Duration(days: i));
-          labels.add('${d.month}/${d.day}');
-          break;
         case _Range.days90:
           d = start.add(Duration(days: i * 7));
           labels.add('${d.month}/${d.day}');
@@ -196,6 +242,8 @@ class _ReportPageState extends State<ReportPage> {
         case _Range.year:
           d = DateTime(start.year, start.month + i);
           labels.add('${d.month}月');
+          break;
+        default:
           break;
       }
     }
