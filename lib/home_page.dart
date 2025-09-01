@@ -31,15 +31,17 @@ class _HomePageState extends State<HomePage> {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   int _navIndex = 0;
-  int reps = 12;
-  double weight = 30;
+  int reps = 10;
+  double weight = 10;
   String _weightUnit = 'kg';
 
   @override
   void initState() {
     super.initState();
-    _loadData();
-    _loadSettings();
+    Future(() async {
+      await _loadSettings();
+      await _loadData();
+    });
   }
 
   Future<void> _loadData() async {
@@ -67,15 +69,21 @@ class _HomePageState extends State<HomePage> {
       _selectedExercise = exId;
       _loading = false;
     });
+    if (exId != null) {
+      await _loadLastWorkout(exId);
+    } else {
+      setState(() {
+        reps = 10;
+        weight = 10;
+        _timerSeconds = 60;
+      });
+    }
   }
 
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _timerSeconds = prefs.getInt('timerSeconds') ?? _timerSeconds;
-      reps = prefs.getInt('reps') ?? reps;
       _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
-      weight = prefs.getDouble('weight') ?? weight;
     });
   }
 
@@ -110,6 +118,15 @@ class _HomePageState extends State<HomePage> {
       _exercises = exs;
       _selectedExercise = exs.isNotEmpty ? exs.first['id'] as int : null;
     });
+    if (_selectedExercise != null) {
+      await _loadLastWorkout(_selectedExercise!);
+    } else {
+      setState(() {
+        reps = 10;
+        weight = 10;
+        _timerSeconds = 60;
+      });
+    }
     unawaited(_saveSettings());
   }
 
@@ -118,7 +135,7 @@ class _HomePageState extends State<HomePage> {
     //final reps = int.tryParse(_repController.text);
     //final weight = double.tryParse(_weightController.text);
     if (exId == null) return;
-    await _db.logWorkout(exId, reps, weight, _weightUnit);
+    await _db.logWorkout(exId, reps, weight, _weightUnit, _timerSeconds);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -153,6 +170,24 @@ class _HomePageState extends State<HomePage> {
       } else {
         weight = weight / 2.20462;
         _weightUnit = 'kg';
+      }
+    });
+    unawaited(_saveSettings());
+  }
+
+  Future<void> _loadLastWorkout(int exerciseId) async {
+    final data = await _db.getLastWorkout(exerciseId);
+    setState(() {
+      if (data != null) {
+        reps = data['reps'] as int;
+        weight = (data['weight'] as num).toDouble();
+        _weightUnit = data['unit'] as String;
+        _timerSeconds = data['rest_seconds'] as int;
+      } else {
+        reps = 10;
+        weight = 10;
+        _weightUnit = 'kg';
+        _timerSeconds = 60;
       }
     });
     unawaited(_saveSettings());
@@ -254,7 +289,16 @@ class _HomePageState extends State<HomePage> {
                       .toList(),
                   onChanged: (id) {
                     setState(() => _selectedExercise = id);
-                    unawaited(_saveSettings());
+                    if (id != null) {
+                      unawaited(_loadLastWorkout(id));
+                    } else {
+                      setState(() {
+                        reps = 10;
+                        weight = 10;
+                        _timerSeconds = 60;
+                      });
+                      unawaited(_saveSettings());
+                    }
                   },
                 ),
                 SizedBox(height: ScreenUtil.h(16)),
@@ -291,11 +335,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                   valueText: weight.toStringAsFixed(1),
                   onMinus: () {
-                    setState(() => weight = (weight - 0.5).clamp(0, 999));
+                    setState(() =>
+                        weight = double.parse(((weight - 0.1).clamp(0, 999))
+                            .toStringAsFixed(1)));
                     unawaited(_saveSettings());
                   },
                   onPlus: () {
-                    setState(() => weight = (weight + 0.5).clamp(0, 999));
+                    setState(() =>
+                        weight = double.parse(((weight + 0.1).clamp(0, 999))
+                            .toStringAsFixed(1)));
                     unawaited(_saveSettings());
                   },
                   onSubmitted: (v) {
@@ -433,6 +481,10 @@ class _NumberRowState extends State<NumberRow> {
     text: widget.valueText,
   );
 
+  Timer? _repeatTimer;
+  Duration _repeatDuration = const Duration(milliseconds: 500);
+  VoidCallback? _repeatAction;
+
   @override
   void didUpdateWidget(covariant NumberRow oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -442,6 +494,36 @@ class _NumberRowState extends State<NumberRow> {
         TextPosition(offset: _c.text.length),
       );
     }
+  }
+
+  void _startRepeat(VoidCallback action) {
+    _repeatAction = action;
+    action();
+    _repeatDuration = const Duration(milliseconds: 500);
+    _repeatTimer?.cancel();
+    _repeatTimer = Timer(_repeatDuration, _onRepeat);
+  }
+
+  void _onRepeat() {
+    final act = _repeatAction;
+    if (act == null) return;
+    act();
+    var ms = (_repeatDuration.inMilliseconds * 0.8).toInt();
+    if (ms < 50) ms = 50;
+    _repeatDuration = Duration(milliseconds: ms);
+    _repeatTimer = Timer(_repeatDuration, _onRepeat);
+  }
+
+  void _stopRepeat() {
+    _repeatTimer?.cancel();
+    _repeatAction = null;
+  }
+
+  @override
+  void dispose() {
+    _repeatTimer?.cancel();
+    _c.dispose();
+    super.dispose();
   }
 
   @override
@@ -473,21 +555,24 @@ class _NumberRowState extends State<NumberRow> {
             Flexible(
               flex: 1,
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Flexible(
-                    child: IconButton(
-                      onPressed: widget.onMinus,
-                      style: IconButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                          side: BorderSide(width: 1),
+                    child: Listener(
+                      onPointerDown: (_) => _startRepeat(widget.onMinus),
+                      onPointerUp: (_) => _stopRepeat(),
+                      onPointerCancel: (_) => _stopRepeat(),
+                      child: IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
+                        icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                       ),
-                      icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                     ),
                   ),
-
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
                     child: TextField(
@@ -500,18 +585,22 @@ class _NumberRowState extends State<NumberRow> {
                       decoration: const InputDecoration(isDense: true),
                     ),
                   ),
-
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
-                    child: IconButton(
-                      onPressed: widget.onPlus,
-                      style: IconButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                          side: BorderSide(width: 1),
+                    child: Listener(
+                      onPointerDown: (_) => _startRepeat(widget.onPlus),
+                      onPointerUp: (_) => _stopRepeat(),
+                      onPointerCancel: (_) => _stopRepeat(),
+                      child: IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
+                        icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                       ),
-                      icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                     ),
                   ),
                 ],

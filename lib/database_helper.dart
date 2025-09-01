@@ -18,7 +18,7 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'irondiary.db');
     return openDatabase(path,
-        version: 3, onCreate: _onCreate, onUpgrade: _onUpgrade);
+        version: 4, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -43,6 +43,7 @@ class DatabaseHelper {
         reps INTEGER NOT NULL,
         weight REAL NOT NULL,
         unit TEXT NOT NULL,
+        rest_seconds INTEGER NOT NULL,
         timestamp INTEGER NOT NULL,
         FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
       )
@@ -84,6 +85,10 @@ class DatabaseHelper {
     if (oldVersion < 3) {
       await db
           .execute("ALTER TABLE workouts ADD COLUMN unit TEXT NOT NULL DEFAULT 'kg'");
+    }
+    if (oldVersion < 4) {
+      await db.execute(
+          'ALTER TABLE workouts ADD COLUMN rest_seconds INTEGER NOT NULL DEFAULT 60');
     }
   }
 
@@ -127,23 +132,37 @@ class DatabaseHelper {
     await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<void> logWorkout(int exerciseId, int reps, double weight, String unit) async {
+  Future<void> logWorkout(
+      int exerciseId, int reps, double weight, String unit, int restSeconds) async {
     final db = await database;
     await db.insert('workouts', {
       'exercise_id': exerciseId,
       'reps': reps,
       'weight': weight,
       'unit': unit,
+      'rest_seconds': restSeconds,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
   }
 
-  Future<List<Map<String, dynamic>>> getWorkouts(DateTime start, DateTime end) async {
+  Future<Map<String, dynamic>?> getLastWorkout(int exerciseId) async {
+    final db = await database;
+    final result = await db.query('workouts',
+        where: 'exercise_id = ?',
+        whereArgs: [exerciseId],
+        orderBy: 'timestamp DESC',
+        limit: 1);
+    if (result.isEmpty) return null;
+    return result.first;
+  }
+
+  Future<List<Map<String, dynamic>>> getWorkouts(
+      DateTime start, DateTime end) async {
     final db = await database;
     final startMs = start.millisecondsSinceEpoch;
     final endMs = end.millisecondsSinceEpoch;
     return db.rawQuery('''
-      SELECT w.id, w.reps, w.weight, w.unit, w.timestamp, e.name as exercise_name, c.name as category_name
+      SELECT w.id, w.reps, w.weight, w.unit, w.rest_seconds, w.timestamp, e.name as exercise_name, c.name as category_name
       FROM workouts w
       JOIN exercises e ON w.exercise_id = e.id
       JOIN categories c ON e.category_id = c.id
