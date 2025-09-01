@@ -335,11 +335,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                   valueText: weight.toStringAsFixed(1),
                   onMinus: () {
-                    setState(() => weight = (weight - 0.5).clamp(0, 999));
+                    setState(() =>
+                        weight = double.parse(((weight - 0.1).clamp(0, 999))
+                            .toStringAsFixed(1)));
                     unawaited(_saveSettings());
                   },
                   onPlus: () {
-                    setState(() => weight = (weight + 0.5).clamp(0, 999));
+                    setState(() =>
+                        weight = double.parse(((weight + 0.1).clamp(0, 999))
+                            .toStringAsFixed(1)));
                     unawaited(_saveSettings());
                   },
                   onSubmitted: (v) {
@@ -477,6 +481,10 @@ class _NumberRowState extends State<NumberRow> {
     text: widget.valueText,
   );
 
+  Timer? _repeatTimer;
+  Duration _repeatDuration = const Duration(milliseconds: 500);
+  VoidCallback? _repeatAction;
+
   @override
   void didUpdateWidget(covariant NumberRow oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -486,6 +494,36 @@ class _NumberRowState extends State<NumberRow> {
         TextPosition(offset: _c.text.length),
       );
     }
+  }
+
+  void _startRepeat(VoidCallback action) {
+    _repeatAction = action;
+    action();
+    _repeatDuration = const Duration(milliseconds: 500);
+    _repeatTimer?.cancel();
+    _repeatTimer = Timer(_repeatDuration, _onRepeat);
+  }
+
+  void _onRepeat() {
+    final act = _repeatAction;
+    if (act == null) return;
+    act();
+    var ms = (_repeatDuration.inMilliseconds * 0.8).toInt();
+    if (ms < 50) ms = 50;
+    _repeatDuration = Duration(milliseconds: ms);
+    _repeatTimer = Timer(_repeatDuration, _onRepeat);
+  }
+
+  void _stopRepeat() {
+    _repeatTimer?.cancel();
+    _repeatAction = null;
+  }
+
+  @override
+  void dispose() {
+    _repeatTimer?.cancel();
+    _c.dispose();
+    super.dispose();
   }
 
   @override
@@ -517,21 +555,24 @@ class _NumberRowState extends State<NumberRow> {
             Flexible(
               flex: 1,
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Flexible(
-                    child: IconButton(
-                      onPressed: widget.onMinus,
-                      style: IconButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                          side: BorderSide(width: 1),
+                    child: Listener(
+                      onPointerDown: (_) => _startRepeat(widget.onMinus),
+                      onPointerUp: (_) => _stopRepeat(),
+                      onPointerCancel: (_) => _stopRepeat(),
+                      child: IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
+                        icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                       ),
-                      icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                     ),
                   ),
-
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
                     child: TextField(
@@ -544,18 +585,22 @@ class _NumberRowState extends State<NumberRow> {
                       decoration: const InputDecoration(isDense: true),
                     ),
                   ),
-
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
-                    child: IconButton(
-                      onPressed: widget.onPlus,
-                      style: IconButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                          side: BorderSide(width: 1),
+                    child: Listener(
+                      onPointerDown: (_) => _startRepeat(widget.onPlus),
+                      onPointerUp: (_) => _stopRepeat(),
+                      onPointerCancel: (_) => _stopRepeat(),
+                      child: IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
+                        icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                       ),
-                      icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                     ),
                   ),
                 ],
