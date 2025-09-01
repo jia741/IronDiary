@@ -557,20 +557,15 @@ class _NumberRowState extends State<NumberRow> {
               child: Row(
                 children: [
                   Flexible(
-                    child: Listener(
-                      onPointerDown: (_) => _startRepeat(widget.onMinus),
-                      onPointerUp: (_) => _stopRepeat(),
-                      onPointerCancel: (_) => _stopRepeat(),
-                      child: IconButton(
-                        onPressed: () {},
-                        style: IconButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(100)),
-                            side: BorderSide(width: 1),
-                          ),
+                    child: IconButton(
+                      onPressed: widget.onMinus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
                         ),
-                        icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                       ),
+                      icon: Icon(Icons.remove, size: ScreenUtil.w(16)),
                     ),
                   ),
                   SizedBox(width: ScreenUtil.w(8)),
@@ -587,20 +582,15 @@ class _NumberRowState extends State<NumberRow> {
                   ),
                   SizedBox(width: ScreenUtil.w(8)),
                   Flexible(
-                    child: Listener(
-                      onPointerDown: (_) => _startRepeat(widget.onPlus),
-                      onPointerUp: (_) => _stopRepeat(),
-                      onPointerCancel: (_) => _stopRepeat(),
-                      child: IconButton(
-                        onPressed: () {},
-                        style: IconButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(100)),
-                            side: BorderSide(width: 1),
-                          ),
+                    child: IconButton(
+                      onPressed: widget.onPlus,
+                      style: IconButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          side: BorderSide(width: 1),
                         ),
-                        icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                       ),
+                      icon: Icon(Icons.add, size: ScreenUtil.w(16)),
                     ),
                   ),
                 ],
