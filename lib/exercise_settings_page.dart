@@ -24,7 +24,11 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
     final cats = await _db.getCategories();
     final List<Map<String, dynamic>> withExs = [];
     for (final c in cats) {
-      final exs = await _db.getExercises(c['id'] as int);
+      // Convert the query result to a modifiable list. Sqflite's QueryResultSet
+      // is read-only and attempting to modify it (e.g. during reordering)
+      // will throw an UnsupportedError.
+      final exs = List<Map<String, dynamic>>.from(
+          await _db.getExercises(c['id'] as int));
       withExs.add({...c, 'exercises': exs});
     }
     setState(() {
