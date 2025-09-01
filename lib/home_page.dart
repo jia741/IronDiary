@@ -31,15 +31,17 @@ class _HomePageState extends State<HomePage> {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   int _navIndex = 0;
-  int reps = 12;
-  double weight = 30;
+  int reps = 10;
+  double weight = 10;
   String _weightUnit = 'kg';
 
   @override
   void initState() {
     super.initState();
-    _loadData();
-    _loadSettings();
+    Future(() async {
+      await _loadSettings();
+      await _loadData();
+    });
   }
 
   Future<void> _loadData() async {
@@ -67,15 +69,21 @@ class _HomePageState extends State<HomePage> {
       _selectedExercise = exId;
       _loading = false;
     });
+    if (exId != null) {
+      await _loadLastWorkout(exId);
+    } else {
+      setState(() {
+        reps = 10;
+        weight = 10;
+        _timerSeconds = 60;
+      });
+    }
   }
 
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _timerSeconds = prefs.getInt('timerSeconds') ?? _timerSeconds;
-      reps = prefs.getInt('reps') ?? reps;
       _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
-      weight = prefs.getDouble('weight') ?? weight;
     });
   }
 
@@ -110,6 +118,15 @@ class _HomePageState extends State<HomePage> {
       _exercises = exs;
       _selectedExercise = exs.isNotEmpty ? exs.first['id'] as int : null;
     });
+    if (_selectedExercise != null) {
+      await _loadLastWorkout(_selectedExercise!);
+    } else {
+      setState(() {
+        reps = 10;
+        weight = 10;
+        _timerSeconds = 60;
+      });
+    }
     unawaited(_saveSettings());
   }
 
@@ -118,7 +135,7 @@ class _HomePageState extends State<HomePage> {
     //final reps = int.tryParse(_repController.text);
     //final weight = double.tryParse(_weightController.text);
     if (exId == null) return;
-    await _db.logWorkout(exId, reps, weight, _weightUnit);
+    await _db.logWorkout(exId, reps, weight, _weightUnit, _timerSeconds);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -153,6 +170,24 @@ class _HomePageState extends State<HomePage> {
       } else {
         weight = weight / 2.20462;
         _weightUnit = 'kg';
+      }
+    });
+    unawaited(_saveSettings());
+  }
+
+  Future<void> _loadLastWorkout(int exerciseId) async {
+    final data = await _db.getLastWorkout(exerciseId);
+    setState(() {
+      if (data != null) {
+        reps = data['reps'] as int;
+        weight = (data['weight'] as num).toDouble();
+        _weightUnit = data['unit'] as String;
+        _timerSeconds = data['rest_seconds'] as int;
+      } else {
+        reps = 10;
+        weight = 10;
+        _weightUnit = 'kg';
+        _timerSeconds = 60;
       }
     });
     unawaited(_saveSettings());
@@ -254,7 +289,16 @@ class _HomePageState extends State<HomePage> {
                       .toList(),
                   onChanged: (id) {
                     setState(() => _selectedExercise = id);
-                    unawaited(_saveSettings());
+                    if (id != null) {
+                      unawaited(_loadLastWorkout(id));
+                    } else {
+                      setState(() {
+                        reps = 10;
+                        weight = 10;
+                        _timerSeconds = 60;
+                      });
+                      unawaited(_saveSettings());
+                    }
                   },
                 ),
                 SizedBox(height: ScreenUtil.h(16)),

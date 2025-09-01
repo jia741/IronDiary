@@ -137,8 +137,9 @@ class _ReportPageState extends State<ReportPage> {
                     subtitle: () {
                       final double weight = (w['weight'] as num).toDouble();
                       final String unit = w['unit'] as String;
+                      final int rest = w['rest_seconds'] as int;
                       return Text(
-                          '次數: ${w['reps']}  重量: ${weight.toStringAsFixed(1)}$unit');
+                          '次數: ${w['reps']}  重量: ${weight.toStringAsFixed(1)}$unit  休息: ${rest}秒');
                     }(),
                   ),
                 )
