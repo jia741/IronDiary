@@ -39,6 +39,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   shared_preferences: ^2.3.2
   audioplayers: ^6.0.0
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

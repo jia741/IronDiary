@@ -1,8 +1,11 @@
+import 'dart:async';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
-import 'screen_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-enum _Period { day, week, month }
+import 'database_helper.dart';
+
+enum _Range { days30, days90, year }
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -12,142 +15,477 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  _Period _period = _Period.day;
-  DateTime _anchor = DateTime.now();
-  List<Map<String, dynamic>> _workouts = [];
+  final _db = DatabaseHelper.instance;
+  _Range _range = _Range.days30;
+  int? _selectedCategoryId;
+  int? _selectedExerciseId;
+
+  List<Map<String, dynamic>> _categories = [];
+  List<Map<String, dynamic>> _exercises = [];
+  List<Map<String, dynamic>> _allWorkouts = [];
+
+  List<FlSpot> _spots = [];
+  List<String> _labels = [];
+
+  Map<String, double> _catTotals = {};
+  Map<String, double> _exerciseTotals = {};
 
   @override
   void initState() {
     super.initState();
-    _loadData();
-  }
-
-  DateTime get _start {
-    switch (_period) {
-      case _Period.day:
-        return DateTime(_anchor.year, _anchor.month, _anchor.day);
-      case _Period.week:
-        final start = _anchor.subtract(Duration(days: _anchor.weekday - 1));
-        return DateTime(start.year, start.month, start.day);
-      case _Period.month:
-        return DateTime(_anchor.year, _anchor.month, 1);
-    }
-  }
-
-  DateTime get _end {
-    switch (_period) {
-      case _Period.day:
-        return _start.add(const Duration(days: 1));
-      case _Period.week:
-        return _start.add(const Duration(days: 7));
-      case _Period.month:
-        return DateTime(_anchor.year, _anchor.month + 1, 1);
-    }
-  }
-
-  Future<void> _loadData() async {
-    final data = await DatabaseHelper.instance.getWorkouts(_start, _end);
-    setState(() {
-      _workouts = data;
+    Future(() async {
+      await _loadSelections();
+      await _loadAllWorkouts();
+      _updateChartData();
+      _computeTotals();
     });
   }
 
-  void _changePeriod(_Period p) {
+  Future<void> _loadSelections() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cats = await _db.getCategories();
+    int? catId = prefs.getInt('selectedCategory');
+    int? exId = prefs.getInt('selectedExercise');
+    List<Map<String, dynamic>> exs = [];
+    if (catId != null && cats.any((c) => c['id'] == catId)) {
+      exs = await _db.getExercises(catId);
+    } else {
+      catId = null;
+    }
+    if (exId != null && !exs.any((e) => e['id'] == exId)) {
+      exId = null;
+    }
     setState(() {
-      _period = p;
-      _anchor = DateTime.now();
+      _categories = cats;
+      _selectedCategoryId = catId;
+      _exercises = exs;
+      _selectedExerciseId = exId;
     });
-    _loadData();
   }
 
-  void _shift(int direction) {
+  Future<void> _loadAllWorkouts() async {
+    final data = await _db.getWorkouts(
+        DateTime.fromMillisecondsSinceEpoch(0), DateTime.now());
+    setState(() => _allWorkouts = data);
+  }
+
+  void _onCategoryChanged(int? id) async {
     setState(() {
-      switch (_period) {
-        case _Period.day:
-          _anchor = _anchor.add(Duration(days: direction));
-          break;
-        case _Period.week:
-          _anchor = _anchor.add(Duration(days: 7 * direction));
-          break;
-        case _Period.month:
-          _anchor = DateTime(_anchor.year, _anchor.month + direction, _anchor.day);
-          break;
+      _selectedCategoryId = id;
+      _selectedExerciseId = null;
+      _exercises = [];
+    });
+    if (id != null) {
+      final exs = await _db.getExercises(id);
+      setState(() => _exercises = exs);
+    }
+    _updateChartData();
+  }
+
+  void _onExerciseChanged(int? id) {
+    setState(() => _selectedExerciseId = id);
+    _updateChartData();
+  }
+
+  void _cycleRange() {
+    setState(() {
+      if (_range == _Range.days30) {
+        _range = _Range.days90;
+      } else if (_range == _Range.days90) {
+        _range = _Range.year;
+      } else {
+        _range = _Range.days30;
       }
     });
-    _loadData();
+    _updateChartData();
   }
 
-  String _title() {
-    switch (_period) {
-      case _Period.day:
-        return '${_anchor.year}-${_anchor.month}-${_anchor.day}';
-      case _Period.week:
-        final end = _start.add(const Duration(days: 6));
-        return '${_start.month}/${_start.day} - ${end.month}/${end.day}';
-      case _Period.month:
-        return '${_anchor.year}-${_anchor.month}';
+  String _rangeLabel() {
+    switch (_range) {
+      case _Range.days30:
+        return '近30天';
+      case _Range.days90:
+        return '近90天';
+      case _Range.year:
+        return '一年';
     }
+  }
+
+  String _catName(int id) =>
+      _categories.firstWhere((c) => c['id'] == id)['name'] as String;
+
+  void _updateChartData() {
+    final now = DateTime.now();
+    DateTime start;
+    int groups;
+    switch (_range) {
+      case _Range.days30:
+        start = now.subtract(const Duration(days: 29));
+        groups = 30;
+        break;
+      case _Range.days90:
+        start = now.subtract(const Duration(days: 89));
+        groups = 13;
+        break;
+      case _Range.year:
+        start = DateTime(now.year - 1, now.month, 1);
+        groups = 12;
+        break;
+    }
+    final Map<int, double> volumes = {for (var i = 0; i < groups; i++) i: 0};
+    for (final w in _allWorkouts) {
+      final ts =
+          DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+      if (ts.isBefore(start) || ts.isAfter(now)) continue;
+      if (_selectedCategoryId != null) {
+        if (w['category_name'] != _catName(_selectedCategoryId!)) continue;
+      }
+      if (_selectedExerciseId != null) {
+        final exName = _exercises
+            .firstWhere((e) => e['id'] == _selectedExerciseId)['name']
+            as String;
+        if (w['exercise_name'] != exName) continue;
+      }
+      double weight = (w['weight'] as num).toDouble();
+      final unit = w['unit'] as String;
+      if (unit.toLowerCase() == 'lb') {
+        weight *= 0.453592;
+      }
+      final reps = w['reps'] as int;
+      final vol = weight * reps;
+      int idx;
+      switch (_range) {
+        case _Range.days30:
+          idx = ts.difference(start).inDays;
+          break;
+        case _Range.days90:
+          idx = ts.difference(start).inDays ~/ 7;
+          break;
+        case _Range.year:
+          idx = (ts.year - start.year) * 12 + ts.month - start.month;
+          break;
+      }
+      volumes[idx] = (volumes[idx] ?? 0) + vol;
+    }
+    final List<FlSpot> spots = [];
+    final List<String> labels = [];
+    for (int i = 0; i < groups; i++) {
+      final y = volumes[i] ?? 0;
+      spots.add(FlSpot(i.toDouble(), y));
+      DateTime d;
+      switch (_range) {
+        case _Range.days30:
+          d = start.add(Duration(days: i));
+          labels.add('${d.month}/${d.day}');
+          break;
+        case _Range.days90:
+          d = start.add(Duration(days: i * 7));
+          labels.add('${d.month}/${d.day}');
+          break;
+        case _Range.year:
+          d = DateTime(start.year, start.month + i);
+          labels.add('${d.month}月');
+          break;
+      }
+    }
+    setState(() {
+      _spots = spots;
+      _labels = labels;
+    });
+  }
+
+  void _computeTotals() {
+    final Map<String, double> catTotals = {};
+    final Map<String, double> exTotals = {};
+    for (final w in _allWorkouts) {
+      double weight = (w['weight'] as num).toDouble();
+      final unit = w['unit'] as String;
+      if (unit.toLowerCase() == 'lb') {
+        weight *= 0.453592;
+      }
+      final reps = w['reps'] as int;
+      final vol = weight * reps;
+      final c = w['category_name'] as String;
+      final e = w['exercise_name'] as String;
+      catTotals[c] = (catTotals[c] ?? 0) + vol;
+      exTotals[e] = (exTotals[e] ?? 0) + vol;
+    }
+    setState(() {
+      _catTotals = catTotals;
+      _exerciseTotals = exTotals;
+    });
+  }
+
+  List<Map<String, dynamic>> _filteredRecords() {
+    final data = _allWorkouts.where((w) {
+      if (_selectedCategoryId != null &&
+          w['category_name'] != _catName(_selectedCategoryId!)) {
+        return false;
+      }
+      if (_selectedExerciseId != null) {
+        final exName = _exercises
+            .firstWhere((e) => e['id'] == _selectedExerciseId)['name']
+            as String;
+        if (w['exercise_name'] != exName) return false;
+      }
+      return true;
+    }).toList();
+    data.sort((a, b) =>
+        (b['timestamp'] as int).compareTo(a['timestamp'] as int));
+    return data;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('報表')),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ChoiceChip(
-                label: const Text('日'),
-                selected: _period == _Period.day,
-                onSelected: (_) => _changePeriod(_Period.day),
-              ),
-              SizedBox(width: ScreenUtil.w(8)),
-              ChoiceChip(
-                label: const Text('周'),
-                selected: _period == _Period.week,
-                onSelected: (_) => _changePeriod(_Period.week),
-              ),
-              SizedBox(width: ScreenUtil.w(8)),
-              ChoiceChip(
-                label: const Text('月'),
-                selected: _period == _Period.month,
-                onSelected: (_) => _changePeriod(_Period.month),
-              ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('報表'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: '趨勢'),
+              Tab(text: '報表'),
+              Tab(text: '紀錄'),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(16)),
+        ),
+        body: TabBarView(
+          children: [
+            _buildTrendTab(),
+            _buildReportTab(),
+            _buildRecordTab(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrendTab() {
+    return Column(
+      children: [
+        TextButton(onPressed: _cycleRange, child: Text(_rangeLabel())),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton<int?>(
+              hint: const Text('部位'),
+              value: _selectedCategoryId,
+              items: [
+                const DropdownMenuItem<int?>(
+                    value: null, child: Text('全部')),
+                ..._categories.map(
+                  (c) => DropdownMenuItem<int?>(
+                    value: c['id'] as int,
+                    child: Text(c['name'] as String),
+                  ),
+                ),
+              ],
+              onChanged: (v) => _onCategoryChanged(v),
+            ),
+            const SizedBox(width: 16),
+            DropdownButton<int?>(
+              hint: const Text('動作'),
+              value: _selectedExerciseId,
+              items: [
+                const DropdownMenuItem<int?>(
+                    value: null, child: Text('全部')),
+                ..._exercises.map(
+                  (e) => DropdownMenuItem<int?>(
+                    value: e['id'] as int,
+                    child: Text(e['name'] as String),
+                  ),
+                ),
+              ],
+              onChanged:
+                  _selectedCategoryId == null ? null : (v) => _onExerciseChanged(v),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: LineChart(
+              LineChartData(
+                minY: 0,
+                titlesData: FlTitlesData(
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: 1,
+                      getTitlesWidget: (value, meta) {
+                        final index = value.toInt();
+                        if (index < 0 || index >= _labels.length) {
+                          return const SizedBox();
+                        }
+                        return Text(
+                          _labels[index],
+                          style: const TextStyle(fontSize: 10),
+                        );
+                      },
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: true),
+                  ),
+                  topTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles:
+                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: _spots,
+                    isCurved: true,
+                    color: Colors.blue,
+                    barWidth: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReportTab() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 200,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: () => _shift(-1), icon: const Icon(Icons.arrow_left)),
-                Text(_title()),
-                IconButton(onPressed: () => _shift(1), icon: const Icon(Icons.arrow_right)),
+                Expanded(
+                  child: PieChart(
+                    PieChartData(
+                      sections: _catTotals.entries.map((e) {
+                        final index =
+                            _catTotals.keys.toList().indexOf(e.key);
+                        final color = Colors
+                            .primaries[index % Colors.primaries.length];
+                        return PieChartSectionData(
+                          value: e.value,
+                          color: color,
+                          title: e.key,
+                          radius: 60,
+                          titleStyle: const TextStyle(fontSize: 12),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 120,
+                  child: ListView(
+                    children: _catTotals.entries
+                        .map((e) => Text(
+                            '${e.key}: ${e.value.toStringAsFixed(1)}kg'))
+                        .toList(),
+                  ),
+                ),
               ],
             ),
           ),
-          Expanded(
-            child: ListView(
-              children: _workouts
-                  .map(
-                  (w) => ListTile(
-                    title: Text('${w['category_name']} - ${w['exercise_name']}'),
-                    subtitle: () {
-                      final double weight = (w['weight'] as num).toDouble();
-                      final String unit = w['unit'] as String;
-                      final int rest = w['rest_seconds'] as int;
-                      return Text(
-                          '次數: ${w['reps']}  重量: ${weight.toStringAsFixed(1)}$unit  休息: ${rest}秒');
-                    }(),
+          SizedBox(
+            height: 200,
+            child: Row(
+              children: [
+                Expanded(
+                  child: PieChart(
+                    PieChartData(
+                      sections: _exerciseTotals.entries.map((e) {
+                        final index = _exerciseTotals.keys
+                            .toList()
+                            .indexOf(e.key);
+                        final color = Colors
+                            .primaries[index % Colors.primaries.length];
+                        return PieChartSectionData(
+                          value: e.value,
+                          color: color,
+                          title: e.key,
+                          radius: 60,
+                          titleStyle: const TextStyle(fontSize: 12),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                )
-                .toList(),
+                ),
+                SizedBox(
+                  width: 120,
+                  child: ListView(
+                    children: _exerciseTotals.entries
+                        .map((e) => Text(
+                            '${e.key}: ${e.value.toStringAsFixed(1)}kg'))
+                        .toList(),
+                  ),
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
+  Widget _buildRecordTab() {
+    final records = _filteredRecords();
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton<int?>(
+              hint: const Text('部位'),
+              value: _selectedCategoryId,
+              items: [
+                const DropdownMenuItem<int?>(
+                    value: null, child: Text('全部')),
+                ..._categories.map((c) => DropdownMenuItem<int?>(
+                      value: c['id'] as int,
+                      child: Text(c['name'] as String),
+                    )),
+              ],
+              onChanged: (v) => _onCategoryChanged(v),
+            ),
+            const SizedBox(width: 16),
+            DropdownButton<int?>(
+              hint: const Text('動作'),
+              value: _selectedExerciseId,
+              items: [
+                const DropdownMenuItem<int?>(
+                    value: null, child: Text('全部')),
+                ..._exercises.map((e) => DropdownMenuItem<int?>(
+                      value: e['id'] as int,
+                      child: Text(e['name'] as String),
+                    )),
+              ],
+              onChanged:
+                  _selectedCategoryId == null ? null : (v) => _onExerciseChanged(v),
+            ),
+          ],
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: records.length,
+            itemBuilder: (context, index) {
+              final w = records[index];
+              final date =
+                  DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+              final weight = (w['weight'] as num).toDouble();
+              final unit = w['unit'] as String;
+              return ListTile(
+                title: Text('${w['category_name']} - ${w['exercise_name']}'),
+                subtitle: Text(
+                  '${date.toLocal()}  次數:${w['reps']}  重量:${weight.toStringAsFixed(1)}$unit  休息:${w['rest_seconds']}秒',
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
 }
+
