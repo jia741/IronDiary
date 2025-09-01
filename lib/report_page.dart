@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:math' as math;
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +28,9 @@ class _ReportPageState extends State<ReportPage> {
 
   List<FlSpot> _spots = [];
   List<String> _labels = [];
+  double _maxY = 0;
+  final ScrollController _chartController = ScrollController();
+  bool _shouldScrollToEnd = true;
 
   Map<String, double> _catTotals = {};
   Map<String, double> _exerciseTotals = {};
@@ -39,6 +44,12 @@ class _ReportPageState extends State<ReportPage> {
       _updateChartData();
       _computeTotals();
     });
+  }
+
+  @override
+  void dispose() {
+    _chartController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadSelections() async {
@@ -188,9 +199,12 @@ class _ReportPageState extends State<ReportPage> {
           break;
       }
     }
+    final maxY = spots.fold<double>(0, (p, s) => math.max(p, s.y));
     setState(() {
       _spots = spots;
       _labels = labels;
+      _maxY = maxY;
+      _shouldScrollToEnd = true;
     });
   }
 
@@ -233,6 +247,18 @@ class _ReportPageState extends State<ReportPage> {
     data.sort((a, b) =>
         (b['timestamp'] as int).compareTo(a['timestamp'] as int));
     return data;
+  }
+
+  Widget _buildYAxis() {
+    final labels = List.generate(5, (i) {
+      final val = (_maxY / 4 * (4 - i));
+      return Text(val.toStringAsFixed(0),
+          style: const TextStyle(fontSize: 10));
+    });
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: labels,
+    );
   }
 
   @override
@@ -307,56 +333,74 @@ class _ReportPageState extends State<ReportPage> {
             padding: const EdgeInsets.all(16),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final maxWidth = constraints.maxWidth;
+                const yAxisWidth = 40.0;
+                final maxWidth = constraints.maxWidth - yAxisWidth;
                 final chartWidth =
                     _spots.length <= 6 ? maxWidth : maxWidth / 6 * _spots.length;
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SizedBox(
-                    width: chartWidth,
-                    child: LineChart(
-                      LineChartData(
-                        minX: 0,
-                        maxX: _spots.isNotEmpty
-                            ? (_spots.length - 1).toDouble()
-                            : 0,
-                        minY: 0,
-                        titlesData: FlTitlesData(
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              interval: 1,
-                              getTitlesWidget: (value, meta) {
-                                final index = value.toInt();
-                                if (index < 0 || index >= _labels.length) {
-                                  return const SizedBox();
-                                }
-                                return Text(
-                                  _labels[index],
-                                  style: const TextStyle(fontSize: 10),
-                                );
-                              },
+                if (_shouldScrollToEnd) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (_chartController.hasClients) {
+                      _chartController
+                          .jumpTo(_chartController.position.maxScrollExtent);
+                    }
+                  });
+                  _shouldScrollToEnd = false;
+                }
+                return Row(
+                  children: [
+                    SizedBox(width: yAxisWidth, child: _buildYAxis()),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: _chartController,
+                        scrollDirection: Axis.horizontal,
+                        child: SizedBox(
+                          width: chartWidth,
+                          child: LineChart(
+                            LineChartData(
+                              minX: 0,
+                              maxX: _spots.isNotEmpty
+                                  ? (_spots.length - 1).toDouble()
+                                  : 0,
+                              minY: 0,
+                              maxY: _maxY == 0 ? 1 : _maxY,
+                              titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    interval: 1,
+                                    getTitlesWidget: (value, meta) {
+                                      final index = value.toInt();
+                                      if (index < 0 || index >= _labels.length) {
+                                        return const SizedBox();
+                                      }
+                                      return Text(
+                                        _labels[index],
+                                        style: const TextStyle(fontSize: 10),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                              lineBarsData: [
+                                LineChartBarData(
+                                  spots: _spots,
+                                  isCurved: true,
+                                  color: Colors.blue,
+                                  barWidth: 3,
+                                ),
+                              ],
                             ),
                           ),
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: true),
-                          ),
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
                         ),
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: _spots,
-                            isCurved: true,
-                            color: Colors.blue,
-                            barWidth: 3,
-                          ),
-                        ],
                       ),
                     ),
-                  ),
+                  ],
                 );
               },
             ),
