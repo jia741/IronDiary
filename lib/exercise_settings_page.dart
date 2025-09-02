@@ -281,43 +281,45 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('動作設定')),
-      body: _categories.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.info_outline,
-                    size: ScreenUtil.w(80), color: Colors.grey),
-                SizedBox(height: ScreenUtil.h(16)),
-                const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
-                SizedBox(height: ScreenUtil.h(16)),
-                ElevatedButton(
-                  onPressed: () => _showCategoryDialog(),
-                  child: const Text('新增類別'),
-                ),
-              ],
-            )
-          : Column(
-              children: [
-                Expanded(
-                  child: ReorderableListView(
-                    onReorder: _reorderCategories,
-                    buildDefaultDragHandles: false,
-                    children: [
-                      for (int i = 0; i < _categories.length; i++)
-                        _buildCategoryTile(_categories[i], i),
-                    ],
-                  ),
-                ),
-                SizedBox(height: ScreenUtil.h(16)),
-                Center(
-                  child: ElevatedButton(
+      body: SafeArea(
+        child: _categories.isEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.info_outline,
+                      size: ScreenUtil.w(80), color: Colors.grey),
+                  SizedBox(height: ScreenUtil.h(16)),
+                  const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
+                  SizedBox(height: ScreenUtil.h(16)),
+                  ElevatedButton(
                     onPressed: () => _showCategoryDialog(),
                     child: const Text('新增類別'),
                   ),
-                ),
-                SizedBox(height: ScreenUtil.h(16)),
-              ],
-            ),
+                ],
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: ReorderableListView(
+                      onReorder: _reorderCategories,
+                      buildDefaultDragHandles: false,
+                      children: [
+                        for (int i = 0; i < _categories.length; i++)
+                          _buildCategoryTile(_categories[i], i),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: ScreenUtil.h(16)),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () => _showCategoryDialog(),
+                      child: const Text('新增類別'),
+                    ),
+                  ),
+                  SizedBox(height: ScreenUtil.h(16)),
+                ],
+              ),
+      ),
     );
   }
 }
