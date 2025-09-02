@@ -622,33 +622,23 @@ class _ReportPageState extends State<ReportPage> {
           ],
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('時間')),
-                DataColumn(label: Text('部位')),
-                DataColumn(label: Text('動作')),
-                DataColumn(label: Text('次數')),
-                DataColumn(label: Text('重量')),
-                DataColumn(label: Text('休息')),
-              ],
-              rows: records.map((w) {
-                final date = DateTime.fromMillisecondsSinceEpoch(
-                    w['timestamp'] as int);
-                final dateStr = date.toLocal().toString().split('.').first;
-                final weight =
-                    (w['weight'] as num).toDouble().toStringAsFixed(1);
-                final unit = w['unit'] as String;
-                return DataRow(cells: [
-                  DataCell(Text(dateStr)),
-                  DataCell(Text(w['category_name'] as String)),
-                  DataCell(Text(w['exercise_name'] as String)),
-                  DataCell(Text('${w['reps']}')),
-                  DataCell(Text('$weight$unit')),
-                  DataCell(Text('${w['rest_seconds']}秒')),
-                ]);
-              }).toList(),
-            ),
+          child: ListView.builder(
+            itemCount: records.length,
+            itemBuilder: (context, index) {
+              final w = records[index];
+              final date =
+                  DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+              final dateStr = date.toLocal().toString().split('.').first;
+              final weight = (w['weight'] as num).toDouble();
+              final unit = w['unit'] as String;
+              return ListTile(
+                title:
+                    Text('${w['category_name']} - ${w['exercise_name']}'),
+                subtitle: Text(
+                  '$dateStr  次數:${w['reps']}  重量:${weight.toStringAsFixed(1)}$unit  休息:${w['rest_seconds']}秒',
+                ),
+              );
+            },
           ),
         ),
       ],
