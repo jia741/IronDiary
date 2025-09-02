@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:sqflite/sqflite.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       await _loadSettings();
       await _loadData();
       await _checkFirstLaunch();
+      await _importTestRecordsIfEmpty();
     });
   }
 
@@ -124,6 +126,65 @@ class _HomePageState extends State<HomePage> {
         await _db.insertExercise(catId, e as String);
       }
     }
+  }
+
+  Future<void> _importTestRecordsIfEmpty() async {
+    final db = await _db.database;
+    final count =
+        Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM workouts')) ?? 0;
+    if (count > 0) return;
+    final data = await rootBundle.loadString('assets/test_records.json');
+    final Map<String, dynamic> jsonMap = json.decode(data);
+    final List records = jsonMap['records'] as List;
+    final Map<String, int> categoryIds = {};
+    final Map<String, int> exerciseIds = {};
+    for (final r in records) {
+      final date = DateTime.parse(r['date'] as String);
+      final List wos = r['workouts'] as List;
+      for (final w in wos) {
+        final catName = w['category'] as String;
+        int catId;
+        if (categoryIds.containsKey(catName)) {
+          catId = categoryIds[catName]!;
+        } else {
+          final existingCat = await db.query('categories',
+              where: 'name = ?', whereArgs: [catName]);
+          if (existingCat.isNotEmpty) {
+            catId = existingCat.first['id'] as int;
+          } else {
+            catId = await _db.insertCategory(catName);
+          }
+          categoryIds[catName] = catId;
+        }
+
+        final exName = w['exercise'] as String;
+        final exKey = '$catId-$exName';
+        int exId;
+        if (exerciseIds.containsKey(exKey)) {
+          exId = exerciseIds[exKey]!;
+        } else {
+          final existingEx = await db.query('exercises',
+              where: 'name = ? AND category_id = ?',
+              whereArgs: [exName, catId]);
+          if (existingEx.isNotEmpty) {
+            exId = existingEx.first['id'] as int;
+          } else {
+            exId = await _db.insertExercise(catId, exName);
+          }
+          exerciseIds[exKey] = exId;
+        }
+
+        await db.insert('workouts', {
+          'exercise_id': exId,
+          'reps': w['reps'] as int,
+          'weight': (w['weight'] as num).toDouble(),
+          'unit': w['unit'] as String,
+          'rest_seconds': w['rest_seconds'] as int,
+          'timestamp': date.millisecondsSinceEpoch,
+        });
+      }
+    }
+    await _loadData();
   }
 
   Future<void> _loadSettings() async {
