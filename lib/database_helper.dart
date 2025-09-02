@@ -104,9 +104,8 @@ class DatabaseHelper {
 
   Future<int> insertExercise(int categoryId, String name) async {
     final db = await database;
-    final exists = await db.query('exercises',
-        where: 'category_id = ? AND LOWER(name) = ?',
-        whereArgs: [categoryId, name.toLowerCase()]);
+    final exists = await db
+        .query('exercises', where: 'LOWER(name) = ?', whereArgs: [name.toLowerCase()]);
     if (exists.isNotEmpty) {
       throw Exception('Exercise name already exists');
     }
@@ -115,20 +114,17 @@ class DatabaseHelper {
 
   Future<void> updateExercise(int id, String name) async {
     final db = await database;
-    final exercise = await db.query('exercises',
-        columns: ['category_id'], where: 'id = ?', whereArgs: [id]);
-    if (exercise.isEmpty) {
-      throw Exception('Exercise not found');
-    }
-    final categoryId = exercise.first['category_id'] as int;
     final exists = await db.query('exercises',
-        where: 'category_id = ? AND LOWER(name) = ? AND id != ?',
-        whereArgs: [categoryId, name.toLowerCase(), id]);
+        where: 'LOWER(name) = ? AND id != ?',
+        whereArgs: [name.toLowerCase(), id]);
     if (exists.isNotEmpty) {
       throw Exception('Exercise name already exists');
     }
-    await db.update('exercises', {'name': name},
+    final count = await db.update('exercises', {'name': name},
         where: 'id = ?', whereArgs: [id]);
+    if (count == 0) {
+      throw Exception('Exercise not found');
+    }
   }
 
   Future<void> deleteExercise(int id) async {

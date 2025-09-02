@@ -40,15 +40,12 @@ void main() {
     await db.insertExercise(catId, '測試動作1');
     expect(() => db.insertExercise(catId, '測試動作1'), throwsException);
     final catId2 = await db.insertCategory('測試類別2');
-    await db.insertExercise(catId2, '測試動作1');
+    await db.insertExercise(catId2, '測試動作2');
+    expect(() => db.insertExercise(catId2, '測試動作1'), throwsException);
 
     // Editing should also reject duplicates
     expect(() => db.updateCategory(catId2, '測試類別'), throwsException);
-    final ex2 = await db.insertExercise(catId, '測試動作2');
-    expect(() => db.updateExercise(ex2, '測試動作1'), throwsException);
-
-    // Same exercise name in a different category is allowed
-    final ex3 = await db.insertExercise(catId2, '測試動作3');
-    await db.updateExercise(ex3, '測試動作2');
+    final ex2 = await db.insertExercise(catId, '測試動作3');
+    expect(() => db.updateExercise(ex2, '測試動作2'), throwsException);
   });
 }
