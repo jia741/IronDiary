@@ -1,0 +1,7213 @@
+{
+  "records": [
+    {
+      "date": "2024-09-02",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 6,
+          "weight": 70.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 6,
+          "weight": 63.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 5,
+          "weight": 18.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 13,
+          "weight": 64.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 8,
+          "weight": 74.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-05",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 9,
+          "weight": 24.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 6,
+          "weight": 18.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 10,
+          "weight": 86.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 9,
+          "weight": 82.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 58.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-09-06",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 6,
+          "weight": 14.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 9,
+          "weight": 98.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 6,
+          "weight": 44.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 15,
+          "weight": 85.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 10,
+          "weight": 42.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-08",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 12,
+          "weight": 44.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 13,
+          "weight": 29.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 5,
+          "weight": 30.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-10",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 8,
+          "weight": 69.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 15,
+          "weight": 51.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 7,
+          "weight": 32.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-12",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 5,
+          "weight": 87.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 15,
+          "weight": 24.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 11,
+          "weight": 63.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 11,
+          "weight": 63.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-09-14",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 6,
+          "weight": 36.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 12,
+          "weight": 10.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 9,
+          "weight": 97.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-15",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 13,
+          "weight": 95.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 5,
+          "weight": 63.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 5,
+          "weight": 20.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 9,
+          "weight": 31.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 14,
+          "weight": 95.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-18",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 13,
+          "weight": 24.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 14,
+          "weight": 48.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 13,
+          "weight": 78.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-19",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 8,
+          "weight": 15.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 14,
+          "weight": 59.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 8,
+          "weight": 10.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 15,
+          "weight": 15.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 5,
+          "weight": 87.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-20",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 8,
+          "weight": 80.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 8,
+          "weight": 18.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 11,
+          "weight": 41.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-09-23",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 6,
+          "weight": 32.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 13,
+          "weight": 50.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 7,
+          "weight": 35.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-24",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 5,
+          "weight": 97.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 7,
+          "weight": 46.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 8,
+          "weight": 87.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-25",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 11,
+          "weight": 72.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 13,
+          "weight": 69.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 7,
+          "weight": 27.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 5,
+          "weight": 62.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-26",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 13,
+          "weight": 17.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 6,
+          "weight": 63.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 8,
+          "weight": 46.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 8,
+          "weight": 62.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 14,
+          "weight": 17.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-09-28",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 15,
+          "weight": 68.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 10,
+          "weight": 93.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 5,
+          "weight": 51.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 6,
+          "weight": 16.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 13,
+          "weight": 33.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-09-29",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 98.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 13,
+          "weight": 10.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 9,
+          "weight": 93.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 7,
+          "weight": 33.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-09-30",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 13,
+          "weight": 54.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 6,
+          "weight": 67.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 5,
+          "weight": 10.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-02",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 6,
+          "weight": 16.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 7,
+          "weight": 59.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 14,
+          "weight": 59.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-10-03",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 15,
+          "weight": 32.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 10,
+          "weight": 80.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 14,
+          "weight": 77.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 7,
+          "weight": 97.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-06",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 7,
+          "weight": 80.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 11,
+          "weight": 88.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 8,
+          "weight": 28.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 10,
+          "weight": 37.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 8,
+          "weight": 12.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-09",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 15,
+          "weight": 98.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 10,
+          "weight": 94.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 9,
+          "weight": 26.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 5,
+          "weight": 19.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-10-11",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 11,
+          "weight": 10.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 15,
+          "weight": 74.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 15,
+          "weight": 27.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 6,
+          "weight": 95.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 14,
+          "weight": 38.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-13",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 11,
+          "weight": 69.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 15,
+          "weight": 77.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 14,
+          "weight": 61.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 13,
+          "weight": 85.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-10-15",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 70.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 12,
+          "weight": 81.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 7,
+          "weight": 69.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 13,
+          "weight": 69.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 10,
+          "weight": 18.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-17",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 8,
+          "weight": 98.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 6,
+          "weight": 51.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 14,
+          "weight": 27.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-10-20",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 11,
+          "weight": 29.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 13,
+          "weight": 51.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 8,
+          "weight": 92.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-23",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 7,
+          "weight": 76.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 12,
+          "weight": 33.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 15,
+          "weight": 35.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 12,
+          "weight": 66.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-10-26",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 10,
+          "weight": 90.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 7,
+          "weight": 23.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 7,
+          "weight": 73.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-29",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 11,
+          "weight": 45.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 5,
+          "weight": 87.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 11,
+          "weight": 52.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 9,
+          "weight": 77.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-10-30",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 15,
+          "weight": 71.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 7,
+          "weight": 85.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 58.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 14,
+          "weight": 60.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-10-31",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 10,
+          "weight": 29.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 10,
+          "weight": 78.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 9,
+          "weight": 77.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-02",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 10,
+          "weight": 30.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 15,
+          "weight": 13.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 8,
+          "weight": 27.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-11-03",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 10,
+          "weight": 25.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 6,
+          "weight": 80.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 9,
+          "weight": 19.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 9,
+          "weight": 61.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-06",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 9,
+          "weight": 86.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 6,
+          "weight": 81.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 5,
+          "weight": 41.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 15,
+          "weight": 43.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 15,
+          "weight": 40.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-09",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 7,
+          "weight": 76.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 9,
+          "weight": 65.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 12,
+          "weight": 51.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 14,
+          "weight": 34.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-11-10",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 5,
+          "weight": 54.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 7,
+          "weight": 53.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 9,
+          "weight": 40.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 9,
+          "weight": 60.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-11-11",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 15,
+          "weight": 74.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 5,
+          "weight": 18.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 11,
+          "weight": 72.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 15,
+          "weight": 62.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 13,
+          "weight": 57.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-13",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 8,
+          "weight": 38.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 13,
+          "weight": 95.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 7,
+          "weight": 27.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 12,
+          "weight": 34.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-11-15",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 7,
+          "weight": 37.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 13,
+          "weight": 21.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 5,
+          "weight": 59.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-11-16",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 7,
+          "weight": 96.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 12,
+          "weight": 20.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 11,
+          "weight": 54.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 15,
+          "weight": 71.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 7,
+          "weight": 83.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-17",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 11,
+          "weight": 50.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 9,
+          "weight": 87.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 9,
+          "weight": 61.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 14,
+          "weight": 96.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 8,
+          "weight": 66.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-18",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 5,
+          "weight": 46.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 14,
+          "weight": 52.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 8,
+          "weight": 35.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-21",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 6,
+          "weight": 59.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 7,
+          "weight": 91.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 6,
+          "weight": 15.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-23",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 13,
+          "weight": 54.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 14,
+          "weight": 13.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 10,
+          "weight": 64.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 6,
+          "weight": 30.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 14,
+          "weight": 62.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-11-25",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 9,
+          "weight": 26.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 11,
+          "weight": 67.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 6,
+          "weight": 52.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-11-27",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 9,
+          "weight": 69.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 13,
+          "weight": 13.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 10,
+          "weight": 32.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-11-30",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 13,
+          "weight": 42.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 15,
+          "weight": 49.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 8,
+          "weight": 34.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-02",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 9,
+          "weight": 59.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 11,
+          "weight": 18.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 12,
+          "weight": 95.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-03",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 12,
+          "weight": 59.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 8,
+          "weight": 93.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 7,
+          "weight": 87.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 11,
+          "weight": 40.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 9,
+          "weight": 83.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-12-05",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 13,
+          "weight": 78.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 12,
+          "weight": 94.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 8,
+          "weight": 61.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 11,
+          "weight": 13.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-08",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 14,
+          "weight": 39.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 12,
+          "weight": 19.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 5,
+          "weight": 75.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 15,
+          "weight": 97.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 80.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-12-10",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 12,
+          "weight": 88.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 14,
+          "weight": 16.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 15,
+          "weight": 92.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 6,
+          "weight": 49.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-11",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 9,
+          "weight": 42.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 7,
+          "weight": 32.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 14,
+          "weight": 71.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 7,
+          "weight": 25.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-14",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 9,
+          "weight": 70.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 9,
+          "weight": 71.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 6,
+          "weight": 49.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 14,
+          "weight": 36.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 9,
+          "weight": 51.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-12-15",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 14,
+          "weight": 36.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 9,
+          "weight": 12.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 11,
+          "weight": 34.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-16",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 15,
+          "weight": 27.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 15,
+          "weight": 78.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 15,
+          "weight": 85.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-17",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 6,
+          "weight": 91.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 11,
+          "weight": 25.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 13,
+          "weight": 88.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 13,
+          "weight": 55.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-12-18",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 7,
+          "weight": 77.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 15,
+          "weight": 75.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 13,
+          "weight": 42.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 5,
+          "weight": 33.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-21",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 15,
+          "weight": 31.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 14,
+          "weight": 89.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 10,
+          "weight": 92.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 15,
+          "weight": 15.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 9,
+          "weight": 68.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-22",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 13,
+          "weight": 22.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 10,
+          "weight": 70.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 13,
+          "weight": 47.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 7,
+          "weight": 89.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-23",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 12,
+          "weight": 95.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 6,
+          "weight": 98.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 13,
+          "weight": 91.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 10,
+          "weight": 15.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2024-12-24",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 5,
+          "weight": 80.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 7,
+          "weight": 80.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 6,
+          "weight": 84.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 8,
+          "weight": 62.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-26",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 13,
+          "weight": 32.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 6,
+          "weight": 69.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 7,
+          "weight": 11.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-28",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 13,
+          "weight": 20.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 12,
+          "weight": 50.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 13,
+          "weight": 63.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 13,
+          "weight": 29.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2024-12-29",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 11,
+          "weight": 71.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 12,
+          "weight": 16.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 10,
+          "weight": 64.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2024-12-30",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 12,
+          "weight": 55.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 6,
+          "weight": 81.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 15,
+          "weight": 68.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 8,
+          "weight": 48.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 11,
+          "weight": 40.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-02",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 7,
+          "weight": 71.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 6,
+          "weight": 18.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 6,
+          "weight": 48.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 10,
+          "weight": 83.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-01-03",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 14,
+          "weight": 38.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 14,
+          "weight": 55.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 15,
+          "weight": 53.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 10,
+          "weight": 86.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-04",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 5,
+          "weight": 26.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 9,
+          "weight": 92.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 5,
+          "weight": 26.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 14,
+          "weight": 69.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-01-05",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 10,
+          "weight": 24.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 10,
+          "weight": 79.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 14,
+          "weight": 17.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 7,
+          "weight": 24.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 5,
+          "weight": 70.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-08",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 13,
+          "weight": 20.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 6,
+          "weight": 35.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 14,
+          "weight": 53.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 9,
+          "weight": 14.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-09",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 10,
+          "weight": 20.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 11,
+          "weight": 25.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 13,
+          "weight": 73.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 13,
+          "weight": 85.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-10",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 6,
+          "weight": 87.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 11,
+          "weight": 61.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 15,
+          "weight": 47.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-01-13",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 10,
+          "weight": 17.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 8,
+          "weight": 49.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 13,
+          "weight": 17.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-15",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 13,
+          "weight": 55.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 10,
+          "weight": 75.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 7,
+          "weight": 31.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-01-17",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 14,
+          "weight": 78.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 15,
+          "weight": 93.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 15,
+          "weight": 67.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 10,
+          "weight": 87.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 10,
+          "weight": 23.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-01-20",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 6,
+          "weight": 37.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 5,
+          "weight": 15.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 6,
+          "weight": 68.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 63.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-23",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 7,
+          "weight": 96.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 6,
+          "weight": 83.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 6,
+          "weight": 55.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 5,
+          "weight": 32.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 57.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-01-24",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 6,
+          "weight": 39.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 15,
+          "weight": 44.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 15,
+          "weight": 96.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 7,
+          "weight": 40.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-01-25",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 11,
+          "weight": 67.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 7,
+          "weight": 70.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 15,
+          "weight": 92.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 15,
+          "weight": 70.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 10,
+          "weight": 11.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-26",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 6,
+          "weight": 36.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 13,
+          "weight": 79.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 13,
+          "weight": 13.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 14,
+          "weight": 21.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-27",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 11,
+          "weight": 42.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 8,
+          "weight": 97.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 9,
+          "weight": 77.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 8,
+          "weight": 58.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 12,
+          "weight": 91.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 8,
+          "weight": 82.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 9,
+          "weight": 14.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 10,
+          "weight": 59.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 13,
+          "weight": 86.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 8,
+          "weight": 83.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 5,
+          "weight": 47.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 13,
+          "weight": 43.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 6,
+          "weight": 43.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 12,
+          "weight": 72.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 12,
+          "weight": 50.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 6,
+          "weight": 11.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 7,
+          "weight": 59.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 8,
+          "weight": 47.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 12,
+          "weight": 15.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 14,
+          "weight": 58.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 13,
+          "weight": 61.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 15,
+          "weight": 70.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 10,
+          "weight": 16.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 13,
+          "weight": 55.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 13,
+          "weight": 11.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 5,
+          "weight": 67.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-02-07",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 14,
+          "weight": 76.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 7,
+          "weight": 14.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 10,
+          "weight": 83.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-10",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 5,
+          "weight": 36.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 8,
+          "weight": 89.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 9,
+          "weight": 56.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-02-13",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 15,
+          "weight": 39.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 10,
+          "weight": 49.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 12,
+          "weight": 90.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-02-15",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 11,
+          "weight": 17.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 7,
+          "weight": 59.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 6,
+          "weight": 17.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 9,
+          "weight": 37.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 11,
+          "weight": 25.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-02-17",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 5,
+          "weight": 16.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 11,
+          "weight": 42.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 15,
+          "weight": 24.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 7,
+          "weight": 86.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-02-20",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 11,
+          "weight": 95.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 14,
+          "weight": 23.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 10,
+          "weight": 43.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-21",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 56.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 6,
+          "weight": 33.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 12,
+          "weight": 29.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 9,
+          "weight": 72.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 8,
+          "weight": 21.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-24",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 6,
+          "weight": 59.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 9,
+          "weight": 86.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 15,
+          "weight": 25.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-02-25",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 10,
+          "weight": 59.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 12,
+          "weight": 82.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 7,
+          "weight": 65.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-26",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 14,
+          "weight": 16.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 15,
+          "weight": 16.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 15,
+          "weight": 56.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 13,
+          "weight": 67.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 7,
+          "weight": 48.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-02-27",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 10,
+          "weight": 95.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 9,
+          "weight": 86.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 8,
+          "weight": 67.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-01",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 14,
+          "weight": 94.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 7,
+          "weight": 69.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 14,
+          "weight": 40.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-02",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 15,
+          "weight": 29.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 11,
+          "weight": 65.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 12,
+          "weight": 90.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-04",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 7,
+          "weight": 49.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 12,
+          "weight": 28.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 7,
+          "weight": 38.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 10,
+          "weight": 76.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 11,
+          "weight": 21.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-03-05",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 7,
+          "weight": 18.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 11,
+          "weight": 87.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 8,
+          "weight": 96.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-03-07",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 12,
+          "weight": 12.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 13,
+          "weight": 51.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 8,
+          "weight": 62.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 5,
+          "weight": 35.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-10",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 10,
+          "weight": 78.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 5,
+          "weight": 46.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 13,
+          "weight": 27.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-12",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 6,
+          "weight": 45.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 13,
+          "weight": 94.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 8,
+          "weight": 64.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 13,
+          "weight": 13.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 7,
+          "weight": 74.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-03-15",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 11,
+          "weight": 99.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 9,
+          "weight": 63.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 13,
+          "weight": 57.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-17",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 15,
+          "weight": 12.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 9,
+          "weight": 97.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 14,
+          "weight": 30.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 14,
+          "weight": 53.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-20",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 8,
+          "weight": 11.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 11,
+          "weight": 23.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 8,
+          "weight": 46.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-23",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 15,
+          "weight": 53.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 10,
+          "weight": 96.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 13,
+          "weight": 40.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-03-25",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 9,
+          "weight": 73.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 12,
+          "weight": 38.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 13,
+          "weight": 94.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 9,
+          "weight": 35.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-28",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 6,
+          "weight": 41.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 15,
+          "weight": 33.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 8,
+          "weight": 28.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-03-30",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 15,
+          "weight": 91.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 15,
+          "weight": 31.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 11,
+          "weight": 39.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 6,
+          "weight": 71.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 5,
+          "weight": 96.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-02",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 15,
+          "weight": 15.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 15,
+          "weight": 61.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 5,
+          "weight": 92.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-05",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 5,
+          "weight": 10.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 14,
+          "weight": 19.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 9,
+          "weight": 50.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 13,
+          "weight": 57.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-08",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 5,
+          "weight": 76.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 14,
+          "weight": 70.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 7,
+          "weight": 65.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 11,
+          "weight": 84.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-10",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 8,
+          "weight": 10.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 8,
+          "weight": 50.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 10,
+          "weight": 37.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 14,
+          "weight": 11.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 10,
+          "weight": 72.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-11",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 15,
+          "weight": 92.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 10,
+          "weight": 65.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 7,
+          "weight": 53.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 43.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-14",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 13,
+          "weight": 73.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 14,
+          "weight": 20.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 13,
+          "weight": 28.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-15",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 13,
+          "weight": 50.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 12,
+          "weight": 21.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 12,
+          "weight": 60.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 12,
+          "weight": 70.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 5,
+          "weight": 45.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-16",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 6,
+          "weight": 98.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 5,
+          "weight": 35.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 7,
+          "weight": 78.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 15,
+          "weight": 96.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-04-19",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 6,
+          "weight": 26.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 11,
+          "weight": 57.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 8,
+          "weight": 85.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 9,
+          "weight": 51.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-22",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 9,
+          "weight": 27.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 6,
+          "weight": 12.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 11,
+          "weight": 65.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-23",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 14,
+          "weight": 70.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 8,
+          "weight": 76.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 12,
+          "weight": 31.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-24",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 8,
+          "weight": 37.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 15,
+          "weight": 56.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 9,
+          "weight": 34.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-25",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 11,
+          "weight": 46.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 11,
+          "weight": 26.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 12,
+          "weight": 31.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-27",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 13,
+          "weight": 57.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 8,
+          "weight": 32.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 15,
+          "weight": 17.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 10,
+          "weight": 18.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-04-28",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 6,
+          "weight": 26.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 15,
+          "weight": 60.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 8,
+          "weight": 88.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 9,
+          "weight": 96.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-04-29",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 14,
+          "weight": 73.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 8,
+          "weight": 59.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 11,
+          "weight": 52.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-01",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 10,
+          "weight": 92.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 10,
+          "weight": 47.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 8,
+          "weight": 76.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 9,
+          "weight": 59.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 14,
+          "weight": 74.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-02",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 12,
+          "weight": 59.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 10,
+          "weight": 33.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 15,
+          "weight": 76.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-03",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 13,
+          "weight": 13.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 14.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 11,
+          "weight": 22.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 8,
+          "weight": 16.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 5,
+          "weight": 29.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-05",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 5,
+          "weight": 57.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 5,
+          "weight": 11.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 9,
+          "weight": 58.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-06",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 8,
+          "weight": 65.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 10,
+          "weight": 34.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 6,
+          "weight": 43.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-09",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 6,
+          "weight": 46.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 13,
+          "weight": 52.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 5,
+          "weight": 73.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-05-12",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 14,
+          "weight": 52.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 6,
+          "weight": 71.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 13,
+          "weight": 60.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 7,
+          "weight": 93.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 5,
+          "weight": 96.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-13",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 11,
+          "weight": 70.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 10,
+          "weight": 44.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 7,
+          "weight": 81.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-14",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 10,
+          "weight": 12.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 12,
+          "weight": 54.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 13,
+          "weight": 94.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 7,
+          "weight": 71.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-17",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 9,
+          "weight": 23.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 23.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 10,
+          "weight": 42.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 5,
+          "weight": 94.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-19",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 13,
+          "weight": 59.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 6,
+          "weight": 12.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 13,
+          "weight": 18.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-21",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 8,
+          "weight": 61.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 15,
+          "weight": 44.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 9,
+          "weight": 37.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 7,
+          "weight": 15.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-23",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 15,
+          "weight": 54.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 8,
+          "weight": 51.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "引體向上",
+          "reps": 9,
+          "weight": 10.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-05-25",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 10,
+          "weight": 64.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 8,
+          "weight": 53.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 11,
+          "weight": 97.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 15,
+          "weight": 54.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-26",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 14,
+          "weight": 99.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 15,
+          "weight": 79.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 12,
+          "weight": 94.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 12,
+          "weight": 81.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-27",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 15,
+          "weight": 23.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 11,
+          "weight": 16.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 12,
+          "weight": 62.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-05-30",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 7,
+          "weight": 68.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 14,
+          "weight": 98.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 46.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 11,
+          "weight": 19.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-01",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 12,
+          "weight": 79.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 13,
+          "weight": 23.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 12,
+          "weight": 19.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-02",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 12,
+          "weight": 80.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 12,
+          "weight": 41.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 12,
+          "weight": 75.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-04",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 5,
+          "weight": 86.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 6,
+          "weight": 70.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 8,
+          "weight": 56.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-06-05",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 15,
+          "weight": 69.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 5,
+          "weight": 76.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 12,
+          "weight": 63.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 5,
+          "weight": 73.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-07",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 10,
+          "weight": 27.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 9,
+          "weight": 70.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 13,
+          "weight": 96.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-10",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 15,
+          "weight": 73.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 14,
+          "weight": 63.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 7,
+          "weight": 38.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 9,
+          "weight": 20.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-11",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 7,
+          "weight": 53.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 15,
+          "weight": 93.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 13,
+          "weight": 25.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-12",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 12,
+          "weight": 22.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 13,
+          "weight": 55.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 11,
+          "weight": 71.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 12,
+          "weight": 54.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-13",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 9,
+          "weight": 25.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 76.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 13,
+          "weight": 56.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-06-14",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 11,
+          "weight": 19.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 8,
+          "weight": 36.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 12,
+          "weight": 33.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 12,
+          "weight": 87.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-15",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 8,
+          "weight": 82.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 10,
+          "weight": 57.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 13,
+          "weight": 25.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 9,
+          "weight": 36.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-16",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 8,
+          "weight": 23.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 8,
+          "weight": 78.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 11,
+          "weight": 54.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 34.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-19",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 10,
+          "weight": 50.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 10,
+          "weight": 62.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 6,
+          "weight": 75.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-21",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 9,
+          "weight": 39.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 10,
+          "weight": 59.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 14,
+          "weight": 86.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 78.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-22",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 11,
+          "weight": 28.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 7,
+          "weight": 89.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 7,
+          "weight": 88.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-23",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 11,
+          "weight": 66.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 8,
+          "weight": 48.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 6,
+          "weight": 10.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 6,
+          "weight": 21.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-26",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 6,
+          "weight": 30.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 6,
+          "weight": 19.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 9,
+          "weight": 22.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 15,
+          "weight": 99.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 6,
+          "weight": 57.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-06-27",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 8,
+          "weight": 17.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 7,
+          "weight": 77.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 11,
+          "weight": 41.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-06-29",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 5,
+          "weight": 86.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 9,
+          "weight": 28.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 13,
+          "weight": 27.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 9,
+          "weight": 68.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-02",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 5,
+          "weight": 98.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 7,
+          "weight": 44.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 11,
+          "weight": 42.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 7,
+          "weight": 78.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-03",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 13,
+          "weight": 35.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 13,
+          "weight": 79.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 11,
+          "weight": 17.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 13,
+          "weight": 65.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-04",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 11,
+          "weight": 62.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 15,
+          "weight": 67.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 11,
+          "weight": 75.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-05",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 9,
+          "weight": 69.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 7,
+          "weight": 20.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 7,
+          "weight": 73.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 12,
+          "weight": 95.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-07-07",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 5,
+          "weight": 40.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 9,
+          "weight": 57.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 14,
+          "weight": 66.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-10",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 14,
+          "weight": 70.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 8,
+          "weight": 76.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 5,
+          "weight": 87.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 8,
+          "weight": 14.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 11,
+          "weight": 92.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-11",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 6,
+          "weight": 61.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 13,
+          "weight": 70.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 7,
+          "weight": 30.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-07-12",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 13,
+          "weight": 51.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 8,
+          "weight": 36.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 14,
+          "weight": 31.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 14,
+          "weight": 97.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-13",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴胸推",
+          "reps": 15,
+          "weight": 85.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 10,
+          "weight": 10.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 11,
+          "weight": 86.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 9,
+          "weight": 19.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-07-14",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 5,
+          "weight": 92.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 11,
+          "weight": 73.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 12,
+          "weight": 97.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-15",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 15,
+          "weight": 96.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 9,
+          "weight": 33.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 11,
+          "weight": 73.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-07-17",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 14,
+          "weight": 19.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 7,
+          "weight": 50.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 11,
+          "weight": 20.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-18",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 15,
+          "weight": 37.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "硬舉",
+          "reps": 14,
+          "weight": 13.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 7,
+          "weight": 18.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 10,
+          "weight": 45.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-20",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 13,
+          "weight": 32.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 6,
+          "weight": 82.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 6,
+          "weight": 11.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-21",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 6,
+          "weight": 12.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 8,
+          "weight": 91.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 7,
+          "weight": 18.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 6,
+          "weight": 13.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-22",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "槌式彎舉",
+          "reps": 5,
+          "weight": 44.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 7,
+          "weight": 41.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 9,
+          "weight": 35.2,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-23",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 5,
+          "weight": 17.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 7,
+          "weight": 47.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 13,
+          "weight": 32.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-07-24",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 14,
+          "weight": 55.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 9,
+          "weight": 26.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 14,
+          "weight": 29.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 5,
+          "weight": 82.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-26",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 13,
+          "weight": 83.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 5,
+          "weight": 78.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 14,
+          "weight": 86.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-07-28",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 10,
+          "weight": 92.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 10,
+          "weight": 95.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 7,
+          "weight": 60.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-07-31",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 14,
+          "weight": 29.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 12,
+          "weight": 10.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 8,
+          "weight": 82.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-01",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 13,
+          "weight": 87.5,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 10,
+          "weight": 73.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 11,
+          "weight": 62.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-03",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 13,
+          "weight": 72.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 10,
+          "weight": 30.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 7,
+          "weight": 44.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 9,
+          "weight": 21.5,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 5,
+          "weight": 95.4,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-08-06",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 7,
+          "weight": 39.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 8,
+          "weight": 41.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 7,
+          "weight": 67.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 15,
+          "weight": 67.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 12,
+          "weight": 11.0,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-08-07",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "直立划船",
+          "reps": 11,
+          "weight": 49.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 7,
+          "weight": 89.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "T槓划船",
+          "reps": 11,
+          "weight": 41.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "背",
+          "exercise": "俯身划船",
+          "reps": 6,
+          "weight": 84.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-08-08",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 5,
+          "weight": 38.7,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 6,
+          "weight": 40.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 7,
+          "weight": 75.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-08-09",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 14,
+          "weight": 90.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 5,
+          "weight": 19.1,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 8,
+          "weight": 46.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "二頭",
+          "exercise": "槓鈴彎舉",
+          "reps": 13,
+          "weight": 33.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-11",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 12,
+          "weight": 23.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 5,
+          "weight": 48.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 15,
+          "weight": 66.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-12",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴胸推",
+          "reps": 6,
+          "weight": 52.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴飛鳥",
+          "reps": 9,
+          "weight": 80.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 12,
+          "weight": 90.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-13",
+      "workouts": [
+        {
+          "category": "背",
+          "exercise": "坐姿划船",
+          "reps": 9,
+          "weight": 49.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 8,
+          "weight": 85.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "背",
+          "exercise": "滑輪下拉",
+          "reps": 5,
+          "weight": 23.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 15,
+          "weight": 18.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-08-15",
+      "workouts": [
+        {
+          "category": "二頭",
+          "exercise": "啞鈴彎舉",
+          "reps": 13,
+          "weight": 47.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 15,
+          "weight": 88.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 14,
+          "weight": 89.3,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-17",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "深蹲",
+          "reps": 12,
+          "weight": 25.6,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 8,
+          "weight": 82.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿屈曲",
+          "reps": 5,
+          "weight": 48.1,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 11,
+          "weight": 28.2,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "羅馬尼亞硬舉",
+          "reps": 7,
+          "weight": 85.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-19",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "槓鈴上胸",
+          "reps": 9,
+          "weight": 56.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 14,
+          "weight": 62.9,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "滑輪夾胸",
+          "reps": 6,
+          "weight": 47.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 14,
+          "weight": 62.9,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-08-20",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 15,
+          "weight": 53.7,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 12,
+          "weight": 13.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "懸垂舉腿",
+          "reps": 11,
+          "weight": 22.9,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 15,
+          "weight": 72.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-08-23",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "阿諾肩推",
+          "reps": 5,
+          "weight": 40.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 9,
+          "weight": 35.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "前平舉",
+          "reps": 15,
+          "weight": 18.8,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    },
+    {
+      "date": "2025-08-24",
+      "workouts": [
+        {
+          "category": "腿",
+          "exercise": "保加利亞分腿蹲",
+          "reps": 12,
+          "weight": 29.0,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腿",
+          "exercise": "箭步蹲",
+          "reps": 12,
+          "weight": 78.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 5,
+          "weight": 56.4,
+          "unit": "kg",
+          "rest_seconds": 60
+        },
+        {
+          "category": "腿",
+          "exercise": "腿伸展",
+          "reps": 6,
+          "weight": 38.0,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-08-27",
+      "workouts": [
+        {
+          "category": "腹",
+          "exercise": "捲腹",
+          "reps": 5,
+          "weight": 32.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "腹",
+          "exercise": "仰臥起坐",
+          "reps": 5,
+          "weight": 92.6,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腹",
+          "exercise": "平板支撐",
+          "reps": 8,
+          "weight": 34.7,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-30",
+      "workouts": [
+        {
+          "category": "三頭",
+          "exercise": "雙槓撐體",
+          "reps": 14,
+          "weight": 50.1,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "繩索下壓",
+          "reps": 14,
+          "weight": 59.6,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "三頭",
+          "exercise": "仰臥臂屈伸",
+          "reps": 7,
+          "weight": 85.4,
+          "unit": "kg",
+          "rest_seconds": 90
+        }
+      ]
+    },
+    {
+      "date": "2025-08-31",
+      "workouts": [
+        {
+          "category": "胸",
+          "exercise": "機械胸推",
+          "reps": 8,
+          "weight": 68.3,
+          "unit": "kg",
+          "rest_seconds": 120
+        },
+        {
+          "category": "腿",
+          "exercise": "腿推",
+          "reps": 8,
+          "weight": 34.2,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "胸",
+          "exercise": "啞鈴上胸",
+          "reps": 13,
+          "weight": 11.8,
+          "unit": "kg",
+          "rest_seconds": 120
+        }
+      ]
+    },
+    {
+      "date": "2025-09-01",
+      "workouts": [
+        {
+          "category": "肩",
+          "exercise": "啞鈴肩推",
+          "reps": 14,
+          "weight": 82.5,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "槓鈴肩推",
+          "reps": 15,
+          "weight": 34.8,
+          "unit": "kg",
+          "rest_seconds": 90
+        },
+        {
+          "category": "肩",
+          "exercise": "側平舉",
+          "reps": 10,
+          "weight": 51.3,
+          "unit": "kg",
+          "rest_seconds": 60
+        }
+      ]
+    }
+  ]
+}
