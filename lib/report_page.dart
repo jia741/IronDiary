@@ -9,6 +9,8 @@ import 'database_helper.dart';
 
 enum _Range { days30, days90, year }
 
+enum _DistRange { days30, days60, year }
+
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
 
@@ -19,6 +21,7 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   final _db = DatabaseHelper.instance;
   _Range _range = _Range.days30;
+  _DistRange _distRange = _DistRange.days30;
   int? _selectedCategoryId;
   int? _selectedExerciseId;
 
@@ -32,8 +35,7 @@ class _ReportPageState extends State<ReportPage> {
   final ScrollController _chartController = ScrollController();
   bool _shouldScrollToEnd = true;
 
-  Map<String, double> _catTotals = {};
-  Map<String, double> _exerciseTotals = {};
+  Map<String, double> _distTotals = {};
 
   @override
   void initState() {
@@ -42,7 +44,7 @@ class _ReportPageState extends State<ReportPage> {
       await _loadSelections();
       await _loadAllWorkouts();
       _updateChartData();
-      _computeTotals();
+      _computeDistribution();
     });
   }
 
@@ -78,6 +80,7 @@ class _ReportPageState extends State<ReportPage> {
     final data = await _db.getWorkouts(
         DateTime.fromMillisecondsSinceEpoch(0), DateTime.now());
     setState(() => _allWorkouts = data);
+    _computeDistribution();
   }
 
   void _onCategoryChanged(int? id) async {
@@ -91,6 +94,7 @@ class _ReportPageState extends State<ReportPage> {
       setState(() => _exercises = exs);
     }
     _updateChartData();
+    _computeDistribution();
   }
 
   void _onExerciseChanged(int? id) {
@@ -111,6 +115,19 @@ class _ReportPageState extends State<ReportPage> {
     _updateChartData();
   }
 
+  void _cycleDistRange() {
+    setState(() {
+      if (_distRange == _DistRange.days30) {
+        _distRange = _DistRange.days60;
+      } else if (_distRange == _DistRange.days60) {
+        _distRange = _DistRange.year;
+      } else {
+        _distRange = _DistRange.days30;
+      }
+    });
+    _computeDistribution();
+  }
+
   String _rangeLabel() {
     switch (_range) {
       case _Range.days30:
@@ -118,6 +135,17 @@ class _ReportPageState extends State<ReportPage> {
       case _Range.days90:
         return '近90天';
       case _Range.year:
+        return '近一年';
+    }
+  }
+
+  String _distRangeLabel() {
+    switch (_distRange) {
+      case _DistRange.days30:
+        return '近30天';
+      case _DistRange.days60:
+        return '近60天';
+      case _DistRange.year:
         return '近一年';
     }
   }
@@ -256,10 +284,29 @@ class _ReportPageState extends State<ReportPage> {
     });
   }
 
-  void _computeTotals() {
-    final Map<String, double> catTotals = {};
-    final Map<String, double> exTotals = {};
+  void _computeDistribution() {
+    final latest = _allWorkouts.isEmpty
+        ? DateTime.now()
+        : DateTime.fromMillisecondsSinceEpoch(
+            _allWorkouts.map<int>((w) => w['timestamp'] as int).reduce(math.max));
+    final now = latest;
+    DateTime start;
+    switch (_distRange) {
+      case _DistRange.days30:
+        start = now.subtract(const Duration(days: 29));
+        break;
+      case _DistRange.days60:
+        start = now.subtract(const Duration(days: 59));
+        break;
+      case _DistRange.year:
+        start = now.subtract(const Duration(days: 364));
+        break;
+    }
+
+    final Map<String, double> totals = {};
     for (final w in _allWorkouts) {
+      final ts = DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+      if (ts.isBefore(start) || ts.isAfter(now)) continue;
       double weight = (w['weight'] as num).toDouble();
       final unit = w['unit'] as String;
       if (unit.toLowerCase() == 'lb') {
@@ -267,15 +314,17 @@ class _ReportPageState extends State<ReportPage> {
       }
       final reps = w['reps'] as int;
       final vol = weight * reps;
-      final c = w['category_name'] as String;
-      final e = w['exercise_name'] as String;
-      catTotals[c] = (catTotals[c] ?? 0) + vol;
-      exTotals[e] = (exTotals[e] ?? 0) + vol;
+      if (_selectedCategoryId == null) {
+        final c = w['category_name'] as String;
+        totals[c] = (totals[c] ?? 0) + vol;
+      } else {
+        final cName = _catName(_selectedCategoryId!);
+        if (w['category_name'] != cName) continue;
+        final e = w['exercise_name'] as String;
+        totals[e] = (totals[e] ?? 0) + vol;
+      }
     }
-    setState(() {
-      _catTotals = catTotals;
-      _exerciseTotals = exTotals;
-    });
+    setState(() => _distTotals = totals);
   }
 
   List<Map<String, dynamic>> _filteredRecords() {
@@ -319,7 +368,7 @@ class _ReportPageState extends State<ReportPage> {
           bottom: const TabBar(
             tabs: [
               Tab(text: '趨勢'),
-              Tab(text: '報表'),
+              Tab(text: '分布'),
               Tab(text: '紀錄'),
             ],
           ),
@@ -328,7 +377,7 @@ class _ReportPageState extends State<ReportPage> {
           child: TabBarView(
             children: [
               _buildTrendTab(),
-              _buildReportTab(),
+              _buildDistributionTab(),
               _buildRecordTab(),
             ],
           ),
@@ -466,83 +515,75 @@ class _ReportPageState extends State<ReportPage> {
     );
   }
 
-  Widget _buildReportTab() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200,
-            child: Row(
-              children: [
-                Expanded(
-                  child: PieChart(
-                    PieChartData(
-                      sections: _catTotals.entries.map((e) {
-                        final index =
-                            _catTotals.keys.toList().indexOf(e.key);
-                        final color = Colors
-                            .primaries[index % Colors.primaries.length];
-                        return PieChartSectionData(
-                          value: e.value,
-                          color: color,
-                          title: e.key,
-                          radius: 60,
-                          titleStyle: const TextStyle(fontSize: 12),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 120,
-                  child: ListView(
-                    children: _catTotals.entries
-                        .map((e) => Text(
-                            '${e.key}: ${e.value.toStringAsFixed(1)}kg'))
-                        .toList(),
+  Widget _buildDistributionTab() {
+    final entries = _distTotals.entries.toList();
+    final total = entries.fold<double>(0, (p, e) => p + e.value);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton<int?> (
+              hint: const Text('部位'),
+              value: _selectedCategoryId,
+              items: [
+                const DropdownMenuItem<int?> (
+                    value: null, child: Text('全部')),
+                ..._categories.map(
+                  (c) => DropdownMenuItem<int?> (
+                    value: c['id'] as int,
+                    child: Text(c['name'] as String),
                   ),
                 ),
               ],
+              onChanged: (v) => _onCategoryChanged(v),
+            ),
+            const SizedBox(width: 16),
+            TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
+          ],
+        ),
+        SizedBox(
+          height: 200,
+          child: PieChart(
+            PieChartData(
+              sections: entries.asMap().entries.map((entry) {
+                final index = entry.key;
+                final e = entry.value;
+                final color =
+                    Colors.primaries[index % Colors.primaries.length];
+                final percent = total == 0 ? 0 : e.value / total * 100;
+                return PieChartSectionData(
+                  value: e.value,
+                  color: color,
+                  title: '${percent.toStringAsFixed(1)}%',
+                  radius: 60,
+                  titleStyle: const TextStyle(fontSize: 12),
+                );
+              }).toList(),
             ),
           ),
-          SizedBox(
-            height: 200,
-            child: Row(
-              children: [
-                Expanded(
-                  child: PieChart(
-                    PieChartData(
-                      sections: _exerciseTotals.entries.map((e) {
-                        final index = _exerciseTotals.keys
-                            .toList()
-                            .indexOf(e.key);
-                        final color = Colors
-                            .primaries[index % Colors.primaries.length];
-                        return PieChartSectionData(
-                          value: e.value,
-                          color: color,
-                          title: e.key,
-                          radius: 60,
-                          titleStyle: const TextStyle(fontSize: 12),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: entries.length,
+            itemBuilder: (context, index) {
+              final e = entries[index];
+              final percent = total == 0 ? 0 : e.value / total * 100;
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text(e.key)),
+                    Text('${percent.toStringAsFixed(1)}%'),
+                    Text('${e.value.toStringAsFixed(1)}kg'),
+                  ],
                 ),
-                SizedBox(
-                  width: 120,
-                  child: ListView(
-                    children: _exerciseTotals.entries
-                        .map((e) => Text(
-                            '${e.key}: ${e.value.toStringAsFixed(1)}kg'))
-                        .toList(),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
