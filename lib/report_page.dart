@@ -36,6 +36,7 @@ class _ReportPageState extends State<ReportPage> {
   bool _shouldScrollToEnd = true;
 
   Map<String, double> _distTotals = {};
+  bool _loading = true;
 
   @override
   void initState() {
@@ -45,6 +46,9 @@ class _ReportPageState extends State<ReportPage> {
       await _loadAllWorkouts();
       _updateChartData();
       _computeDistribution();
+      if (mounted) {
+        setState(() => _loading = false);
+      }
     });
   }
 
@@ -205,11 +209,17 @@ class _ReportPageState extends State<ReportPage> {
       final dates = volumes.keys.toList()..sort();
       final spots = <FlSpot>[];
       final labels = <String>[];
-      for (var i = 0; i < dates.length; i++) {
-        final d = dates[i];
-        final y = volumes[d] ?? 0;
-        spots.add(FlSpot(i.toDouble(), y));
+      if (dates.isEmpty) {
+        final d = DateTime(now.year, now.month, now.day);
+        spots.add(const FlSpot(0, 0));
         labels.add('${d.month}/${d.day}');
+      } else {
+        for (var i = 0; i < dates.length; i++) {
+          final d = dates[i];
+          final y = volumes[d] ?? 0;
+          spots.add(FlSpot(i.toDouble(), y));
+          labels.add('${d.month}/${d.day}');
+        }
       }
       final maxY = spots.fold<double>(0, (p, s) => math.max(p, s.y));
       setState(() {
@@ -374,13 +384,15 @@ class _ReportPageState extends State<ReportPage> {
           ),
         ),
         body: SafeArea(
-          child: TabBarView(
-            children: [
-              _buildTrendTab(),
-              _buildDistributionTab(),
-              _buildRecordTab(),
-            ],
-          ),
+          child: _loading
+              ? const Center(child: CircularProgressIndicator())
+              : TabBarView(
+                  children: [
+                    _buildTrendTab(),
+                    _buildDistributionTab(),
+                    _buildRecordTab(),
+                  ],
+                ),
         ),
       ),
     );
