@@ -520,28 +520,23 @@ class _ReportPageState extends State<ReportPage> {
     final total = entries.fold<double>(0, (p, e) => p + e.value);
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            DropdownButton<int?> (
-              hint: const Text('部位'),
-              value: _selectedCategoryId,
-              items: [
-                const DropdownMenuItem<int?> (
-                    value: null, child: Text('全部')),
-                ..._categories.map(
-                  (c) => DropdownMenuItem<int?> (
-                    value: c['id'] as int,
-                    child: Text(c['name'] as String),
-                  ),
-                ),
-              ],
-              onChanged: (v) => _onCategoryChanged(v),
+        DropdownButton<int?>(
+          hint: const Text('部位'),
+          value: _selectedCategoryId,
+          items: [
+            const DropdownMenuItem<int?> (
+                value: null, child: Text('全部')),
+            ..._categories.map(
+              (c) => DropdownMenuItem<int?> (
+                value: c['id'] as int,
+                child: Text(c['name'] as String),
+              ),
             ),
-            const SizedBox(width: 16),
-            TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
           ],
+          onChanged: (v) => _onCategoryChanged(v),
         ),
+        const SizedBox(height: 8),
+        TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: SizedBox(
@@ -559,7 +554,6 @@ class _ReportPageState extends State<ReportPage> {
                     color: color,
                     title: e.key,
                     radius: 60,
-                    titlePositionPercentageOffset: 1.4,
                     titleStyle: const TextStyle(fontSize: 12),
                   );
                 }).toList(),
