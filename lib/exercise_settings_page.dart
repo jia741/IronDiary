@@ -70,15 +70,22 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (id == null) {
-                  await _db.insertCategory(controller.text);
-                } else {
-                  await _db.updateCategory(id, controller.text);
+                try {
+                  final name = controller.text.trim();
+                  if (id == null) {
+                    await _db.insertCategory(name);
+                  } else {
+                    await _db.updateCategory(id, name);
+                  }
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                  if (!mounted) return;
+                  _loadCategories();
+                } catch (e) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('類別名稱重複')));
                 }
-                if (!context.mounted) return;
-                Navigator.pop(context);
-                if (!mounted) return;
-                _loadCategories();
               },
               child: const Text('確定'),
             ),
@@ -103,15 +110,22 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (id == null) {
-                  await _db.insertExercise(catId, controller.text);
-                } else {
-                  await _db.updateExercise(id, controller.text);
+                try {
+                  final name = controller.text.trim();
+                  if (id == null) {
+                    await _db.insertExercise(catId, name);
+                  } else {
+                    await _db.updateExercise(id, name);
+                  }
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                  if (!mounted) return;
+                  _loadCategories();
+                } catch (e) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('動作名稱重複')));
                 }
-                if (!context.mounted) return;
-                Navigator.pop(context);
-                if (!mounted) return;
-                _loadCategories();
               },
               child: const Text('確定'),
             ),

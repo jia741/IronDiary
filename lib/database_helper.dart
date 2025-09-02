@@ -77,6 +77,11 @@ class DatabaseHelper {
 
   Future<int> insertCategory(String name) async {
     final db = await database;
+    final exists = await db.query('categories',
+        where: 'LOWER(name) = ?', whereArgs: [name.toLowerCase()]);
+    if (exists.isNotEmpty) {
+      throw Exception('Category name already exists');
+    }
     return db.insert('categories', {'name': name});
   }
 
@@ -92,6 +97,12 @@ class DatabaseHelper {
 
   Future<int> insertExercise(int categoryId, String name) async {
     final db = await database;
+    final exists = await db.query('exercises',
+        where: 'category_id = ? AND LOWER(name) = ?',
+        whereArgs: [categoryId, name.toLowerCase()]);
+    if (exists.isNotEmpty) {
+      throw Exception('Exercise name already exists');
+    }
     return db.insert('exercises', {'category_id': categoryId, 'name': name});
   }
 
