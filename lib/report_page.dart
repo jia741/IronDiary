@@ -324,12 +324,14 @@ class _ReportPageState extends State<ReportPage> {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            _buildTrendTab(),
-            _buildReportTab(),
-            _buildRecordTab(),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              _buildTrendTab(),
+              _buildReportTab(),
+              _buildRecordTab(),
+            ],
+          ),
         ),
       ),
     );
