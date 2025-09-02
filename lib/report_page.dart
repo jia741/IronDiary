@@ -494,7 +494,7 @@ class _ReportPageState extends State<ReportPage> {
                               ),
                               lineBarsData: [
                                 LineChartBarData(
-                                  spots: _spots,
+                                  spots: _spots.isEmpty ? [FlSpot(0, 0)] : _spots, //如果還未有資料，避免錯誤
                                   isCurved: false,
                                   color: Colors.blue,
                                   barWidth: 3,
