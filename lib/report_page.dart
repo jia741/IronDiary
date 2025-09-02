@@ -9,7 +9,7 @@ import 'database_helper.dart';
 
 enum _Range { days30, days90, year }
 
-enum _DistRange { days30, days60, year }
+enum _DistRange { days30, days90, year }
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -118,8 +118,8 @@ class _ReportPageState extends State<ReportPage> {
   void _cycleDistRange() {
     setState(() {
       if (_distRange == _DistRange.days30) {
-        _distRange = _DistRange.days60;
-      } else if (_distRange == _DistRange.days60) {
+        _distRange = _DistRange.days90;
+      } else if (_distRange == _DistRange.days90) {
         _distRange = _DistRange.year;
       } else {
         _distRange = _DistRange.days30;
@@ -143,8 +143,8 @@ class _ReportPageState extends State<ReportPage> {
     switch (_distRange) {
       case _DistRange.days30:
         return '近30天';
-      case _DistRange.days60:
-        return '近60天';
+      case _DistRange.days90:
+        return '近90天';
       case _DistRange.year:
         return '近一年';
     }
@@ -295,8 +295,8 @@ class _ReportPageState extends State<ReportPage> {
       case _DistRange.days30:
         start = now.subtract(const Duration(days: 29));
         break;
-      case _DistRange.days60:
-        start = now.subtract(const Duration(days: 59));
+      case _DistRange.days90:
+        start = now.subtract(const Duration(days: 89));
         break;
       case _DistRange.year:
         start = now.subtract(const Duration(days: 364));
@@ -520,6 +520,8 @@ class _ReportPageState extends State<ReportPage> {
     final total = entries.fold<double>(0, (p, e) => p + e.value);
     return Column(
       children: [
+        TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
+        const SizedBox(height: 8),
         DropdownButton<int?>(
           hint: const Text('部位'),
           value: _selectedCategoryId,
@@ -535,8 +537,6 @@ class _ReportPageState extends State<ReportPage> {
           ],
           onChanged: (v) => _onCategoryChanged(v),
         ),
-        const SizedBox(height: 8),
-        TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: SizedBox(
@@ -622,21 +622,33 @@ class _ReportPageState extends State<ReportPage> {
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: records.length,
-            itemBuilder: (context, index) {
-              final w = records[index];
-              final date =
-                  DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
-              final weight = (w['weight'] as num).toDouble();
-              final unit = w['unit'] as String;
-              return ListTile(
-                title: Text('${w['category_name']} - ${w['exercise_name']}'),
-                subtitle: Text(
-                  '${date.toLocal()}  次數:${w['reps']}  重量:${weight.toStringAsFixed(1)}$unit  休息:${w['rest_seconds']}秒',
-                ),
-              );
-            },
+          child: SingleChildScrollView(
+            child: DataTable(
+              columns: const [
+                DataColumn(label: Text('時間')),
+                DataColumn(label: Text('部位')),
+                DataColumn(label: Text('動作')),
+                DataColumn(label: Text('次數')),
+                DataColumn(label: Text('重量')),
+                DataColumn(label: Text('休息')),
+              ],
+              rows: records.map((w) {
+                final date = DateTime.fromMillisecondsSinceEpoch(
+                    w['timestamp'] as int);
+                final dateStr = date.toLocal().toString().split('.').first;
+                final weight =
+                    (w['weight'] as num).toDouble().toStringAsFixed(1);
+                final unit = w['unit'] as String;
+                return DataRow(cells: [
+                  DataCell(Text(dateStr)),
+                  DataCell(Text(w['category_name'] as String)),
+                  DataCell(Text(w['exercise_name'] as String)),
+                  DataCell(Text('${w['reps']}')),
+                  DataCell(Text('$weight$unit')),
+                  DataCell(Text('${w['rest_seconds']}秒')),
+                ]);
+              }).toList(),
+            ),
           ),
         ),
       ],
