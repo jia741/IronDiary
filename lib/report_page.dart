@@ -546,17 +546,18 @@ class _ReportPageState extends State<ReportPage> {
           height: 200,
           child: PieChart(
             PieChartData(
+              sectionsSpace: 2,
               sections: entries.asMap().entries.map((entry) {
                 final index = entry.key;
                 final e = entry.value;
                 final color =
                     Colors.primaries[index % Colors.primaries.length];
-                final percent = total == 0 ? 0 : e.value / total * 100;
                 return PieChartSectionData(
                   value: e.value,
                   color: color,
-                  title: '${percent.toStringAsFixed(1)}%',
+                  title: e.key,
                   radius: 60,
+                  titlePositionPercentageOffset: 1.4,
                   titleStyle: const TextStyle(fontSize: 12),
                 );
               }).toList(),
@@ -564,23 +565,22 @@ class _ReportPageState extends State<ReportPage> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: entries.length,
-            itemBuilder: (context, index) {
-              final e = entries[index];
-              final percent = total == 0 ? 0 : e.value / total * 100;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(child: Text(e.key)),
-                    Text('${percent.toStringAsFixed(1)}%'),
-                    Text('${e.value.toStringAsFixed(1)}kg'),
-                  ],
-                ),
-              );
-            },
+          child: SingleChildScrollView(
+            child: DataTable(
+              columns: const [
+                DataColumn(label: Text('名稱')),
+                DataColumn(label: Text('百分比')),
+                DataColumn(label: Text('總訓練量')),
+              ],
+              rows: entries.map((e) {
+                final percent = total == 0 ? 0 : e.value / total * 100;
+                return DataRow(cells: [
+                  DataCell(Text(e.key)),
+                  DataCell(Text('${percent.toStringAsFixed(1)}%')),
+                  DataCell(Text('${e.value.toStringAsFixed(1)}kg')),
+                ]);
+              }).toList(),
+            ),
           ),
         ),
       ],
