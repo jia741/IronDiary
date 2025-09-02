@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   bool _isTiming = false;
   int _remainingSeconds = 0;
   Timer? _timer;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  AudioPlayer? _audioPlayer;
 
   int _navIndex = 0;
   int reps = 10;
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
     _repController.dispose();
     _weightController.dispose();
     _timer?.cancel();
-    _audioPlayer.dispose();
+    _audioPlayer?.dispose();
     super.dispose();
   }
 
@@ -197,7 +197,8 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        unawaited(_audioPlayer.play(AssetSource('readytowork.mp3')));
+        _audioPlayer ??= AudioPlayer();
+        unawaited(_audioPlayer!.play(AssetSource('readytowork.mp3')));
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('計時完成')));
