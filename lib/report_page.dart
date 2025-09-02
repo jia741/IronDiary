@@ -412,24 +412,30 @@ class _ReportPageState extends State<ReportPage> {
                               minY: 0,
                               maxY: _maxY == 0 ? 1 : _maxY,
                               titlesData: FlTitlesData(
-                                bottomTitles: AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    interval: 1,
-                                    getTitlesWidget: (value, meta) {
-                                      final index = value.toInt();
-                                      if (index < 0 || index >= _labels.length) {
-                                        return const SizedBox();
-                                      }
-                                      return Text(
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  interval: 1,
+                                  getTitlesWidget: (value, meta) {
+                                    final index = value.toInt();
+                                    if (index < 0 || index >= _labels.length) {
+                                      return const SizedBox();
+                                    }
+                                    return SideTitleWidget(
+                                      axisSide: meta.axisSide,
+                                      fitInside:
+                                          SideTitleFitInsideData.fromTitleMeta(
+                                              meta),
+                                      child: Text(
                                         _labels[index],
                                         style: const TextStyle(fontSize: 10),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                leftTitles: AxisTitles(
-                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                              leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false)),
                                 topTitles: AxisTitles(
                                     sideTitles: SideTitles(showTitles: false)),
                                 rightTitles: AxisTitles(
@@ -438,7 +444,7 @@ class _ReportPageState extends State<ReportPage> {
                               lineBarsData: [
                                 LineChartBarData(
                                   spots: _spots,
-                                  isCurved: true,
+                                  isCurved: false,
                                   color: Colors.blue,
                                   barWidth: 3,
                                 ),
