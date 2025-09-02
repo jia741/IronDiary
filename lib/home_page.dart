@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     Future(() async {
       await _loadSettings();
       await _loadData();
+      await _checkFirstLaunch();
     });
   }
 
@@ -77,6 +79,50 @@ class _HomePageState extends State<HomePage> {
         weight = 10;
         _timerSeconds = 60;
       });
+    }
+  }
+
+  Future<void> _checkFirstLaunch() async {
+    final prefs = await SharedPreferences.getInstance();
+    final prompted = prefs.getBool('defaultDataPrompted') ?? false;
+    if (!prompted) {
+      if (!mounted) return;
+      final shouldImport = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('匯入預設動作？'),
+          content: const Text('是否匯入常見的動作與分類？'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('否'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('是'),
+            ),
+          ],
+        ),
+      );
+      if (shouldImport ?? false) {
+        await _importDefaultExercises();
+        await _loadData();
+      }
+      await prefs.setBool('defaultDataPrompted', true);
+    }
+  }
+
+  Future<void> _importDefaultExercises() async {
+    final data = await rootBundle.loadString('assets/default_exercises.json');
+    final Map<String, dynamic> jsonMap = json.decode(data);
+    final List cats = jsonMap['categories'] as List;
+    for (final c in cats) {
+      final catName = c['name'] as String;
+      final catId = await _db.insertCategory(catName);
+      final List exs = c['exercises'] as List;
+      for (final e in exs) {
+        await _db.insertExercise(catId, e as String);
+      }
     }
   }
 

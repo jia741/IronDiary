@@ -70,15 +70,22 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (id == null) {
-                  await _db.insertCategory(controller.text);
-                } else {
-                  await _db.updateCategory(id, controller.text);
+                try {
+                  final name = controller.text.trim();
+                  if (id == null) {
+                    await _db.insertCategory(name);
+                  } else {
+                    await _db.updateCategory(id, name);
+                  }
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                  if (!mounted) return;
+                  _loadCategories();
+                } catch (e) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('類別名稱重複')));
                 }
-                if (!context.mounted) return;
-                Navigator.pop(context);
-                if (!mounted) return;
-                _loadCategories();
               },
               child: const Text('確定'),
             ),
@@ -103,15 +110,22 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (id == null) {
-                  await _db.insertExercise(catId, controller.text);
-                } else {
-                  await _db.updateExercise(id, controller.text);
+                try {
+                  final name = controller.text.trim();
+                  if (id == null) {
+                    await _db.insertExercise(catId, name);
+                  } else {
+                    await _db.updateExercise(id, name);
+                  }
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                  if (!mounted) return;
+                  _loadCategories();
+                } catch (e) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('動作名稱重複')));
                 }
-                if (!context.mounted) return;
-                Navigator.pop(context);
-                if (!mounted) return;
-                _loadCategories();
               },
               child: const Text('確定'),
             ),
@@ -283,19 +297,21 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
       appBar: AppBar(title: const Text('動作設定')),
       body: SafeArea(
         child: _categories.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.info_outline,
-                      size: ScreenUtil.w(80), color: Colors.grey),
-                  SizedBox(height: ScreenUtil.h(16)),
-                  const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
-                  SizedBox(height: ScreenUtil.h(16)),
-                  ElevatedButton(
-                    onPressed: () => _showCategoryDialog(),
-                    child: const Text('新增類別'),
-                  ),
-                ],
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.info_outline,
+                        size: ScreenUtil.w(80), color: Colors.grey),
+                    SizedBox(height: ScreenUtil.h(16)),
+                    const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
+                    SizedBox(height: ScreenUtil.h(16)),
+                    ElevatedButton(
+                      onPressed: () => _showCategoryDialog(),
+                      child: const Text('新增類別'),
+                    ),
+                  ],
+                ),
               )
             : Column(
                 children: [

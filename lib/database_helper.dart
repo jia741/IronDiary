@@ -48,33 +48,6 @@ class DatabaseHelper {
         FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
       )
     ''');
-
-    // insert default categories
-    final catNames = ['胸', '肩', '背', '腿'];
-    for (final name in catNames) {
-      await db.insert('categories', {'name': name});
-    }
-
-    final categories = await db.query('categories');
-    final catIds = {for (var c in categories) c['name'] as String: c['id'] as int};
-    Future<void> addEx(String cat, String name) async {
-      final catId = catIds[cat]!;
-      await db.insert('exercises', {'category_id': catId, 'name': name});
-    }
-
-    await addEx('胸', '啞鈴胸推');
-    await addEx('胸', '槓鈴胸推');
-    await addEx('胸', '機械胸推');
-    await addEx('胸', '啞鈴上胸');
-    await addEx('胸', '槓鈴上胸');
-    await addEx('肩', '啞鈴肩推');
-    await addEx('肩', '槓鈴肩推');
-    await addEx('背', '坐姿划船');
-    await addEx('背', '硬舉');
-    await addEx('背', '滑輪下拉');
-    await addEx('背', '引體向上');
-    await addEx('腿', '深蹲');
-    await addEx('腿', '保加利亞分腿蹲');
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -102,14 +75,26 @@ class DatabaseHelper {
     return db.query('exercises', where: 'category_id = ?', whereArgs: [categoryId]);
   }
 
-  Future<void> insertCategory(String name) async {
+  Future<int> insertCategory(String name) async {
     final db = await database;
-    await db.insert('categories', {'name': name});
+    final exists = await db.query('categories',
+        where: 'LOWER(name) = ?', whereArgs: [name.toLowerCase()]);
+    if (exists.isNotEmpty) {
+      throw Exception('Category name already exists');
+    }
+    return db.insert('categories', {'name': name});
   }
 
   Future<void> updateCategory(int id, String name) async {
     final db = await database;
-    await db.update('categories', {'name': name}, where: 'id = ?', whereArgs: [id]);
+    final exists = await db.query('categories',
+        where: 'LOWER(name) = ? AND id != ?',
+        whereArgs: [name.toLowerCase(), id]);
+    if (exists.isNotEmpty) {
+      throw Exception('Category name already exists');
+    }
+    await db.update('categories', {'name': name},
+        where: 'id = ?', whereArgs: [id]);
   }
 
   Future<void> deleteCategory(int id) async {
@@ -117,14 +102,29 @@ class DatabaseHelper {
     await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<void> insertExercise(int categoryId, String name) async {
+  Future<int> insertExercise(int categoryId, String name) async {
     final db = await database;
-    await db.insert('exercises', {'category_id': categoryId, 'name': name});
+    final exists = await db
+        .query('exercises', where: 'LOWER(name) = ?', whereArgs: [name.toLowerCase()]);
+    if (exists.isNotEmpty) {
+      throw Exception('Exercise name already exists');
+    }
+    return db.insert('exercises', {'category_id': categoryId, 'name': name});
   }
 
   Future<void> updateExercise(int id, String name) async {
     final db = await database;
-    await db.update('exercises', {'name': name}, where: 'id = ?', whereArgs: [id]);
+    final exists = await db.query('exercises',
+        where: 'LOWER(name) = ? AND id != ?',
+        whereArgs: [name.toLowerCase(), id]);
+    if (exists.isNotEmpty) {
+      throw Exception('Exercise name already exists');
+    }
+    final count = await db.update('exercises', {'name': name},
+        where: 'id = ?', whereArgs: [id]);
+    if (count == 0) {
+      throw Exception('Exercise not found');
+    }
   }
 
   Future<void> deleteExercise(int id) async {
