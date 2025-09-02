@@ -542,25 +542,28 @@ class _ReportPageState extends State<ReportPage> {
             TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
           ],
         ),
-        SizedBox(
-          height: 200,
-          child: PieChart(
-            PieChartData(
-              sectionsSpace: 2,
-              sections: entries.asMap().entries.map((entry) {
-                final index = entry.key;
-                final e = entry.value;
-                final color =
-                    Colors.primaries[index % Colors.primaries.length];
-                return PieChartSectionData(
-                  value: e.value,
-                  color: color,
-                  title: e.key,
-                  radius: 60,
-                  titlePositionPercentageOffset: 1.4,
-                  titleStyle: const TextStyle(fontSize: 12),
-                );
-              }).toList(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: SizedBox(
+            height: 200,
+            child: PieChart(
+              PieChartData(
+                sectionsSpace: 2,
+                sections: entries.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final e = entry.value;
+                  final color =
+                      Colors.primaries[index % Colors.primaries.length];
+                  return PieChartSectionData(
+                    value: e.value,
+                    color: color,
+                    title: e.key,
+                    radius: 60,
+                    titlePositionPercentageOffset: 1.4,
+                    titleStyle: const TextStyle(fontSize: 12),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),
