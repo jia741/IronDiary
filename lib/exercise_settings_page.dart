@@ -297,19 +297,21 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
       appBar: AppBar(title: const Text('動作設定')),
       body: SafeArea(
         child: _categories.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.info_outline,
-                      size: ScreenUtil.w(80), color: Colors.grey),
-                  SizedBox(height: ScreenUtil.h(16)),
-                  const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
-                  SizedBox(height: ScreenUtil.h(16)),
-                  ElevatedButton(
-                    onPressed: () => _showCategoryDialog(),
-                    child: const Text('新增類別'),
-                  ),
-                ],
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.info_outline,
+                        size: ScreenUtil.w(80), color: Colors.grey),
+                    SizedBox(height: ScreenUtil.h(16)),
+                    const Text('您尚未建立任何動作類別，點擊下方按鈕開始吧！'),
+                    SizedBox(height: ScreenUtil.h(16)),
+                    ElevatedButton(
+                      onPressed: () => _showCategoryDialog(),
+                      child: const Text('新增類別'),
+                    ),
+                  ],
+                ),
               )
             : Column(
                 children: [
