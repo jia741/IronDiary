@@ -170,4 +170,29 @@ class DatabaseHelper {
       ORDER BY w.timestamp DESC
     ''', [startMs, endMs]);
   }
+
+  Future<void> updateWorkout({
+    required int id,
+    int? reps,
+    double? weight,
+    String? unit,
+    int? restSeconds,
+  }) async {
+    final db = await database;
+    final data = <String, Object?>{};
+    if (reps != null) data['reps'] = reps;
+    if (weight != null) data['weight'] = weight;
+    if (unit != null) data['unit'] = unit;
+    if (restSeconds != null) data['rest_seconds'] = restSeconds;
+    if (data.isEmpty) return;
+    final count = await db.update('workouts', data, where: 'id = ?', whereArgs: [id]);
+    if (count == 0) {
+      throw Exception('Workout not found');
+    }
+  }
+
+  Future<void> deleteWorkout(int id) async {
+    final db = await database;
+    await db.delete('workouts', where: 'id = ?', whereArgs: [id]);
+  }
 }

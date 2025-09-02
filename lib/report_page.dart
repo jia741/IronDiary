@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'database_helper.dart';
 
@@ -626,16 +627,60 @@ class _ReportPageState extends State<ReportPage> {
             itemCount: records.length,
             itemBuilder: (context, index) {
               final w = records[index];
-              final date =
-                  DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
+              final date = DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
               final dateStr = date.toLocal().toString().split('.').first;
               final weight = (w['weight'] as num).toDouble();
               final unit = w['unit'] as String;
-              return ListTile(
-                title:
-                    Text('${w['category_name']} - ${w['exercise_name']}'),
-                subtitle: Text(
-                  '$dateStr  次數:${w['reps']}  重量:${weight.toStringAsFixed(1)}$unit  休息:${w['rest_seconds']}秒',
+              return Slidable(
+                key: ValueKey('workout_${w['id']}'),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (_) => _showEditWorkoutDialog(w),
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      icon: Icons.edit,
+                      label: '編輯',
+                    ),
+                    SlidableAction(
+                      onPressed: (_) async {
+                        final confirm = await showDialog<bool>(
+                              context: context,
+                              builder: (dialogContext) => AlertDialog(
+                                title: const Text('確認刪除'),
+                                content: const Text('確定要刪除這筆紀錄嗎？'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(dialogContext, false),
+                                    child: const Text('取消'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(dialogContext, true),
+                                    child: const Text('刪除'),
+                                  ),
+                                ],
+                              ),
+                            ) ??
+                            false;
+                        if (confirm) {
+                          await _db.deleteWorkout(w['id'] as int);
+                          await _loadAllWorkouts();
+                          _updateChartData();
+                        }
+                      },
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: '刪除',
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  title: Text('${w['category_name']} - ${w['exercise_name']}'),
+                  subtitle: Text(
+                    '$dateStr  次數:${w['reps']}  重量:${weight.toStringAsFixed(1)}$unit  休息:${w['rest_seconds']}秒',
+                  ),
                 ),
               );
             },
@@ -644,5 +689,98 @@ class _ReportPageState extends State<ReportPage> {
       ],
     );
   }
-}
 
+  Future<void> _showEditWorkoutDialog(Map<String, dynamic> w) async {
+    final id = w['id'] as int;
+    final repsController = TextEditingController(text: (w['reps'] as int).toString());
+    final weightController = TextEditingController(text: (w['weight'] as num).toString());
+    final restController = TextEditingController(text: (w['rest_seconds'] as int).toString());
+    String unit = (w['unit'] as String);
+
+    await showDialog<void>(
+      context: context,
+      builder: (dialogCtx) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('編輯紀錄'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${w['category_name']} - ${w['exercise_name']}'),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: repsController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(labelText: '次數'),
+                    ),
+                    TextField(
+                      controller: weightController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(labelText: '重量'),
+                    ),
+                    Row(
+                      children: [
+                        const Text('單位: '),
+                        const SizedBox(width: 8),
+                        DropdownButton<String>(
+                          value: unit,
+                          items: const [
+                            DropdownMenuItem(value: 'kg', child: Text('kg')),
+                            DropdownMenuItem(value: 'lb', child: Text('lb')),
+                          ],
+                          onChanged: (v) {
+                            if (v == null) return;
+                            setState(() => unit = v);
+                          },
+                        ),
+                      ],
+                    ),
+                    TextField(
+                      controller: restController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(labelText: '休息秒數'),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('取消'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    final reps = int.tryParse(repsController.text.trim());
+                    final weight = double.tryParse(weightController.text.trim());
+                    final rest = int.tryParse(restController.text.trim());
+                    if (reps == null || weight == null || rest == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('請輸入有效的數值')),
+                      );
+                      return;
+                    }
+                    await _db.updateWorkout(
+                      id: id,
+                      reps: reps,
+                      weight: weight,
+                      unit: unit,
+                      restSeconds: rest,
+                    );
+                    if (!context.mounted) return;
+                    Navigator.pop(context);
+                    await _loadAllWorkouts();
+                    _updateChartData();
+                  },
+                  child: const Text('儲存'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}
