@@ -45,13 +45,28 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   sqflite_common_ffi: ^2.3.1
-
+  change_app_package_name: ^1.1.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/IronDairy_ICON.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/IronDairy_splashscreen.png
+  android: true
+  ios: true
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
