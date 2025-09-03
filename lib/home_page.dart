@@ -50,6 +50,11 @@ class _HomePageState extends State<HomePage> {
   Future<void> _importTestRecordsIfDev() async {
     const bool isDev = bool.fromEnvironment('IS_DEV');
     if (!isDev) return;
+
+    // Ensure default categories and exercises exist so test records can be
+    // imported without missing references.
+    await _importDefaultExercises();
+
     final data = await rootBundle.loadString('assets/test_records.json');
     final Map<String, dynamic> jsonMap = json.decode(data);
     final List records = jsonMap['records'] as List;
@@ -58,8 +63,8 @@ class _HomePageState extends State<HomePage> {
       final catName = r['category'] as String;
       final exName = r['exercise'] as String;
       int categoryId;
-      final existingCat =
-          await db.query('categories', where: 'name = ?', whereArgs: [catName]);
+      final existingCat = await db.query('categories',
+          where: 'name = ?', whereArgs: [catName]);
       if (existingCat.isNotEmpty) {
         categoryId = existingCat.first['id'] as int;
       } else {
@@ -156,12 +161,26 @@ class _HomePageState extends State<HomePage> {
     final data = await rootBundle.loadString('assets/default_exercises.json');
     final Map<String, dynamic> jsonMap = json.decode(data);
     final List cats = jsonMap['categories'] as List;
+    final db = await _db.database;
     for (final c in cats) {
       final catName = c['name'] as String;
-      final catId = await _db.insertCategory(catName);
+      int categoryId;
+      final existingCat =
+          await db.query('categories', where: 'name = ?', whereArgs: [catName]);
+      if (existingCat.isNotEmpty) {
+        categoryId = existingCat.first['id'] as int;
+      } else {
+        categoryId = await db.insert('categories', {'name': catName});
+      }
       final List exs = c['exercises'] as List;
       for (final e in exs) {
-        await _db.insertExercise(catId, e as String);
+        final existingEx = await db.query('exercises',
+            where: 'name = ? AND category_id = ?',
+            whereArgs: [e as String, categoryId]);
+        if (existingEx.isEmpty) {
+          await db.insert(
+              'exercises', {'name': e as String, 'category_id': categoryId});
+        }
       }
     }
   }
