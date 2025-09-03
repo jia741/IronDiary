@@ -132,8 +132,16 @@ class DatabaseHelper {
     await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<void> logWorkout(
-      int exerciseId, int reps, double weight, String unit, int restSeconds) async {
+  Future<void> clearAll() async {
+    final db = await database;
+    await db.delete('workouts');
+    await db.delete('exercises');
+    await db.delete('categories');
+  }
+
+  Future<void> logWorkout(int exerciseId, int reps, double weight, String unit,
+      int restSeconds,
+      {DateTime? timestamp}) async {
     final db = await database;
     await db.insert('workouts', {
       'exercise_id': exerciseId,
@@ -141,7 +149,8 @@ class DatabaseHelper {
       'weight': weight,
       'unit': unit,
       'rest_seconds': restSeconds,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'timestamp':
+          (timestamp ?? DateTime.now()).millisecondsSinceEpoch,
     });
   }
 
