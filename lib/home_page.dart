@@ -41,9 +41,49 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     Future(() async {
       await _loadSettings();
+      await _importTestRecordsIfDev();
       await _loadData();
       await _checkFirstLaunch();
     });
+  }
+
+  Future<void> _importTestRecordsIfDev() async {
+    const bool isDev = bool.fromEnvironment('IS_DEV');
+    if (!isDev) return;
+    final data = await rootBundle.loadString('assets/test_records.json');
+    final Map<String, dynamic> jsonMap = json.decode(data);
+    final List records = jsonMap['records'] as List;
+    final db = await _db.database;
+    for (final r in records) {
+      final catName = r['category'] as String;
+      final exName = r['exercise'] as String;
+      int categoryId;
+      final existingCat =
+          await db.query('categories', where: 'name = ?', whereArgs: [catName]);
+      if (existingCat.isNotEmpty) {
+        categoryId = existingCat.first['id'] as int;
+      } else {
+        categoryId = await db.insert('categories', {'name': catName});
+      }
+      int exerciseId;
+      final existingEx = await db.query('exercises',
+          where: 'name = ? AND category_id = ?',
+          whereArgs: [exName, categoryId]);
+      if (existingEx.isNotEmpty) {
+        exerciseId = existingEx.first['id'] as int;
+      } else {
+        exerciseId = await db
+            .insert('exercises', {'name': exName, 'category_id': categoryId});
+      }
+      await db.insert('workouts', {
+        'exercise_id': exerciseId,
+        'reps': r['reps'] as int,
+        'weight': (r['weight'] as num).toDouble(),
+        'unit': r['unit'] as String,
+        'rest_seconds': r['rest_seconds'] as int,
+        'timestamp': r['timestamp'] as int,
+      });
+    }
   }
 
   Future<void> _loadData() async {

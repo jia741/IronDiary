@@ -82,6 +82,7 @@ flutter:
   assets:
     - assets/readytowork.mp3
     - assets/default_exercises.json
+    - assets/test_records.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

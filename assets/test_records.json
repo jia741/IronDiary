@@ -1,0 +1,31 @@
+{
+  "records": [
+    {
+      "category": "胸",
+      "exercise": "啞鈴胸推",
+      "reps": 10,
+      "weight": 20,
+      "unit": "kg",
+      "rest_seconds": 60,
+      "timestamp": 1710000000000
+    },
+    {
+      "category": "肩",
+      "exercise": "側平舉",
+      "reps": 12,
+      "weight": 5,
+      "unit": "kg",
+      "rest_seconds": 60,
+      "timestamp": 1710003600000
+    },
+    {
+      "category": "背",
+      "exercise": "硬舉",
+      "reps": 8,
+      "weight": 80,
+      "unit": "kg",
+      "rest_seconds": 90,
+      "timestamp": 1710007200000
+    }
+  ]
+}
