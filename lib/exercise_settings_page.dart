@@ -22,15 +22,18 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
 
   Future<void> _loadCategories() async {
     final cats = await _db.getCategories();
-    final List<Map<String, dynamic>> withExs = [];
-    for (final c in cats) {
-      // Convert the query result to a modifiable list. Sqflite's QueryResultSet
-      // is read-only and attempting to modify it (e.g. during reordering)
-      // will throw an UnsupportedError.
-      final exs = List<Map<String, dynamic>>.from(
-          await _db.getExercises(c['id'] as int));
-      withExs.add({...c, 'exercises': exs});
-    }
+    final futures = [for (final c in cats) _db.getExercises(c['id'] as int)];
+    final exsList = await Future.wait(futures);
+    final withExs = <Map<String, dynamic>>[
+      for (var i = 0; i < cats.length; i++)
+        {
+          ...cats[i],
+          // Convert the query result to a modifiable list. Sqflite's
+          // QueryResultSet is read-only and attempting to modify it
+          // (e.g. during reordering) will throw an UnsupportedError.
+          'exercises': List<Map<String, dynamic>>.from(exsList[i]),
+        }
+    ];
     setState(() {
       _categories = withExs;
     });
@@ -70,8 +73,13 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
+                final name = controller.text.trim();
+                if (name.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('請輸入類別名稱')));
+                  return;
+                }
                 try {
-                  final name = controller.text.trim();
                   if (id == null) {
                     await _db.insertCategory(name);
                   } else {
@@ -80,7 +88,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                   if (!context.mounted) return;
                   Navigator.pop(context);
                   if (!mounted) return;
-                  _loadCategories();
+                  await _loadCategories();
                 } catch (e) {
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -110,8 +118,13 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
             ),
             ElevatedButton(
               onPressed: () async {
+                final name = controller.text.trim();
+                if (name.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('請輸入動作名稱')));
+                  return;
+                }
                 try {
-                  final name = controller.text.trim();
                   if (id == null) {
                     await _db.insertExercise(catId, name);
                   } else {
@@ -120,7 +133,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                   if (!context.mounted) return;
                   Navigator.pop(context);
                   if (!mounted) return;
-                  _loadCategories();
+                  await _loadCategories();
                 } catch (e) {
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -174,7 +187,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                   false;
               if (confirm) {
                 await _db.deleteExercise(e['id'] as int);
-                _loadCategories();
+                await _loadCategories();
               }
             },
             backgroundColor: Colors.red,
@@ -242,7 +255,7 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
                   false;
               if (confirm) {
                 await _db.deleteCategory(catId);
-                _loadCategories();
+                await _loadCategories();
               }
             },
             backgroundColor: Colors.red,
