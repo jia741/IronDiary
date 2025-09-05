@@ -31,6 +31,9 @@ class _HomePageState extends State<HomePage> {
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
 
+  int _todaySetCount = 0;
+  String _currentExerciseName = '';
+
   int _navIndex = 0;
   int reps = 10;
   double weight = 10;
@@ -198,7 +201,8 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Future<void> _showCompletionNotification() async {
+  Future<void> _showCompletionNotification(
+      String exerciseName, int count) async {
     // Android: use notification usage so system decides sound/vibrate according to channel & device settings
     final androidDetails = AndroidNotificationDetails(
       'timer_completion',
@@ -224,7 +228,8 @@ class _HomePageState extends State<HomePage> {
       macOS: darwinDetails,
     );
 
-    await _localNotifications.show(0, '計時完成', '組間休息已結束', details);
+    await _localNotifications.show(
+        0, '休息結束', '$exerciseName今天做了$count組', details);
   }
 
   Future<void> _onCategoryChanged(int? id) async {
@@ -245,6 +250,9 @@ class _HomePageState extends State<HomePage> {
     final exId = _selectedExercise;
     if (exId == null) return;
     await _db.logWorkout(exId, reps, weight, _weightUnit, _timerSeconds);
+    final count = await _db.getTodayWorkoutCount(exId);
+    final exName =
+        _exercises.firstWhere((e) => e['id'] == exId)['name'] as String;
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -252,6 +260,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isTiming = true;
       _remainingSeconds = _timerSeconds;
+      _todaySetCount = count;
+      _currentExerciseName = exName;
     });
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -260,15 +270,31 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        unawaited(_showCompletionNotification());
+        unawaited(
+            _showCompletionNotification(_currentExerciseName, _todaySetCount));
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('計時完成')));
+        ).showSnackBar(SnackBar(
+            content: Text('休息結束，$_currentExerciseName今天做了$_todaySetCount組')));
         setState(() {
           _isTiming = false;
         });
       }
     });
+  }
+
+  Future<void> _recordWorkoutOnly() async {
+    final exId = _selectedExercise;
+    if (exId == null) return;
+    await _db.logWorkout(exId, reps, weight, _weightUnit, _timerSeconds);
+    final count = await _db.getTodayWorkoutCount(exId);
+    final exName =
+        _exercises.firstWhere((e) => e['id'] == exId)['name'] as String;
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(
+        SnackBar(content: Text('$exName今天做了$count組')));
   }
 
   void _toggleWeightUnit() {
@@ -468,6 +494,7 @@ class _HomePageState extends State<HomePage> {
                   child: Center(
                     child: ElevatedButton(
                       onPressed: _isTiming ? null : _startWorkout,
+                      onLongPress: _isTiming ? null : _recordWorkoutOnly,
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
                         minimumSize: Size.square(ScreenUtil.w(100)),
