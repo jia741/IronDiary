@@ -32,5 +32,13 @@ class ScreenUtil {
     }
     return height * _scaleHeight;
   }
+
+  static double sp(double fontSize) {
+    if (!_initialized) {
+      throw StateError('ScreenUtil.init must be called before using sp().');
+    }
+    final scale = _scaleWidth < _scaleHeight ? _scaleWidth : _scaleHeight;
+    return fontSize * scale;
+  }
 }
 

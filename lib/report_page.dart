@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'database_helper.dart';
+import 'screen_util.dart';
 
 enum _Range { days30, days90, year }
 
@@ -383,7 +384,7 @@ class _ReportPageState extends State<ReportPage> {
     final labels = List.generate(5, (i) {
       final val = (_maxY / 4 * (4 - i));
       return Text(val.toStringAsFixed(0),
-          style: const TextStyle(fontSize: 10));
+          style: TextStyle(fontSize: ScreenUtil.sp(10)));
     });
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -512,7 +513,7 @@ class _ReportPageState extends State<ReportPage> {
                                               meta),
                                       child: Text(
                                         _labels[index],
-                                        style: const TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: ScreenUtil.sp(10)),
                                       ),
                                     );
                                   },
@@ -587,7 +588,7 @@ class _ReportPageState extends State<ReportPage> {
                     color: color,
                     title: e.key,
                     radius: 60,
-                    titleStyle: const TextStyle(fontSize: 12),
+                    titleStyle: TextStyle(fontSize: ScreenUtil.sp(12)),
                   );
                 }).toList(),
               ),

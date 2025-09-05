@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             c['name'] as String,
                             style: TextStyle(
-                              fontSize: ScreenUtil.w(16),
+                              fontSize: ScreenUtil.sp(16),
                               color: Theme.of(
                                 context,
                               ).textTheme.bodyLarge?.color,
@@ -384,7 +384,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             e['name'] as String,
                             style: TextStyle(
-                              fontSize: ScreenUtil.w(16),
+                              fontSize: ScreenUtil.sp(16),
                               color: Theme.of(
                                 context,
                               ).textTheme.bodyLarge?.color,
@@ -531,7 +531,7 @@ Widget prettyDropdown<T>({
   return DropdownButtonFormField<T>(
     value: value,
     isExpanded: true,
-    style: TextStyle(fontSize: ScreenUtil.w(16)),
+    style: TextStyle(fontSize: ScreenUtil.sp(16)),
     items: items,
     onChanged: onChanged,
     icon: Icon(Icons.keyboard_arrow_down_rounded, size: ScreenUtil.w(24)),
@@ -646,7 +646,7 @@ class _NumberRowState extends State<NumberRow> {
                   Text(
                     widget.label,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: ScreenUtil.w(16),
+                      fontSize: ScreenUtil.sp(16),
                     ),
                   ),
                   if (widget.labelTrailing != null) ...[
@@ -688,7 +688,7 @@ class _NumberRowState extends State<NumberRow> {
                       keyboardType: widget.keyboardType,
                       inputFormatters: widget.inputFormatters,
                       onSubmitted: widget.onSubmitted,
-                      style: TextStyle(fontSize: ScreenUtil.w(16)),
+                      style: TextStyle(fontSize: ScreenUtil.sp(16)),
                       decoration: const InputDecoration(isDense: true),
                     ),
                   ),
