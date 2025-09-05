@@ -12,6 +12,10 @@ enum _Range { days30, days90, year }
 
 enum _DistRange { days30, days90, year }
 
+double _toKg(double weight, String unit) {
+  return unit.toLowerCase() == 'lb' ? weight * 0.453592 : weight;
+}
+
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
 
@@ -78,8 +82,33 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   Future<void> _loadAllWorkouts() async {
-    final data = await _db.getWorkouts(
-        DateTime.fromMillisecondsSinceEpoch(0), DateTime.now());
+    final now = DateTime.now();
+    DateTime startRange;
+    switch (_range) {
+      case _Range.days30:
+        startRange = now.subtract(const Duration(days: 29));
+        break;
+      case _Range.days90:
+        startRange = now.subtract(const Duration(days: 89));
+        break;
+      case _Range.year:
+        startRange = DateTime(now.year, now.month - 11, 1);
+        break;
+    }
+    DateTime startDist;
+    switch (_distRange) {
+      case _DistRange.days30:
+        startDist = now.subtract(const Duration(days: 29));
+        break;
+      case _DistRange.days90:
+        startDist = now.subtract(const Duration(days: 89));
+        break;
+      case _DistRange.year:
+        startDist = now.subtract(const Duration(days: 364));
+        break;
+    }
+    final start = startRange.isBefore(startDist) ? startRange : startDist;
+    final data = await _db.getWorkouts(start, now);
     setState(() => _allWorkouts = data);
     _computeDistribution();
   }
@@ -90,16 +119,28 @@ class _ReportPageState extends State<ReportPage> {
       _selectedExerciseId = null;
       _exercises = [];
     });
+    final prefs = await SharedPreferences.getInstance();
     if (id != null) {
+      await prefs.setInt('selectedCategory', id);
+      await prefs.remove('selectedExercise');
       final exs = await _db.getExercises(id);
       setState(() => _exercises = exs);
+    } else {
+      await prefs.remove('selectedCategory');
+      await prefs.remove('selectedExercise');
     }
     _updateChartData();
     _computeDistribution();
   }
 
-  void _onExerciseChanged(int? id) {
+  void _onExerciseChanged(int? id) async {
     setState(() => _selectedExerciseId = id);
+    final prefs = await SharedPreferences.getInstance();
+    if (id != null) {
+      await prefs.setInt('selectedExercise', id);
+    } else {
+      await prefs.remove('selectedExercise');
+    }
     _updateChartData();
   }
 
@@ -193,11 +234,8 @@ class _ReportPageState extends State<ReportPage> {
               as String;
           if (w['exercise_name'] != exName) continue;
         }
-        double weight = (w['weight'] as num).toDouble();
-        final unit = w['unit'] as String;
-        if (unit.toLowerCase() == 'lb') {
-          weight *= 0.453592;
-        }
+        final weight =
+            _toKg((w['weight'] as num).toDouble(), w['unit'] as String);
         final reps = w['reps'] as int;
         final vol = weight * reps;
         final day = DateTime(ts.year, ts.month, ts.day);
@@ -237,11 +275,8 @@ class _ReportPageState extends State<ReportPage> {
             as String;
         if (w['exercise_name'] != exName) continue;
       }
-      double weight = (w['weight'] as num).toDouble();
-      final unit = w['unit'] as String;
-      if (unit.toLowerCase() == 'lb') {
-        weight *= 0.453592;
-      }
+      final weight =
+          _toKg((w['weight'] as num).toDouble(), w['unit'] as String);
       final reps = w['reps'] as int;
       final vol = weight * reps;
       int idx;
@@ -308,11 +343,8 @@ class _ReportPageState extends State<ReportPage> {
     for (final w in _allWorkouts) {
       final ts = DateTime.fromMillisecondsSinceEpoch(w['timestamp'] as int);
       if (ts.isBefore(start) || ts.isAfter(now)) continue;
-      double weight = (w['weight'] as num).toDouble();
-      final unit = w['unit'] as String;
-      if (unit.toLowerCase() == 'lb') {
-        weight *= 0.453592;
-      }
+      final weight =
+          _toKg((w['weight'] as num).toDouble(), w['unit'] as String);
       final reps = w['reps'] as int;
       final vol = weight * reps;
       if (_selectedCategoryId == null) {
