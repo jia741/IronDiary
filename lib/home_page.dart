@@ -42,13 +42,31 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     Future(() async {
       const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+      const darwinInit = DarwinInitializationSettings();
       await _localNotifications.initialize(
-        const InitializationSettings(android: androidInit),
+        const InitializationSettings(
+          android: androidInit,
+          iOS: darwinInit,
+          macOS: darwinInit,
+        ),
       );
       final androidImpl = _localNotifications
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
+            AndroidFlutterLocalNotificationsPlugin
+          >();
       await androidImpl?.requestNotificationsPermission();
+      // Request iOS permissions (if running on iOS)
+      final iosImpl = _localNotifications
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+      await iosImpl?.requestPermissions(alert: true, badge: true, sound: true);
+      // Request macOS permissions (if running on macOS)
+      final macImpl = _localNotifications
+          .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin
+          >();
+      await macImpl?.requestPermissions(alert: true, badge: true, sound: true);
       await _loadSettings();
       await _loadData();
       await _checkFirstLaunch();
@@ -165,20 +183,32 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _showCompletionNotification() async {
-    const androidDetails = AndroidNotificationDetails(
+    // Android: use notification usage so system decides sound/vibrate according to channel & device settings
+    final androidDetails = AndroidNotificationDetails(
       'timer_completion',
       'Timer Completion',
       importance: Importance.max,
       priority: Priority.high,
-      audioAttributesUsage: AudioAttributesUsage.alarm,
+      // use notification usage (not alarm) so system respects Do Not Disturb and channel settings
+      audioAttributesUsage: AudioAttributesUsage.notification,
+      playSound: true,
+      enableVibration: true,
     );
-    const details = NotificationDetails(android: androidDetails);
-    await _localNotifications.show(
-      0,
-      '計時完成',
-      '組間休息已結束',
-      details,
+
+    // iOS / macOS (Darwin): allow sound/alert/badge presentation (system will decide actual behavior)
+    final darwinDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
     );
+
+    final details = NotificationDetails(
+      android: androidDetails,
+      iOS: darwinDetails,
+      macOS: darwinDetails,
+    );
+
+    await _localNotifications.show(0, '計時完成', '組間休息已結束', details);
   }
 
   Future<void> _onCategoryChanged(int? id) async {
@@ -290,7 +320,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     if (_loading) {
       return const Scaffold(
-          body: SafeArea(child: Center(child: CircularProgressIndicator())));
+        body: SafeArea(child: Center(child: CircularProgressIndicator())),
+      );
     }
 
     return Scaffold(
@@ -391,15 +422,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   valueText: weight.toStringAsFixed(1),
                   onMinus: () {
-                    setState(() =>
-                        weight = double.parse(((weight - 0.1).clamp(0, 999))
-                            .toStringAsFixed(1)));
+                    setState(
+                      () => weight = double.parse(
+                        ((weight - 0.1).clamp(0, 999)).toStringAsFixed(1),
+                      ),
+                    );
                     unawaited(_saveSettings());
                   },
                   onPlus: () {
-                    setState(() =>
-                        weight = double.parse(((weight + 0.1).clamp(0, 999))
-                            .toStringAsFixed(1)));
+                    setState(
+                      () => weight = double.parse(
+                        ((weight + 0.1).clamp(0, 999)).toStringAsFixed(1),
+                      ),
+                    );
                     unawaited(_saveSettings());
                   },
                   onSubmitted: (v) {
@@ -621,7 +656,9 @@ class _NumberRowState extends State<NumberRow> {
                         onPressed: () {},
                         style: IconButton.styleFrom(
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
                             side: BorderSide(width: 1),
                           ),
                         ),
@@ -651,7 +688,9 @@ class _NumberRowState extends State<NumberRow> {
                         onPressed: () {},
                         style: IconButton.styleFrom(
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(100)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
                             side: BorderSide(width: 1),
                           ),
                         ),
