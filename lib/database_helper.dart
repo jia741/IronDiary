@@ -19,7 +19,7 @@ class DatabaseHelper {
     final path = join(dbPath, 'irondiary.db');
     return openDatabase(
       path,
-      version: 4,
+      version: 5,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -55,6 +55,12 @@ class DatabaseHelper {
         FOREIGN KEY(exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
       )
     ''');
+    await db.execute(
+        'CREATE INDEX idx_exercises_category_id ON exercises(category_id)');
+    await db.execute(
+        'CREATE INDEX idx_workouts_exercise_id ON workouts(exercise_id)');
+    await db
+        .execute('CREATE INDEX idx_workouts_timestamp ON workouts(timestamp)');
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -69,6 +75,14 @@ class DatabaseHelper {
     if (oldVersion < 4) {
       await db.execute(
           'ALTER TABLE workouts ADD COLUMN rest_seconds INTEGER NOT NULL DEFAULT 60');
+    }
+    if (oldVersion < 5) {
+      await db.execute(
+          'CREATE INDEX idx_exercises_category_id ON exercises(category_id)');
+      await db.execute(
+          'CREATE INDEX idx_workouts_exercise_id ON workouts(exercise_id)');
+      await db
+          .execute('CREATE INDEX idx_workouts_timestamp ON workouts(timestamp)');
     }
   }
 
