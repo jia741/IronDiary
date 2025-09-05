@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _db = DatabaseHelper.instance;
+  late final SharedPreferences _prefs;
   List<Map<String, dynamic>> _categories = [];
   List<Map<String, dynamic>> _exercises = [];
   int? _selectedCategory;
@@ -141,34 +142,52 @@ class _HomePageState extends State<HomePage> {
     final data = await rootBundle.loadString('assets/default_exercises.json');
     final Map<String, dynamic> jsonMap = json.decode(data);
     final List cats = jsonMap['categories'] as List;
-    for (final c in cats) {
-      final catName = c['name'] as String;
-      final catId = await _db.insertCategory(catName);
-      final List exs = c['exercises'] as List;
-      for (final e in exs) {
-        await _db.insertExercise(catId, e as String);
+    final db = await _db.database;
+    await db.transaction((txn) async {
+      for (final c in cats) {
+        final catName = c['name'] as String;
+        final existingCat = await txn.query('categories',
+            where: 'LOWER(name) = ?', whereArgs: [catName.toLowerCase()]);
+        final int catId;
+        if (existingCat.isNotEmpty) {
+          catId = existingCat.first['id'] as int;
+        } else {
+          catId = await txn.insert('categories', {'name': catName});
+        }
+        final List exs = c['exercises'] as List;
+        for (final e in exs) {
+          final exName = e as String;
+          final existingEx = await txn.query('exercises',
+              where: 'LOWER(name) = ?', whereArgs: [exName.toLowerCase()]);
+          if (existingEx.isEmpty) {
+            await txn.insert(
+                'exercises', {'category_id': catId, 'name': exName});
+          }
+        }
       }
-    }
+    });
   }
 
   Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
+    _prefs = await SharedPreferences.getInstance();
     setState(() {
-      _weightUnit = prefs.getString('weightUnit') ?? _weightUnit;
+      _timerSeconds = _prefs.getInt('timerSeconds') ?? _timerSeconds;
+      reps = _prefs.getInt('reps') ?? reps;
+      weight = _prefs.getDouble('weight') ?? weight;
+      _weightUnit = _prefs.getString('weightUnit') ?? _weightUnit;
     });
   }
 
   Future<void> _saveSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('timerSeconds', _timerSeconds);
-    await prefs.setInt('reps', reps);
-    await prefs.setDouble('weight', weight);
-    await prefs.setString('weightUnit', _weightUnit);
+    await _prefs.setInt('timerSeconds', _timerSeconds);
+    await _prefs.setInt('reps', reps);
+    await _prefs.setDouble('weight', weight);
+    await _prefs.setString('weightUnit', _weightUnit);
     if (_selectedCategory != null) {
-      await prefs.setInt('selectedCategory', _selectedCategory!);
+      await _prefs.setInt('selectedCategory', _selectedCategory!);
     }
     if (_selectedExercise != null) {
-      await prefs.setInt('selectedExercise', _selectedExercise!);
+      await _prefs.setInt('selectedExercise', _selectedExercise!);
     }
   }
 
