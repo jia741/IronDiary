@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
   bool _isTiming = false;
   int _remainingSeconds = 0;
   Timer? _timer;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
 
   int _navIndex = 0;
   int reps = 10;
@@ -40,6 +41,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future(() async {
+      const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+      await _localNotifications.initialize(
+        const InitializationSettings(android: androidInit),
+      );
+      final androidImpl = _localNotifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+      await androidImpl?.requestNotificationsPermission();
       await _loadSettings();
       await _loadData();
       await _checkFirstLaunch();
@@ -152,8 +161,24 @@ class _HomePageState extends State<HomePage> {
     _repController.dispose();
     _weightController.dispose();
     _timer?.cancel();
-    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  Future<void> _showCompletionNotification() async {
+    const androidDetails = AndroidNotificationDetails(
+      'timer_completion',
+      'Timer Completion',
+      importance: Importance.max,
+      priority: Priority.high,
+      audioAttributesUsage: AudioAttributesUsage.alarm,
+    );
+    const details = NotificationDetails(android: androidDetails);
+    await _localNotifications.show(
+      0,
+      '計時完成',
+      '組間休息已結束',
+      details,
+    );
   }
 
   Future<void> _onCategoryChanged(int? id) async {
@@ -191,7 +216,7 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        unawaited(_audioPlayer.play(AssetSource('readytowork.mp3')));
+        unawaited(_showCompletionNotification());
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('計時完成')));
