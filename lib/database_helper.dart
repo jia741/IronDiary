@@ -175,6 +175,22 @@ class DatabaseHelper {
     });
   }
 
+  Future<int> getTodayWorkoutCount(int exerciseId) async {
+    final db = await database;
+    final now = DateTime.now();
+    final start = DateTime(now.year, now.month, now.day);
+    final end = start.add(const Duration(days: 1));
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) FROM workouts WHERE exercise_id = ? AND timestamp BETWEEN ? AND ?',
+      [
+        exerciseId,
+        start.millisecondsSinceEpoch,
+        end.millisecondsSinceEpoch,
+      ],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
   Future<Map<String, dynamic>?> getLastWorkout(int exerciseId) async {
     final db = await database;
     final result = await db.query('workouts',
