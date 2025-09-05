@@ -211,4 +211,9 @@ class DatabaseHelper {
     final db = await database;
     await db.delete('workouts', where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<void> close() async {
+    await _db?.close();
+    _db = null;
+  }
 }

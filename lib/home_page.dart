@@ -175,6 +175,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _timer?.cancel();
+    unawaited(_db.close());
     super.dispose();
   }
 
