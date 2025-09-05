@@ -22,8 +22,6 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _exercises = [];
   int? _selectedCategory;
   int? _selectedExercise;
-  final TextEditingController _repController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
   int _timerSeconds = 60;
   bool _loading = true;
   bool _isTiming = false;
@@ -176,8 +174,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _repController.dispose();
-    _weightController.dispose();
     _timer?.cancel();
     super.dispose();
   }
@@ -227,8 +223,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _startWorkout() async {
     final exId = _selectedExercise;
-    //final reps = int.tryParse(_repController.text);
-    //final weight = double.tryParse(_weightController.text);
     if (exId == null) return;
     await _db.logWorkout(exId, reps, weight, _weightUnit, _timerSeconds);
     if (!mounted) return;
