@@ -145,7 +145,7 @@ class _ReportPageState extends State<ReportPage> {
     _updateChartData();
   }
 
-  void _cycleRange() {
+  Future<void> _cycleRange() async {
     setState(() {
       if (_range == _Range.days30) {
         _range = _Range.days90;
@@ -155,10 +155,11 @@ class _ReportPageState extends State<ReportPage> {
         _range = _Range.days30;
       }
     });
+    await _loadAllWorkouts();
     _updateChartData();
   }
 
-  void _cycleDistRange() {
+  Future<void> _cycleDistRange() async {
     setState(() {
       if (_distRange == _DistRange.days30) {
         _distRange = _DistRange.days90;
@@ -168,6 +169,7 @@ class _ReportPageState extends State<ReportPage> {
         _distRange = _DistRange.days30;
       }
     });
+    await _loadAllWorkouts();
     _computeDistribution();
   }
 
@@ -423,7 +425,11 @@ class _ReportPageState extends State<ReportPage> {
   Widget _buildTrendTab() {
     return Column(
       children: [
-        TextButton(onPressed: _cycleRange, child: Text(_rangeLabel())),
+        TextButton(
+            onPressed: () async {
+              await _cycleRange();
+            },
+            child: Text(_rangeLabel())),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -554,7 +560,11 @@ class _ReportPageState extends State<ReportPage> {
     final total = entries.fold<double>(0, (p, e) => p + e.value);
     return Column(
       children: [
-        TextButton(onPressed: _cycleDistRange, child: Text(_distRangeLabel())),
+        TextButton(
+            onPressed: () async {
+              await _cycleDistRange();
+            },
+            child: Text(_distRangeLabel())),
         const SizedBox(height: 8),
         DropdownButton<int?>(
           hint: const Text('部位'),
