@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'database_helper.dart';
@@ -47,6 +48,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     tz.initializeTimeZones();
     Future(() async {
+      final String tzName = await FlutterNativeTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(tzName));
       const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       const darwinInit = DarwinInitializationSettings();
       await _localNotifications.initialize(
