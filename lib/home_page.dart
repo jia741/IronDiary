@@ -241,7 +241,8 @@ class _HomePageState extends State<HomePage> {
       '$exerciseName今天做了$count組',
       tz.TZDateTime.from(when, tz.local),
       details,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      // 使用非精準投遞以避免要求精準鬧鐘權限
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
