@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -27,12 +31,15 @@ class _HomePageState extends State<HomePage> {
   bool _loading = true;
   bool _isTiming = false;
   int _remainingSeconds = 0;
+  DateTime? _endTime;
   Timer? _timer;
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
 
   int _todaySetCount = 0;
   String _currentExerciseName = '';
+
+  bool _canScheduleExactNotifications = false;
 
   int _navIndex = 0;
   int reps = 10;
@@ -42,7 +49,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    tz.initializeTimeZones();
     Future(() async {
+      final String tzName = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(tzName));
       const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
       const darwinInit = DarwinInitializationSettings();
       await _localNotifications.initialize(
@@ -70,6 +80,7 @@ class _HomePageState extends State<HomePage> {
           >();
       await macImpl?.requestPermissions(alert: true, badge: true, sound: true);
       await _loadSettings();
+      await _checkExactAlarmPermission();
       await _loadData();
       await _checkFirstLaunch();
     });
@@ -181,6 +192,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> _checkExactAlarmPermission() async {
+    if (!Platform.isAndroid) return;
+    final androidImpl = _localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImpl == null) return;
+
+    final prompted = _prefs.getBool('exactAlarmPrompted') ?? false;
+    bool canExact = await androidImpl.canScheduleExactNotifications() ?? false;
+    if (!prompted && !canExact) {
+      final granted = await androidImpl.requestExactAlarmsPermission() ?? false;
+      canExact = granted;
+      if (!canExact && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('未授予精準鬧鐘權限，將改用一般排程')),
+        );
+      }
+      await _prefs.setBool('exactAlarmPrompted', true);
+    }
+    setState(() {
+      _canScheduleExactNotifications = canExact;
+    });
+  }
+
   Future<void> _saveSettings() async {
     await _prefs.setInt('timerSeconds', _timerSeconds);
     await _prefs.setInt('reps', reps);
@@ -201,8 +236,8 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Future<void> _showCompletionNotification(
-      String exerciseName, int count) async {
+  Future<void> _scheduleCompletionNotification(
+      String exerciseName, int count, DateTime when) async {
     // Android: use notification usage so system decides sound/vibrate according to channel & device settings
     final androidDetails = AndroidNotificationDetails(
       'timer_completion',
@@ -228,8 +263,18 @@ class _HomePageState extends State<HomePage> {
       macOS: darwinDetails,
     );
 
-    await _localNotifications.show(
-        0, '休息結束', '$exerciseName今天做了$count組', details);
+    await _localNotifications.zonedSchedule(
+      0,
+      '休息結束',
+      '$exerciseName今天做了$count組',
+      tz.TZDateTime.from(when, tz.local),
+      details,
+      androidScheduleMode: _canScheduleExactNotifications
+          ? AndroidScheduleMode.exactAllowWhileIdle
+          : AndroidScheduleMode.inexactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
   }
 
   Future<void> _onCategoryChanged(int? id) async {
@@ -253,6 +298,10 @@ class _HomePageState extends State<HomePage> {
     final count = await _db.getTodayWorkoutCount(exId);
     final exName =
         _exercises.firstWhere((e) => e['id'] == exId)['name'] as String;
+    final endTime = DateTime.now().add(Duration(seconds: _timerSeconds));
+    await _localNotifications.cancel(0);
+    unawaited(
+        _scheduleCompletionNotification(exName, count, endTime));
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -262,16 +311,16 @@ class _HomePageState extends State<HomePage> {
       _remainingSeconds = _timerSeconds;
       _todaySetCount = count;
       _currentExerciseName = exName;
+      _endTime = endTime;
     });
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (_remainingSeconds > 1) {
-        setState(() => _remainingSeconds--);
+      final diff = _endTime!.difference(DateTime.now()).inSeconds;
+      if (diff > 0) {
+        setState(() => _remainingSeconds = diff);
       } else {
         t.cancel();
         if (!mounted) return;
-        unawaited(
-            _showCompletionNotification(_currentExerciseName, _todaySetCount));
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(
