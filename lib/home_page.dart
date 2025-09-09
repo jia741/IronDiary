@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   bool _isTiming = false;
   int _remainingSeconds = 0;
   Timer? _timer;
+  DateTime? _endTime;
   final FlutterLocalNotificationsPlugin _localNotifications =
       FlutterLocalNotificationsPlugin();
 
@@ -197,41 +199,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _timer?.cancel();
+    FlutterBackgroundService().invoke('stopTimer');
     unawaited(_db.close());
     super.dispose();
   }
-
-  Future<void> _showCompletionNotification(
-      String exerciseName, int count) async {
-    // Android: use notification usage so system decides sound/vibrate according to channel & device settings
-    final androidDetails = AndroidNotificationDetails(
-      'timer_completion',
-      'Timer Completion',
-      importance: Importance.max,
-      priority: Priority.high,
-      // use notification usage (not alarm) so system respects Do Not Disturb and channel settings
-      audioAttributesUsage: AudioAttributesUsage.notification,
-      playSound: true,
-      enableVibration: true,
-    );
-
-    // iOS / macOS (Darwin): allow sound/alert/badge presentation (system will decide actual behavior)
-    final darwinDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    final details = NotificationDetails(
-      android: androidDetails,
-      iOS: darwinDetails,
-      macOS: darwinDetails,
-    );
-
-    await _localNotifications.show(
-        0, '休息結束', '$exerciseName今天做了$count組', details);
-  }
-
   Future<void> _onCategoryChanged(int? id) async {
     if (id == null) return;
     final exs = await _db.getExercises(id);
@@ -263,23 +234,36 @@ class _HomePageState extends State<HomePage> {
       _todaySetCount = count;
       _currentExerciseName = exName;
     });
+    _endTime = DateTime.now().add(Duration(seconds: _timerSeconds));
+    final service = FlutterBackgroundService();
+    if (!await service.isRunning()) {
+      await service.startService();
+    }
+    service.invoke('startTimer', {
+      'seconds': _timerSeconds,
+      'exercise': _currentExerciseName,
+      'count': _todaySetCount,
+    });
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (_remainingSeconds > 1) {
-        setState(() => _remainingSeconds--);
-      } else {
-        t.cancel();
-        if (!mounted) return;
-        unawaited(
-            _showCompletionNotification(_currentExerciseName, _todaySetCount));
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(
-            content: Text('休息結束，$_currentExerciseName今天做了$_todaySetCount組')));
-        setState(() {
-          _isTiming = false;
-        });
+      final end = _endTime;
+      if (end != null) {
+        final remaining = end.difference(DateTime.now()).inSeconds;
+        if (remaining > 0) {
+          setState(() => _remainingSeconds = remaining);
+          return;
+        }
       }
+      t.cancel();
+      service.invoke('stopTimer');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(
+          content: Text('休息結束，$_currentExerciseName今天做了$_todaySetCount組')));
+      setState(() {
+        _isTiming = false;
+      });
     });
   }
 
