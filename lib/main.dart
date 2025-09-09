@@ -22,6 +22,7 @@ Future<void> main() async {
       initialNotificationTitle: 'IronDiary 計時器',
       initialNotificationContent: '計時中... ',
       foregroundServiceNotificationId: 888,
+      foregroundServiceTypes: [AndroidForegroundType.dataSync],
     ),
     iosConfiguration: IosConfiguration(),
   );
