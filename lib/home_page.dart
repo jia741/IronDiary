@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +38,8 @@ class _HomePageState extends State<HomePage> {
 
   int _todaySetCount = 0;
   String _currentExerciseName = '';
+
+  bool _canScheduleExactNotifications = false;
 
   int _navIndex = 0;
   int reps = 10;
@@ -77,6 +80,7 @@ class _HomePageState extends State<HomePage> {
           >();
       await macImpl?.requestPermissions(alert: true, badge: true, sound: true);
       await _loadSettings();
+      await _checkExactAlarmPermission();
       await _loadData();
       await _checkFirstLaunch();
     });
@@ -188,6 +192,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> _checkExactAlarmPermission() async {
+    if (!Platform.isAndroid) return;
+    final androidImpl = _localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImpl == null) return;
+
+    final prompted = _prefs.getBool('exactAlarmPrompted') ?? false;
+    bool canExact = await androidImpl.canScheduleExactNotifications() ?? false;
+    if (!prompted && !canExact) {
+      final granted = await androidImpl.requestExactAlarmsPermission() ?? false;
+      canExact = granted;
+      if (!canExact && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('未授予精準鬧鐘權限，將改用一般排程')),
+        );
+      }
+      await _prefs.setBool('exactAlarmPrompted', true);
+    }
+    setState(() {
+      _canScheduleExactNotifications = canExact;
+    });
+  }
+
   Future<void> _saveSettings() async {
     await _prefs.setInt('timerSeconds', _timerSeconds);
     await _prefs.setInt('reps', reps);
@@ -241,8 +269,9 @@ class _HomePageState extends State<HomePage> {
       '$exerciseName今天做了$count組',
       tz.TZDateTime.from(when, tz.local),
       details,
-      // 使用非精準投遞以避免要求精準鬧鐘權限
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      androidScheduleMode: _canScheduleExactNotifications
+          ? AndroidScheduleMode.exactAllowWhileIdle
+          : AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
