@@ -1,18 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:irondiary/main.dart';
 import 'package:irondiary/database_helper.dart';
 
+class _MockPermissionHandler extends PermissionHandlerPlatform {
+  @override
+  Future<PermissionStatus> checkPermissionStatus(Permission permission) async {
+    return PermissionStatus.granted;
+  }
+
+  @override
+  Future<Map<Permission, PermissionStatus>> requestPermissions(
+      List<Permission> permissions) async {
+    return {for (final p in permissions) p: PermissionStatus.granted};
+  }
+}
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  const MethodChannel('dexterous.com/flutter/local_notifications')
+      .setMockMethodCallHandler((_) async => true);
+  const MethodChannel('flutter_timezone')
+      .setMockMethodCallHandler((_) async => 'Asia/Taipei');
+
+  PermissionHandlerPlatform.instance = _MockPermissionHandler();
+
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
 
   testWidgets('home page has two dropdowns', (tester) async {
     SharedPreferences.setMockInitialValues({'defaultDataPrompted': true});
     await tester.pumpWidget(const MyApp());
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(find.byType(DropdownButton), findsNWidgets(2));
   });
 
@@ -27,7 +52,7 @@ void main() {
       'defaultDataPrompted': true,
     });
     await tester.pumpWidget(const MyApp());
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(find.text('測試類別'), findsOneWidget);
     expect(find.text('測試動作1'), findsOneWidget);
   });
