@@ -32,7 +32,7 @@ android {
 
     dependencies {
     // 放在同一個 dependencies 區塊
-        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.2")
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
     }
 
     defaultConfig {
