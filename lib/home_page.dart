@@ -166,9 +166,31 @@ class _HomePageState extends State<HomePage> {
         if (existingCat.isNotEmpty) {
           catId = existingCat.first['id'] as int;
         } else {
-          catId = await txn.insert('categories', {'name': catName});
+          final maxOrder = await txn.query(
+            'categories',
+            columns: ['sort_order'],
+            orderBy: 'sort_order DESC',
+            limit: 1,
+          );
+          final nextOrder =
+              maxOrder.isNotEmpty ? (maxOrder.first['sort_order'] as int) + 1 : 0;
+          catId = await txn.insert('categories', {
+            'name': catName,
+            'sort_order': nextOrder,
+          });
         }
         final List exs = c['exercises'] as List;
+        final maxExerciseOrder = await txn.query(
+          'exercises',
+          columns: ['sort_order'],
+          where: 'category_id = ?',
+          whereArgs: [catId],
+          orderBy: 'sort_order DESC',
+          limit: 1,
+        );
+        var nextExerciseOrder = maxExerciseOrder.isNotEmpty
+            ? (maxExerciseOrder.first['sort_order'] as int) + 1
+            : 0;
         for (final e in exs) {
           final exName = e as String;
           final existingEx = await txn.query(
@@ -180,7 +202,9 @@ class _HomePageState extends State<HomePage> {
             await txn.insert('exercises', {
               'category_id': catId,
               'name': exName,
+              'sort_order': nextExerciseOrder,
             });
+            nextExerciseOrder += 1;
           }
         }
       }
@@ -431,12 +455,10 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: AbsorbPointer(
-          absorbing: _isTiming,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(20)),
-            child: Column(
-              children: [
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: ScreenUtil.w(20)),
+          child: Column(
+            children: [
                 SizedBox(height: ScreenUtil.h(20)),
                 // 美化下拉 1：部位
                 prettyDropdown<int>(
@@ -557,14 +579,17 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                   child: Center(
-                    child: ElevatedButton(
-                      onPressed: _isTiming ? null : _startWorkout,
-                      onLongPress: _isTiming ? null : _recordWorkoutOnly,
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        minimumSize: Size.square(ScreenUtil.w(100)),
+                    child: AbsorbPointer(
+                      absorbing: _isTiming,
+                      child: ElevatedButton(
+                        onPressed: _isTiming ? null : _startWorkout,
+                        onLongPress: _isTiming ? null : _recordWorkoutOnly,
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          minimumSize: Size.square(ScreenUtil.w(100)),
+                        ),
+                        child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                       ),
-                      child: Text(_isTiming ? '$_remainingSeconds' : '開始'),
                     ),
                   ),
                 ),
