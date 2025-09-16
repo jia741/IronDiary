@@ -33,7 +33,9 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           // Convert the query result to a modifiable list. Sqflite's
           // QueryResultSet is read-only and attempting to modify it
           // (e.g. during reordering) will throw an UnsupportedError.
-          'exercises': List<Map<String, dynamic>>.from(exsList[i]),
+          'exercises': [
+            for (final ex in exsList[i]) Map<String, dynamic>.from(ex)
+          ],
         }
     ];
     setState(() {
