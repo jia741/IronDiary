@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'database_helper.dart';
 import 'exercise_settings_page.dart';
 import 'report_page.dart';
@@ -69,9 +73,13 @@ class _HomePageState extends State<HomePage> {
             MacOSFlutterLocalNotificationsPlugin
           >();
       await macImpl?.requestPermissions(alert: true, badge: true, sound: true);
+      tz.initializeTimeZones();
+      final String timeZone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timeZone));
       await _loadSettings();
       await _loadData();
       await _checkFirstLaunch();
+      await _checkExactAlarmPermission();
     });
   }
 
@@ -149,8 +157,11 @@ class _HomePageState extends State<HomePage> {
     await db.transaction((txn) async {
       for (final c in cats) {
         final catName = c['name'] as String;
-        final existingCat = await txn.query('categories',
-            where: 'LOWER(name) = ?', whereArgs: [catName.toLowerCase()]);
+        final existingCat = await txn.query(
+          'categories',
+          where: 'LOWER(name) = ?',
+          whereArgs: [catName.toLowerCase()],
+        );
         final int catId;
         if (existingCat.isNotEmpty) {
           catId = existingCat.first['id'] as int;
@@ -160,15 +171,49 @@ class _HomePageState extends State<HomePage> {
         final List exs = c['exercises'] as List;
         for (final e in exs) {
           final exName = e as String;
-          final existingEx = await txn.query('exercises',
-              where: 'LOWER(name) = ?', whereArgs: [exName.toLowerCase()]);
+          final existingEx = await txn.query(
+            'exercises',
+            where: 'LOWER(name) = ?',
+            whereArgs: [exName.toLowerCase()],
+          );
           if (existingEx.isEmpty) {
-            await txn.insert(
-                'exercises', {'category_id': catId, 'name': exName});
+            await txn.insert('exercises', {
+              'category_id': catId,
+              'name': exName,
+            });
           }
         }
       }
     });
+  }
+
+  Future<void> _checkExactAlarmPermission() async {
+    final prompted = _prefs.getBool('exactAlarmPrompted') ?? false;
+    if (prompted) return;
+    final granted = await Permission.scheduleExactAlarm.isGranted;
+    if (!granted && mounted) {
+      final goSettings = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('需要精準鬧鐘權限'),
+          content: const Text('為確保計時提醒準時送達，請至設定中允許精準鬧鐘權限。'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('取消'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('前往設定'),
+            ),
+          ],
+        ),
+      );
+      if (goSettings ?? false) {
+        await openAppSettings();
+      }
+    }
+    await _prefs.setBool('exactAlarmPrompted', true);
   }
 
   Future<void> _loadSettings() async {
@@ -201,35 +246,38 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  Future<void> _showCompletionNotification(
-      String exerciseName, int count) async {
-    // Android: use notification usage so system decides sound/vibrate according to channel & device settings
+  NotificationDetails _notificationDetails() {
     final androidDetails = AndroidNotificationDetails(
       'timer_completion',
       'Timer Completion',
       importance: Importance.max,
       priority: Priority.high,
-      // use notification usage (not alarm) so system respects Do Not Disturb and channel settings
       audioAttributesUsage: AudioAttributesUsage.notification,
       playSound: true,
       enableVibration: true,
     );
-
-    // iOS / macOS (Darwin): allow sound/alert/badge presentation (system will decide actual behavior)
     final darwinDetails = DarwinNotificationDetails(
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
     );
-
-    final details = NotificationDetails(
+    return NotificationDetails(
       android: androidDetails,
       iOS: darwinDetails,
       macOS: darwinDetails,
     );
+  }
 
+  Future<void> _showCompletionNotification(
+    String exerciseName,
+    int count,
+  ) async {
     await _localNotifications.show(
-        0, '休息結束', '$exerciseName今天做了$count組', details);
+      0,
+      '休息結束',
+      '$exerciseName今天做了$count組',
+      _notificationDetails(),
+    );
   }
 
   Future<void> _onCategoryChanged(int? id) async {
@@ -253,6 +301,20 @@ class _HomePageState extends State<HomePage> {
     final count = await _db.getTodayWorkoutCount(exId);
     final exName =
         _exercises.firstWhere((e) => e['id'] == exId)['name'] as String;
+    final hasExact = await Permission.scheduleExactAlarm.isGranted;
+    if (hasExact) {
+      final scheduleTime = tz.TZDateTime.now(
+        tz.local,
+      ).add(Duration(seconds: _timerSeconds));
+      await _localNotifications.zonedSchedule(
+        0,
+        '休息結束',
+        '$exName今天做了$count組',
+        scheduleTime,
+        _notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    }
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -270,12 +332,16 @@ class _HomePageState extends State<HomePage> {
       } else {
         t.cancel();
         if (!mounted) return;
-        unawaited(
-            _showCompletionNotification(_currentExerciseName, _todaySetCount));
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(
-            content: Text('休息結束，$_currentExerciseName今天做了$_todaySetCount組')));
+        if (!hasExact) {
+          unawaited(
+            _showCompletionNotification(_currentExerciseName, _todaySetCount),
+          );
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('休息結束，$_currentExerciseName今天做了$_todaySetCount組'),
+          ),
+        );
         setState(() {
           _isTiming = false;
         });
@@ -293,8 +359,7 @@ class _HomePageState extends State<HomePage> {
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(
-        SnackBar(content: Text('$exName今天做了$count組')));
+    ).showSnackBar(SnackBar(content: Text('$exName今天做了$count組')));
   }
 
   void _toggleWeightUnit() {
