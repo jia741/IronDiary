@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'database_helper.dart';
@@ -31,7 +33,9 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
           // Convert the query result to a modifiable list. Sqflite's
           // QueryResultSet is read-only and attempting to modify it
           // (e.g. during reordering) will throw an UnsupportedError.
-          'exercises': List<Map<String, dynamic>>.from(exsList[i]),
+          'exercises': [
+            for (final ex in exsList[i]) Map<String, dynamic>.from(ex)
+          ],
         }
     ];
     setState(() {
@@ -44,18 +48,28 @@ class _ExerciseSettingsPageState extends State<ExerciseSettingsPage> {
       if (newIndex > oldIndex) newIndex -= 1;
       final item = _categories.removeAt(oldIndex);
       _categories.insert(newIndex, item);
+      for (var i = 0; i < _categories.length; i++) {
+        _categories[i]['sort_order'] = i;
+      }
     });
+    final orderedIds = _categories.map((c) => c['id'] as int).toList();
+    unawaited(_db.updateCategoryOrders(orderedIds));
   }
 
   void _reorderExercises(int catId, int oldIndex, int newIndex) {
+    final exercises = _categories
+        .firstWhere((c) => c['id'] == catId)['exercises']
+        as List<Map<String, dynamic>>;
     setState(() {
-      final exercises = _categories
-          .firstWhere((c) => c['id'] == catId)['exercises']
-          as List<Map<String, dynamic>>;
       if (newIndex > oldIndex) newIndex -= 1;
       final item = exercises.removeAt(oldIndex);
       exercises.insert(newIndex, item);
+      for (var i = 0; i < exercises.length; i++) {
+        exercises[i]['sort_order'] = i;
+      }
     });
+    final orderedIds = exercises.map((e) => e['id'] as int).toList();
+    unawaited(_db.updateExerciseOrders(catId, orderedIds));
   }
 
   void _showCategoryDialog({int? id, String? name}) {

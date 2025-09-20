@@ -19,7 +19,7 @@ class DatabaseHelper {
     final path = join(dbPath, 'irondiary.db');
     return openDatabase(
       path,
-      version: 5,
+      version: 6,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -32,7 +32,8 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE categories(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
+        name TEXT NOT NULL,
+        sort_order INTEGER NOT NULL DEFAULT 0
       )
     ''');
     await db.execute('''
@@ -40,6 +41,7 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         category_id INTEGER NOT NULL,
         name TEXT NOT NULL,
+        sort_order INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE
       )
     ''');
@@ -84,16 +86,46 @@ class DatabaseHelper {
       await db
           .execute('CREATE INDEX idx_workouts_timestamp ON workouts(timestamp)');
     }
+    if (oldVersion < 6) {
+      await db.execute(
+          'ALTER TABLE categories ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0');
+      await db.execute(
+          'ALTER TABLE exercises ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0');
+
+      final cats = await db.query('categories', columns: ['id'], orderBy: 'id');
+      final catBatch = db.batch();
+      for (var i = 0; i < cats.length; i++) {
+        catBatch.update('categories', {'sort_order': i},
+            where: 'id = ?', whereArgs: [cats[i]['id']]);
+      }
+      await catBatch.commit(noResult: true);
+
+      final exs = await db.query('exercises',
+          columns: ['id', 'category_id'], orderBy: 'category_id, id');
+      final orderMap = <int, int>{};
+      final exBatch = db.batch();
+      for (final ex in exs) {
+        final catId = ex['category_id'] as int;
+        final index = orderMap[catId] ?? 0;
+        exBatch.update('exercises', {'sort_order': index},
+            where: 'id = ?', whereArgs: [ex['id']]);
+        orderMap[catId] = index + 1;
+      }
+      await exBatch.commit(noResult: true);
+    }
   }
 
   Future<List<Map<String, dynamic>>> getCategories() async {
     final db = await database;
-    return db.query('categories');
+    return db.query('categories', orderBy: 'sort_order ASC, id ASC');
   }
 
   Future<List<Map<String, dynamic>>> getExercises(int categoryId) async {
     final db = await database;
-    return db.query('exercises', where: 'category_id = ?', whereArgs: [categoryId]);
+    return db.query('exercises',
+        where: 'category_id = ?',
+        whereArgs: [categoryId],
+        orderBy: 'sort_order ASC, id ASC');
   }
 
   Future<int> insertCategory(String name) async {
@@ -103,7 +135,12 @@ class DatabaseHelper {
     if (exists.isNotEmpty) {
       throw Exception('Category name already exists');
     }
-    return db.insert('categories', {'name': name});
+    final maxOrderResult = await db
+        .rawQuery('SELECT MAX(sort_order) AS max_order FROM categories');
+    final maxOrderValue = maxOrderResult.first['max_order'];
+    final nextOrder = (maxOrderValue is num ? maxOrderValue.toInt() : -1) + 1;
+    return db
+        .insert('categories', {'name': name, 'sort_order': nextOrder});
   }
 
   Future<void> updateCategory(int id, String name) async {
@@ -130,7 +167,16 @@ class DatabaseHelper {
     if (exists.isNotEmpty) {
       throw Exception('Exercise name already exists');
     }
-    return db.insert('exercises', {'category_id': categoryId, 'name': name});
+    final maxOrderResult = await db.rawQuery(
+        'SELECT MAX(sort_order) AS max_order FROM exercises WHERE category_id = ?',
+        [categoryId]);
+    final maxOrderValue = maxOrderResult.first['max_order'];
+    final nextOrder = (maxOrderValue is num ? maxOrderValue.toInt() : -1) + 1;
+    return db.insert('exercises', {
+      'category_id': categoryId,
+      'name': name,
+      'sort_order': nextOrder,
+    });
   }
 
   Future<void> updateExercise(int id, String name) async {
@@ -151,6 +197,27 @@ class DatabaseHelper {
   Future<void> deleteExercise(int id) async {
     final db = await database;
     await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<void> updateCategoryOrders(List<int> orderedIds) async {
+    final db = await database;
+    final batch = db.batch();
+    for (var i = 0; i < orderedIds.length; i++) {
+      batch.update('categories', {'sort_order': i},
+          where: 'id = ?', whereArgs: [orderedIds[i]]);
+    }
+    await batch.commit(noResult: true);
+  }
+
+  Future<void> updateExerciseOrders(int categoryId, List<int> orderedIds) async {
+    final db = await database;
+    final batch = db.batch();
+    for (var i = 0; i < orderedIds.length; i++) {
+      batch.update('exercises', {'sort_order': i},
+          where: 'id = ? AND category_id = ?',
+          whereArgs: [orderedIds[i], categoryId]);
+    }
+    await batch.commit(noResult: true);
   }
 
   Future<void> clearAll() async {
